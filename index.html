@@ -114,9 +114,7 @@ href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css
 </script>
 <script>
 
-let map = L.map('map', {
-  zoomControl: false 
-}).setView([50.45, 30.52], 15);
+let map = L.map('map').setView([50.45, 30.52], 15);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -124,18 +122,14 @@ L.tileLayer(
     maxZoom: 19
   }
 ).addTo(map);
-// GPS трек
-let userTrack = []; 
-let userTrackLine = L.polyline([], {
-  color: 'red',
-  weight: 5
-}).addTo(map);    
+
 let currentMarker = null;
 let routingControl = null;
 let targetPoint = null;
 let targetMarker = null;
 let targetLine = null;
-
+let userTrack = [];
+let userTrackLine = null;
 
 async function setTargetAddress() {
 
