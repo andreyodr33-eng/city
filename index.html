@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>PWA Navigator</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <style>
+.search-box {
+  position: fixed;
+
+  top: 60px;
+  left: 10px;
+  right: 10px;
+
+  display: flex;
+  gap: 10px;
+
+  z-index: 3000;
+}
+
+.search-box input {
+  flex: 1;
+
+  padding: 12px;
+
+  border: none;
+  border-radius: 10px;
+}
+
+.search-box button {
+
+  padding: 12px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #1E88E5;
+  color: white;
+}
+#map {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#directionArrow {
+
+  position: fixed;
+
+  top: 10px;
+  left: 10px;
+
+  width: 60px;
+  height: 60px;
+
+  background: rgba(0,0,0,0.7);
+
+  color: white;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 32px;
+
+  z-index: 5000;
+}
+</style>
+</head>
+<body>
+<div id="directionArrow">↑</div>
+<div id="map"></div>
+<div class="search-box">
+
+  <input
+    type="text"
+    id="addressInput"
+    placeholder="Введите адрес">
+
+  <button onclick="setTargetAddress()">
+    Цель
+  </button>
+
+</div>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<link rel="stylesheet" 
+href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css"
+/>
+<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js">
+</script>
+<script>
+
+let map = L.map('map').setView([50.45, 30.52], 15);
+
+L.tileLayer(
+  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  {
+    maxZoom: 19
+  }
+).addTo(map);
+
+let currentMarker = null;
+let routingControl = null;
+let targetPoint = null;
+let targetMarker = null;
+let targetLine = null;
+let userTrack = [];
+let userTrackLine = null;
+
+async function setTargetAddress() {
+
+  const address =
+    document.getElementById("addressInput").value;
+
+  if (!address) {
+    return;
+  }
+
+  const response = await fetch(
+    `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`
+  );
+
+  const data = await response.json();
+
+  if (!data.length) {
+    alert("Адрес не найден");
+    return;
+  }
+
+  const lat = parseFloat(data[0].lat);
+  const lng = parseFloat(data[0].lon);
+
+  targetPoint = [lat, lng];
+
+  // marker цели
+  if (targetMarker) {
+    map.removeLayer(targetMarker);
+  }
+
+  targetMarker = L.marker(targetPoint).addTo(map);
+
+  alert("Цель установлена");
+  buildRoute();
+}
+function buildRoute() {
+
+  if (!targetPoint || !currentMarker) {
+    return;
+  }
+
+  // если уже был маршрут — удалить
+  if (routingControl) {
+    map.removeControl(routingControl);
+  }
+
+  navigator.geolocation.getCurrentPosition((pos) => {
+
+    const start = [pos.coords.latitude, pos.coords.longitude];
+
+    routingControl = L.Routing.control({
+
+      waypoints: [
+        L.latLng(start[0], start[1]),
+        L.latLng(targetPoint[0], targetPoint[1])
+      ],
+
+      lineOptions: {
+        styles: [{
+          color: 'blue',
+          weight: 6
+        }]
+      },
+
+      routeWhileDragging: false,
+      addWaypoints: false,
+      draggableWaypoints: false,
+      fitSelectedRoutes: true,
+      show: false
+
+    }).addTo(map);
+
+  });
+}
+
+function detectTargetDirection(currentPoint) {
+
+
+  if (!targetPoint) {
+    return;
+  }
+
+  const dx =
+    targetPoint[1] - currentPoint[1];
+
+  const dy =
+    targetPoint[0] - currentPoint[0];
+
+  if (Math.abs(dx) > Math.abs(dy)) {
+
+    if (dx > 0) {
+      updateArrow("right");
+    } else {
+      updateArrow("left");
+    }
+
+  } else {
+
+    if (dy > 0) {
+      updateArrow("forward");
+    } else {
+      updateArrow("back");
+    }
+  }
+}
+function updateArrow(direction) {
+
+  const arrow =
+    document.getElementById("directionArrow");
+
+  if (direction === "forward") {
+    arrow.innerText = "↑";
+  }
+
+  if (direction === "right") {
+    arrow.innerText = "→";
+  }
+
+  if (direction === "left") {
+    arrow.innerText = "←";
+  }
+
+  if (direction === "back") {
+    arrow.innerText = "↓";
+  }
+}
+navigator.geolocation.watchPosition((pos) => {
+
+  const latitude = pos.coords.latitude;
+  const longitude = pos.coords.longitude;
+
+  const currentPoint = [latitude, longitude];
+
+  userTrack.push(currentPoint);
+  if (userTrackLine) {
+    userTrackLine.addLatLng(currentPoint);
+  }
+
+  // marker пользователя
+  if (currentMarker) {
+    map.removeLayer(currentMarker);
+  }
+
+  currentMarker =
+    L.marker(currentPoint).addTo(map);
+
+  // центр карты
+  map.setView(currentPoint);
+
+  // линия до цели
+  if (targetPoint) {
+
+    if (targetLine) {
+      map.removeLayer(targetLine);
+    }
+
+ const currentPoint = [latitude, longitude];
+
+userTrack.push(currentPoint);
+
+if (userTrackLine) {
+  userTrackLine.addLatLng(currentPoint);
+}
+
+if (currentMarker) {
+  map.removeLayer(currentMarker);
+}
+
+currentMarker = L.marker(currentPoint).addTo(map);
+
+map.setView(currentPoint);
+
+detectTargetDirection(currentPoint);   
+  
+ }
+
+},
+(err) => {
+
+  alert(err.message);
+
+},
+{
+  enableHighAccuracy: true
+});
+
+</script>
+</body>
+</html>
