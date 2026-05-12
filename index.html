@@ -5,7 +5,7 @@
   <title>PWA Navigator</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <link rel="manifest" href="manifest.json">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1,0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <style>
   * {
@@ -114,7 +114,7 @@ href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css
 </script>
 <script>
 
-let map = L.map('map'), {
+let map = L.map('map', {
   zoomControl: false 
 }).setView([50.45, 30.52], 15);
 
