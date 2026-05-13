@@ -213,7 +213,7 @@ navigator.geolocation.watchPosition((pos) => {
   currentMarker = L.marker(currentPoint).addTo(map);
 
   // плавное движение карты
-  map.panTo(currentPoint);
+  map.setView(currentPoint);
 
   // обновление маршрута
   if (targetPoint) {
