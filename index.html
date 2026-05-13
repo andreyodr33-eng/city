@@ -213,11 +213,37 @@ function buildRoute() {
       show: false
 
     }).addTo(map);
+routingControl.on('routesfound', function(e) {
 
-  });
-}
+  const route = e.routes[0];
 
-navigator.geolocation.watchPosition((pos) => {
+  if (!route.instructions.length) {
+    return;
+  }
+
+  const step = route.instructions[0];
+
+  let arrow = "↑";
+
+  const text = step.text.toLowerCase();
+
+  if (text.includes("left")) {
+    arrow = "←";
+  }
+
+  if (text.includes("right")) {
+    arrow = "→";
+  }
+
+  if (text.includes("uturn")) {
+    arrow = "↓";
+  }
+
+  document.getElementById("navInfo").innerText =
+    arrow + " " + Math.round(step.distance) + " м";
+});  
+
+  navigator.geolocation.watchPosition((pos) => {
 
   const latitude = pos.coords.latitude;
   const longitude = pos.coords.longitude;
@@ -302,35 +328,6 @@ navigator.geolocation.watchPosition((pos) => {
 
   routingControl.addTo(map);
 } 
-routingControl.on('routesfound', function(e) {
-
-  const route = e.routes[0];
-
-  if (!route.instructions.length) {
-    return;
-  }
-
-  const step = route.instructions[0];
-
-  let arrow = "↑";
-
-  const text = step.text.toLowerCase();
-
-  if (text.includes("left")) {
-    arrow = "←";
-  }
-
-  if (text.includes("right")) {
-    arrow = "→";
-  }
-
-  if (text.includes("uturn")) {
-    arrow = "↓";
-  }
-
-  document.getElementById("navInfo").innerText =
-    arrow + " " + Math.round(step.distance) + " м";
-});  
 </script>
 </body>
 </html>
