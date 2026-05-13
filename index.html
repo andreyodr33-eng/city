@@ -92,7 +92,7 @@ html, body {
 </style>
 </head>
 <body>
-<div id="directionArrow">↑</div>
+
 <div id="map"></div>
 <div class="search-box">
 
@@ -113,8 +113,10 @@ href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css
 <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js">
 </script>
 <script>
+let map = L.map('map', {
+  zoomControl: false
+}).setView([50.45, 30.52], 15);    
 
-let map = L.map('map').setView([50.45, 30.52], 15);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -122,14 +124,15 @@ L.tileLayer(
     maxZoom: 19
   }
 ).addTo(map);
-
-let currentMarker = null;
+let watchId = null;
+let userTrack = [];
+let userTrackLine = null;  
 let routingControl = null;
 let targetPoint = null;
 let targetMarker = null;
 let targetLine = null;
-let userTrack = [];
-let userTrackLine = null;
+let lastRouteUpdate = 0;
+let routeUpdateInterval = 15000;  
 
 async function setTargetAddress() {
 
@@ -206,57 +209,6 @@ function buildRoute() {
   });
 }
 
-function detectTargetDirection(currentPoint) {
-
-
-  if (!targetPoint) {
-    return;
-  }
-
-  const dx =
-    targetPoint[1] - currentPoint[1];
-
-  const dy =
-    targetPoint[0] - currentPoint[0];
-
-  if (Math.abs(dx) > Math.abs(dy)) {
-
-    if (dx > 0) {
-      updateArrow("right");
-    } else {
-      updateArrow("left");
-    }
-
-  } else {
-
-    if (dy > 0) {
-      updateArrow("forward");
-    } else {
-      updateArrow("back");
-    }
-  }
-}
-function updateArrow(direction) {
-
-  const arrow =
-    document.getElementById("directionArrow");
-
-  if (direction === "forward") {
-    arrow.innerText = "↑";
-  }
-
-  if (direction === "right") {
-    arrow.innerText = "→";
-  }
-
-  if (direction === "left") {
-    arrow.innerText = "←";
-  }
-
-  if (direction === "back") {
-    arrow.innerText = "↓";
-  }
-}
 navigator.geolocation.watchPosition((pos) => {
 
   const latitude = pos.coords.latitude;
