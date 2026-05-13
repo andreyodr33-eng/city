@@ -92,7 +92,7 @@ href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css
 let map = L.map('map', {
   zoomControl: false
 }).setView([50.45, 30.52], 15);
-  
+let lastMove = 0;  
 let userTrack = [];
 let userTrackLine = L.polyline([], {  
     color: 'red',
@@ -111,7 +111,7 @@ let watchId = null;
 let routingControl = null;
 let targetPoint = null;
 let targetMarker = null;
-//let targetLine = null;
+
 let lastRouteUpdate = 0;
 let routeUpdateInterval = 15000;  
 let currentMarker = null;
@@ -213,7 +213,10 @@ navigator.geolocation.watchPosition((pos) => {
   currentMarker = L.marker(currentPoint).addTo(map);
 
   // плавное движение карты
-  map.setView(currentPoint);
+  if (!lastMove || Date.now() - lastMove > 2000) {
+    map.panTo(currentPoint, { animate: false });
+    lastMove = Date.now();
+  }  
 
   // обновление маршрута
   if (targetPoint) {
