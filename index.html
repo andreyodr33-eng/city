@@ -215,7 +215,10 @@ navigator.geolocation.watchPosition((pos) => {
   const longitude = pos.coords.longitude;
 
   const currentPoint = [latitude, longitude];
-
+  userTrackLine = L.polyline([], {
+  color: 'red',
+  weight: 5
+}).addTo(map);
   userTrack.push(currentPoint);
   if (userTrackLine) {
     userTrackLine.addLatLng(currentPoint);
