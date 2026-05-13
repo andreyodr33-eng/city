@@ -115,9 +115,14 @@ href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css
 <script>
 let map = L.map('map', {
   zoomControl: false
-}).setView([50.45, 30.52], 15);    
-
-
+}).setView([50.45, 30.52], 15);
+  
+let userTrack = [];
+let userTrackLine = L.polyline([], {  
+    color: 'red',
+    weight: 5
+}).addTo(map);
+  
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   {
@@ -249,7 +254,8 @@ navigator.geolocation.watchPosition((pos) => {
   maximumAge: 1000,
   timeout: 10000
 });
-
+let lastRouteUpdate = 0;
+const routeUpdateInterval = 10000;  
   
 function updateRoute(currentPoint) {
 
