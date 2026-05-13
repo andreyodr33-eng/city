@@ -271,6 +271,43 @@ detectTargetDirection(currentPoint);
 {
   enableHighAccuracy: true
 });
+function updateRoute(currentPoint) {
+
+  if (!targetPoint) return;
+
+  // ⛔ throttle (главное)
+  if (Date.now() - lastRouteUpdate < routeUpdateInterval) {
+    return;
+  }
+
+  lastRouteUpdate = Date.now();
+
+  // удалить старый маршрут
+  if (routingControl) {
+    map.removeControl(routingControl);
+  }
+
+  routingControl = L.Routing.control({
+
+    waypoints: [
+      L.latLng(currentPoint[0], currentPoint[1]),
+      L.latLng(targetPoint[0], targetPoint[1])
+    ],
+
+    lineOptions: {
+      styles: [{
+        color: 'blue',
+        weight: 5
+      }]
+    },
+
+    routeWhileDragging: false,
+    addWaypoints: false,
+    draggableWaypoints: false,
+    show: false
+
+  }).addTo(map);
+}  
 function startTracking() {
 
   userTrack = [];
