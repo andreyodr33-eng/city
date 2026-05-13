@@ -215,52 +215,28 @@ navigator.geolocation.watchPosition((pos) => {
   const longitude = pos.coords.longitude;
 
   const currentPoint = [latitude, longitude];
-  userTrackLine = L.polyline([], {
-  color: 'red',
-  weight: 5
-}).addTo(map);
+
+  // добавление точки в красный трек
   userTrack.push(currentPoint);
+
   if (userTrackLine) {
     userTrackLine.addLatLng(currentPoint);
   }
 
-  // marker пользователя
+  // обновление маркера пользователя
   if (currentMarker) {
     map.removeLayer(currentMarker);
   }
 
-  currentMarker =
-    L.marker(currentPoint).addTo(map);
+  currentMarker = L.marker(currentPoint).addTo(map);
 
   // центр карты
   map.setView(currentPoint);
 
-  // линия до цели
+  // обновление маршрута
   if (targetPoint) {
-
-    if (targetLine) {
-      map.removeLayer(targetLine);
-    }
-
- const currentPoint = [latitude, longitude];
-
-userTrack.push(currentPoint);
-
-if (userTrackLine) {
-  userTrackLine.addLatLng(currentPoint);
-}
-
-if (currentMarker) {
-  map.removeLayer(currentMarker);
-}
-
-currentMarker = L.marker(currentPoint).addTo(map);
-
-map.setView(currentPoint);
-
-detectTargetDirection(currentPoint);   
-  
- }
+    updateRoute(currentPoint);
+  }
 
 },
 (err) => {
@@ -269,8 +245,12 @@ detectTargetDirection(currentPoint);
 
 },
 {
-  enableHighAccuracy: true
+  enableHighAccuracy: true,
+  maximumAge: 1000,
+  timeout: 10000
 });
+
+  
 function updateRoute(currentPoint) {
 
   if (!targetPoint) return;
