@@ -65,30 +65,6 @@ html, body {
   padding-bottom: calc(10px + env(safe-area-inset-bottom));
 }   
 
-#directionArrow {
-
-  position: fixed;
-
-  top: 10px;
-  left: 10px;
-
-  width: 60px;
-  height: 60px;
-
-  background: rgba(0,0,0,0.7);
-
-  color: white;
-
-  border-radius: 50%;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 32px;
-
-  z-index: 5000;
-}
 </style>
 </head>
 <body>
@@ -102,7 +78,7 @@ html, body {
     placeholder="Введите адрес">
 
   <button onclick="setTargetAddress()">
-    Цель
+    ПОИСК
   </button>
 
 </div>
@@ -129,9 +105,9 @@ L.tileLayer(
     maxZoom: 19
   }
 ).addTo(map);
+  
 let watchId = null;
 
-//let userTrackLine = null;  
 let routingControl = null;
 let targetPoint = null;
 let targetMarker = null;
@@ -254,10 +230,8 @@ navigator.geolocation.watchPosition((pos) => {
   maximumAge: 1000,
   timeout: 10000
 });
-//let lastRouteUpdate = 0;
-//const routeUpdateInterval = 10000;  
   
-function updateRoute(currentPoint) {
+  function updateRoute(currentPoint) {
 
   if (!targetPoint) return;
 
