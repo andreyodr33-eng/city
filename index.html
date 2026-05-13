@@ -212,8 +212,8 @@ navigator.geolocation.watchPosition((pos) => {
 
   currentMarker = L.marker(currentPoint).addTo(map);
 
-  // центр карты
-  map.setView(currentPoint);
+  // плавное движение карты
+  map.panTo(currentPoint);
 
   // обновление маршрута
   if (targetPoint) {
