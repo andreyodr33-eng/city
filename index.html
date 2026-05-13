@@ -111,10 +111,11 @@ let watchId = null;
 let routingControl = null;
 let targetPoint = null;
 let targetMarker = null;
-let targetLine = null;
+//let targetLine = null;
 let lastRouteUpdate = 0;
 let routeUpdateInterval = 15000;  
 let currentMarker = null;
+  
 async function setTargetAddress() {
 
   const address =
@@ -268,20 +269,6 @@ navigator.geolocation.watchPosition((pos) => {
 
   }).addTo(map);
 }  
-function startTracking() {
-
-  userTrack = [];
-
-  watchId = navigator.geolocation.watchPosition(
-    onGPS,
-    onError,
-    {
-      enableHighAccuracy: true,
-      maximumAge: 1000,
-      timeout: 10000
-    }
-  );
-}
 </script>
 </body>
 </html>
