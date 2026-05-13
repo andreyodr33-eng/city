@@ -63,13 +63,39 @@ html, body {
 }
   /* ВАЖНО для iPhone */
   padding-bottom: calc(10px + env(safe-area-inset-bottom));
-}   
+} 
+.leaflet-routing-container {
+   display: none;
+}  
+#navInfo {
 
+  position: fixed;
+
+  top: 10px;
+  right: 10px;
+
+  z-index: 5000;
+
+  background: rgba(0,0,0,0.7);
+
+  color: white;
+
+  padding: 12px 16px;
+
+  border-radius: 12px;
+
+  font-size: 28px;
+
+  font-weight: bold;
+}
 </style>
 </head>
 <body>
 
 <div id="map"></div>
+<div id="navInfo">
+ ↑ 0 м
+</div>  
 <div class="search-box">
 
   <input
@@ -276,6 +302,35 @@ navigator.geolocation.watchPosition((pos) => {
 
   routingControl.addTo(map);
 } 
+routingControl.on('routesfound', function(e) {
+
+  const route = e.routes[0];
+
+  if (!route.instructions.length) {
+    return;
+  }
+
+  const step = route.instructions[0];
+
+  let arrow = "↑";
+
+  const text = step.text.toLowerCase();
+
+  if (text.includes("left")) {
+    arrow = "←";
+  }
+
+  if (text.includes("right")) {
+    arrow = "→";
+  }
+
+  if (text.includes("uturn")) {
+    arrow = "↓";
+  }
+
+  document.getElementById("navInfo").innerText =
+    arrow + " " + Math.round(step.distance) + " м";
+});  
 </script>
 </body>
 </html>
