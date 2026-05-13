@@ -92,7 +92,7 @@ href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css
 let map = L.map('map', {
   zoomControl: false
 }).setView([50.45, 30.52], 15);
-  
+let routeRequestId = 0;  
 let userTrack = [];
 let userTrackLine = L.polyline([], {  
     color: 'red',
@@ -232,20 +232,17 @@ navigator.geolocation.watchPosition((pos) => {
   timeout: 10000
 });
   
-  function updateRoute(currentPoint) {
+   function updateRoute(currentPoint) {
 
   if (!targetPoint) return;
 
-  // ⛔ throttle (главное)
-  if (Date.now() - lastRouteUpdate < routeUpdateInterval) {
-    return;
-  }
+  // увеличиваем ID запроса
+  const myRequest = ++routeRequestId;
 
-  lastRouteUpdate = Date.now();
-
-  // удалить старый маршрут
+  // удаляем старый маршрут
   if (routingControl) {
     map.removeControl(routingControl);
+    routingControl = null;
   }
 
   routingControl = L.Routing.control({
@@ -267,8 +264,18 @@ navigator.geolocation.watchPosition((pos) => {
     draggableWaypoints: false,
     show: false
 
-  }).addTo(map);
-}  
+  });
+
+  routingControl.on('routesfound', function () {
+    // если уже появился новый запрос — игнорируем результат
+    if (myRequest !== routeRequestId) {
+      map.removeControl(routingControl);
+      routingControl = null;
+    }
+  });
+
+  routingControl.addTo(map);
+} 
 </script>
 </body>
 </html>
