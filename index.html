@@ -271,7 +271,20 @@ detectTargetDirection(currentPoint);
 {
   enableHighAccuracy: true
 });
+function startTracking() {
 
+  userTrack = [];
+
+  watchId = navigator.geolocation.watchPosition(
+    onGPS,
+    onError,
+    {
+      enableHighAccuracy: true,
+      maximumAge: 1000,
+      timeout: 10000
+    }
+  );
+}
 </script>
 </body>
 </html>
