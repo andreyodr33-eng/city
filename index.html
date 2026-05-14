@@ -202,15 +202,7 @@ navigator.geolocation.watchPosition((pos) => {
       map.removeLayer(targetLine);
     }
 
- const currentPoint = [latitude, longitude];
-
-userTrack.push(currentPoint);
-
-if (userTrackLine) {
-  userTrackLine.addLatLng(currentPoint);
-}
-
-if (currentMarker) {
+ if (currentMarker) {
   map.removeLayer(currentMarker);
 }
 
