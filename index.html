@@ -77,7 +77,9 @@ href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css
 />
 <script>
 
-let map = L.map('map').setView([50.45, 30.52], 15);
+let map = L.map('map', {
+  zoomControl: false
+  }).setView([50.45, 30.52], 15);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
