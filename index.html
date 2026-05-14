@@ -48,7 +48,34 @@
   width: 100%;
   height: 100%;
 }
+#routeInfo {
 
+  position: fixed;
+
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  z-index: 5000;
+
+  background: rgba(0,0,0,0.75);
+
+  backdrop-filter: blur(8px);
+
+  color: white;
+
+  padding: 12px 18px;
+
+  border-radius: 14px;
+
+  font-size: 22px;
+
+  font-weight: bold;
+
+  white-space: nowrap;
+}
 
 </style>
 
@@ -57,7 +84,7 @@
 
 <div id="map"></div>
 <div class="search-box">
-
+<div id="routeInfo"> 0 км : 0 мин </div>
   <input
     type="text"
     id="addressInput"
