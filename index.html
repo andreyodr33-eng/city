@@ -87,7 +87,10 @@ L.tileLayer(
     maxZoom: 19
   }
 ).addTo(map);
-
+userTrackLine = L.polyline([], {
+  color: 'red',
+  weight: 5
+}).addTo(map);    
 let currentMarker = null;
 let routingControl = null;
 let targetPoint = null;
