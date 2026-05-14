@@ -198,8 +198,7 @@ function buildRoute() {
 
     }).addTo(map);
 
-  });
-}
+ 
 routingControl.on('routesfound', function(e) {
 
   const route = e.routes[0];
@@ -213,8 +212,9 @@ routingControl.on('routesfound', function(e) {
   document.getElementById("routeInfo").innerText =
     distanceKm + " км • " + timeMin + " мин";
 
-});
-
+  });
+ });
+}
 navigator.geolocation.watchPosition((pos) => {
 
   const latitude = pos.coords.latitude;
