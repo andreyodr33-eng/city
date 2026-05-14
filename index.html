@@ -178,7 +178,16 @@ function buildRoute() {
     const start = [pos.coords.latitude, pos.coords.longitude];
 
     routingControl = L.Routing.control({
+    const route = e.routes[0];
 
+const distanceKm =
+  (route.summary.totalDistance / 1000).toFixed(1);
+
+const timeMin =
+  Math.round(route.summary.totalTime / 60);
+
+document.getElementById("routeInfo").innerText =
+  distanceKm + " км • " + timeMin + " мин";
       waypoints: [
         L.latLng(start[0], start[1]),
         L.latLng(targetPoint[0], targetPoint[1])
