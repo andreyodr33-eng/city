@@ -200,7 +200,20 @@ function buildRoute() {
 
   });
 }
+routingControl.on('routesfound', function(e) {
 
+  const route = e.routes[0];
+
+  const distanceKm =
+    (route.summary.totalDistance / 1000).toFixed(1);
+
+  const timeMin =
+    Math.round(route.summary.totalTime / 60);
+
+  document.getElementById("routeInfo").innerText =
+    distanceKm + " км • " + timeMin + " мин";
+
+});
 
 navigator.geolocation.watchPosition((pos) => {
 
