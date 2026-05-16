@@ -215,57 +215,44 @@ routingControl.on('routesfound', function(e) {
   });
  });
 }
-navigator.geolocation.watchPosition((pos) => {
+ watchId = navigator.geolocation.watchPosition((pos) => {
 
-  const latitude = pos.coords.latitude;
-  const longitude = pos.coords.longitude;
+          const latitude = pos.coords.latitude;
+          const longitude = pos.coords.longitude;
 
-  const currentPoint = [latitude, longitude];
+          const currentPoint = [latitude, longitude];
+          if (firstUpdate) {
+          map.setView(currentPoint, 17);
+          firstUpdate = false;
+         }
+        
+          userTrack.push(currentPoint);
 
-  userTrack.push(currentPoint);
-  if (userTrackLine) {
-    userTrackLine.addLatLng(currentPoint);
-  }
+          if (userTrackLine) {
+            userTrackLine.addLatLng(currentPoint);
+          }
 
-  // marker пользователя
-  if (currentMarker) {
-    map.removeLayer(currentMarker);
-  }
+          if (!currentMarker) {
+          
+           currentMarker = L.marker(currentPoint).addTo(map);
+          } else {
+            currentMarker.setLatLng(currentPoint);
+          }
+        
+          // линия до цели
+          if (targetPoint) {
 
-  currentMarker =
-    L.marker(currentPoint).addTo(map);
+       // detectTargetDirection(currentPoint);
+        }
 
-  // центр карты
-  map.setView(currentPoint);
+       } , (err) => {
 
-  // линия до цели
-  if (targetPoint) {
+          alert(err.message);
 
-    if (targetLine) {
-      map.removeLayer(targetLine);
-    }
+        }, {
+          enableHighAccuracy: true
+        });
 
- if (currentMarker) {
-  map.removeLayer(currentMarker);
-}
-
-currentMarker = L.marker(currentPoint).addTo(map);
-
-map.setView(currentPoint);
-
-detectTargetDirection(currentPoint);   
-  
- }
-
-},
-(err) => {
-
-  alert(err.message);
-
-},
-{
-  enableHighAccuracy: true
-});
 
 </script>
 </body>
