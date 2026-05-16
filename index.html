@@ -223,7 +223,7 @@ routingControl.on('routesfound', function(e) {
 
           const currentPoint = [latitude, longitude];
           if (firstUpdate) {
-          map.setView(currentPoint, 17);
+          map.flyTo(currentPoint, 17);
           firstUpdate = false;
          }
         
