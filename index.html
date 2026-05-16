@@ -121,7 +121,7 @@ let targetMarker = null;
 let targetLine = null;
 let userTrack = [];
 let userTrackLine = null;
-let firstUpdate = true;
+
 userTrackLine = L.polyline([], {
   color: 'red',
   weight: 6
@@ -215,6 +215,7 @@ routingControl.on('routesfound', function(e) {
   });
  });
 }
+ let firstUpdate = true;  
  watchId = navigator.geolocation.watchPosition((pos) => {
 
           const latitude = pos.coords.latitude;
