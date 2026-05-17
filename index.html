@@ -358,15 +358,7 @@
 
   return (brng + 360) % 360;
 } 
-  function detectTargetDirection(currentPoint) {
-
-  if (!currentPoint || !targetPoint) return;
-
-  const bearing =
-    getBearing(currentPoint, targetPoint);
-
-  map.setBearing(bearing);
-}      
+       
       function getSmoothedPoint(points) {
         let lat = 0;
         let lng = 0;
@@ -411,7 +403,7 @@
 
           // линия до цели
           if (targetPoint) {
-             detectTargetDirection(currentPoint);
+         //detectTargetDirection(currentPoint);
           }
         },
         (err) => {
