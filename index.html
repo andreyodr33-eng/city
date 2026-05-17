@@ -336,6 +336,28 @@
             `;
         });
       }
+       function getBearing(start, end) {
+
+  const lat1 = start[0] * Math.PI / 180;
+  const lon1 = start[1] * Math.PI / 180;
+
+  const lat2 = end[0] * Math.PI / 180;
+  const lon2 = end[1] * Math.PI / 180;
+
+  const dLon = lon2 - lon1;
+
+  const y = Math.sin(dLon) * Math.cos(lat2);
+
+  const x =
+    Math.cos(lat1) * Math.sin(lat2) -
+    Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
+
+  let brng = Math.atan2(y, x);
+
+  brng = brng * 180 / Math.PI;
+
+  return (brng + 360) % 360;
+} 
       function getSmoothedPoint(points) {
         let lat = 0;
         let lng = 0;
@@ -380,7 +402,7 @@
 
           // линия до цели
           if (targetPoint) {
-            // detectTargetDirection(currentPoint);
+             detectTargetDirection(currentPoint);
           }
         },
         (err) => {
