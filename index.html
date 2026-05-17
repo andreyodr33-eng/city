@@ -239,7 +239,10 @@
             const distanceKm = (route.summary.totalDistance / 1000).toFixed(1);
 
             const timeMin = Math.round(route.summary.totalTime / 60);
-
+            if (isRepeatingRoute) {
+              isRepeatingRoute = false;
+              return;
+            }   
             document.getElementById("routeInfo").innerText =
               distanceKm + " км • " + timeMin + " мин";
             saveRouteHistory(
