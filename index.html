@@ -154,7 +154,7 @@
       let watchId = null;
       let routeHistory = JSON.parse(localStorage.getItem("routeHistory")) || [];
       let firstUpdate = true;
-
+      let isRepeatingRoute = false;
       userTrackLine = L.polyline([], {
         color: "red",
         weight: 6,
@@ -277,7 +277,7 @@
         }
 
         targetMarker = L.marker(targetPoint).addTo(map);
-
+        is.RepeatingRoute = true;
         buildRoute();
 
         document.getElementById("historyMenu").style.display = "none";
