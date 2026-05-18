@@ -1,260 +1,498 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>PWA Navigator</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <link rel="manifest" href="manifest.json">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <style>
-     
-.search-box {
-  position: fixed;
-  top: calc(env(safe-area-inset-top, 0px) + 10px);
-  
-  left: 10px;
-  right: 10px;
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json" />
+<title>PWA Navigator</title>
 
-  display: flex;
-  gap: 10px;
+<style>
 
-  z-index: 5000;
+*{
+    box-sizing:border-box;
 }
 
-.search-box input {
-  flex: 1;
-  min-width: 0;
-  padding: 12px;
-  font-size: 16px;
-  border: none;
-  border-radius: 10px;
+body{
+    margin:0;
+    background:#111;
+    color:white;
+    font-family:Arial,sans-serif;
+    overflow-x:hidden;
 }
 
-.search-box button {
-  
-  padding: 12px;
-
-  border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  background: #1E88E5;
-  color: white;
+.wrapper{
+    width:100%;
+    max-width:100vw;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:10px;
 }
-#map {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+
+h1{
+    font-size:26px;
+    margin:10px 0 20px;
 }
-#routeInfo {
 
-  position: fixed;
+.container{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    gap:6px;
+}
 
-  bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
+.wheel{
+    position:relative;
+    width:24vw;
+    max-width:140px;
+    min-width:78px;
+    height:350px;
+    overflow:hidden;
+    background:#222;
+    border-radius:16px;
+    border:2px solid #444;
+}
 
-  left: 50%;
+.track{
+    position:absolute;
+    width:100%;
+    top:0;
+    left:0;
+    transition:transform 0.15s;
+}
 
-  transform: translateX(-50%);
+.item{
+    height:50px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:18px;
+    user-select:none;
+}
 
-  z-index: 5000;
+.center{
+    position:absolute;
+    top:150px;
+    width:100%;
+    height:50px;
+    border-top:2px solid #00ff99;
+    border-bottom:2px solid #00ff99;
+    background:rgba(0,255,153,0.08);
+    pointer-events:none;
+}
 
-  background: rgba(0,0,0,0.75);
+button{
+    margin-top:25px;
+    padding:14px 24px;
+    font-size:18px;
+    border:none;
+    border-radius:12px;
+    background:#00cc88;
+    color:white;
+}
 
-  backdrop-filter: blur(8px);
+.result{
+    margin-top:20px;
+    font-size:30px;
+    text-align:center;
+    min-height:45px;
+    padding:0 10px;
+}
 
-  color: white;
+.memory{
+    width:95%;
+    max-width:700px;
+    margin-top:25px;
+}
 
-  padding: 12px 18px;
-
-  border-radius: 14px;
-
-  font-size: 22px;
-
-  font-weight: bold;
-
-  white-space: nowrap;
+.memory-item{
+    background:#222;
+    padding:10px;
+    border-radius:10px;
+    margin-top:6px;
 }
 
 </style>
-
 </head>
 <body>
 
-<div id="map"></div>
-<div class="search-box">
-<div id="routeInfo"> 0 км : 0 мин </div>
-  <input
-    type="text"
-    id="addressInput"
-    placeholder="Введите адрес">
+<div class="wrapper">
 
-  <button onclick="setTargetAddress()">
-    Поиск
-  </button>
+<h1>English Constructor</h1>
+
+<div class="container">
+
+<div class="wheel" id="wheel1">
+<div class="center"></div>
+</div>
+
+<div class="wheel" id="wheel2">
+<div class="center"></div>
+</div>
+
+<div class="wheel" id="wheel3">
+<div class="center"></div>
+</div>
+
+<div class="wheel" id="wheel4">
+<div class="center"></div>
+</div>
 
 </div>
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js">
-</script>
-<link rel="stylesheet" 
-href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css"
-/>
+<button onclick="buildSentence()">
+Собрать предложение
+</button>
+
+<div class="result" id="result"></div>
+
+<div class="memory">
+
+<h2>Память</h2>
+
+<div id="memoryList"></div>
+
+</div>
+
+</div>
+
 <script>
 
-let map = L.map('map', {
-  zoomControl: false
-  }).setView([0, 0], 2);
+const itemHeight = 50;
 
-L.tileLayer(
-  'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
-  {
-    maxZoom: 19
-  }
-).addTo(map);
-let currentMarker = null;
-let routingControl = null;
-let targetPoint = null;
-let targetMarker = null;
-let targetLine = null;
-let userTrack = [];
-let userTrackLine = null;
+const wheelsData = [
 
-userTrackLine = L.polyline([], {
-  color: 'red',
-  weight: 6
-}).addTo(map);    
+[
+{ru:"Я", en:"I"},
+{ru:"Ты", en:"You"},
+{ru:"Он", en:"He"},
+{ru:"Она", en:"She"},
+{ru:"Это", en:"It"},
+{ru:"Мы", en:"We"},
+{ru:"Они", en:"They"}
+],
 
-async function setTargetAddress() {
+[
+{ru:"хочу", en:"want"},
+{ru:"нуждаюсь", en:"need"},
+{ru:"люблю", en:"like"},
+{ru:"вижу", en:"see"},
+{ru:"имею", en:"have"},
+{ru:"знаю", en:"know"},
+{ru:"ем", en:"eat"}
+],
 
-  const address =
-    document.getElementById("addressInput").value;
+[
+{ru:"", en:""},
+{ru:"в", en:"in"},
+{ru:"на", en:"on"},
+{ru:"с", en:"with"},
+{ru:"для", en:"for"},
+{ru:"к", en:"to"},
+{ru:"из", en:"from"}
+],
 
-  if (!address) {
-    return;
-  }
+[
+{ru:"вода", en:"water"},
+{ru:"еда", en:"food"},
+{ru:"деньги", en:"money"},
+{ru:"работа", en:"work"},
+{ru:"город", en:"city"},
+{ru:"семья", en:"family"},
+{ru:"помощь", en:"help"}
+]
 
-  const response = await fetch(
-    `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`
-  );
+];
 
-  const data = await response.json();
+const states = [];
 
-  if (!data.length) {
-    alert("Адрес не найден");
-    return;
-  }
+function createWheel(id,data,index){
 
-  const lat = parseFloat(data[0].lat);
-  const lng = parseFloat(data[0].lon);
+    const wheel =
+        document.getElementById(id);
 
-  targetPoint = [lat, lng];
+    const track =
+        document.createElement("div");
 
-  // marker цели
-  if (targetMarker) {
-    map.removeLayer(targetMarker);
-  }
+    track.className = "track";
 
-  targetMarker = L.marker(targetPoint).addTo(map);
+    wheel.appendChild(track);
 
-  alert("Цель установлена");
-  buildRoute();
-}
-function buildRoute() {
+    // 3 пустых сверху
 
-  if (!targetPoint || !currentMarker) {
-    return;
-  }
+    for(let i=0;i<3;i++){
 
-  // если уже был маршрут — удалить
-  if (routingControl) {
-    map.removeControl(routingControl);
-  }
+        const empty =
+            document.createElement("div");
 
-  navigator.geolocation.getCurrentPosition((pos) => {
+        empty.className = "item";
 
-    const start = [pos.coords.latitude, pos.coords.longitude];
+        empty.innerHTML = "&nbsp;";
 
-    routingControl = L.Routing.control({
-         waypoints: [
-        L.latLng(start[0], start[1]),
-        L.latLng(targetPoint[0], targetPoint[1])
-      ],
+        track.appendChild(empty);
 
-      lineOptions: {
-        styles: [{
-          color: 'blue',
-          weight: 6
-        }]
-      },
+    }
 
-      routeWhileDragging: false,
-      addWaypoints: false,
-      draggableWaypoints: false,
-      fitSelectedRoutes: true,
-      show: false
+    // слова
 
-    }).addTo(map);
+    data.forEach(word=>{
 
- 
-routingControl.on('routesfound', function(e) {
+        const div =
+            document.createElement("div");
 
-  const route = e.routes[0];
+        div.className = "item";
 
-  const distanceKm =
-    (route.summary.totalDistance / 1000).toFixed(1);
+        div.innerText = word.ru;
 
-  const timeMin =
-    Math.round(route.summary.totalTime / 60);
+        track.appendChild(div);
 
-  document.getElementById("routeInfo").innerText =
-    distanceKm + " км • " + timeMin + " мин";
+    });
 
-  });
- });
-}
- let firstUpdate = true;  
- watchId = navigator.geolocation.watchPosition((pos) => {
+    // 3 пустых снизу
 
-          const latitude = pos.coords.latitude;
-          const longitude = pos.coords.longitude;
+    for(let i=0;i<3;i++){
 
-          const currentPoint = [latitude, longitude];
-          if (firstUpdate) {
-          map.flyTo(currentPoint, 17);
-          firstUpdate = false;
-         }
-        
-          userTrack.push(currentPoint);
+        const empty =
+            document.createElement("div");
 
-          if (userTrackLine) {
-            userTrackLine.addLatLng(currentPoint);
-          }
+        empty.className = "item";
 
-          if (!currentMarker) {
-          
-           currentMarker = L.marker(currentPoint).addTo(map);
-          } else {
-            currentMarker.setLatLng(currentPoint);
-          }
-        
-          // линия до цели
-          if (targetPoint) {
+        empty.innerHTML = "&nbsp;";
 
-       // detectTargetDirection(currentPoint);
+        track.appendChild(empty);
+
+    }
+
+    states[index] = 0;
+
+    updateWheel(track,index);
+
+    // mouse wheel
+
+    wheel.addEventListener("wheel",e=>{
+
+        e.preventDefault();
+
+        if(e.deltaY > 0){
+moveDown(index,data);
+
+        }else{
+
+            moveUp(index);
+
         }
 
-       } , (err) => {
+        updateWheel(track,index);
 
-          alert(err.message);
+    });
 
-        }, {
-          enableHighAccuracy: true
-        });
+    // drag mouse
 
+    let startY = 0;
+
+    wheel.addEventListener("mousedown",e=>{
+
+        startY = e.clientY;
+
+    });
+
+    wheel.addEventListener("mouseup",e=>{
+
+        let diff =
+            startY - e.clientY;
+
+        processSwipe(diff,index,data,track);
+
+    });
+
+    // touch
+
+    wheel.addEventListener("touchstart",e=>{
+
+        startY =
+            e.touches[0].clientY;
+
+    });
+
+    wheel.addEventListener("touchend",e=>{
+
+        let diff =
+            startY -
+            e.changedTouches[0].clientY;
+
+        processSwipe(diff,index,data,track);
+
+    });
+
+}
+
+function processSwipe(
+    diff,
+    index,
+    data,
+    track
+){
+
+    if(Math.abs(diff) < 15){
+
+        return;
+    }
+
+    if(diff > 0){
+
+        moveDown(index,data);
+
+    }else{
+
+        moveUp(index);
+
+    }
+
+    updateWheel(track,index);
+
+}
+
+function moveDown(index,data){
+
+    states[index]++;
+
+    if(states[index] >
+        data.length - 1){
+
+        states[index] =
+            data.length - 1;
+    }
+
+}
+
+function moveUp(index){
+
+    states[index]--;
+
+    if(states[index] < 0){
+
+        states[index] = 0;
+    }
+
+}
+
+function updateWheel(track,index){
+
+    const translateY =
+        -(states[index] * itemHeight);
+
+    track.style.transform =
+        `translateY(${translateY}px)`;
+
+}
+
+createWheel("wheel1",wheelsData[0],0);
+createWheel("wheel2",wheelsData[1],1);
+createWheel("wheel3",wheelsData[2],2);
+createWheel("wheel4",wheelsData[3],3);
+
+function buildSentence(){
+
+    const s =
+        wheelsData[0][states[0]].en;
+
+    const v =
+        wheelsData[1][states[1]].en;
+
+    const p =
+        wheelsData[2][states[2]].en;
+
+    const o =
+        wheelsData[3][states[3]].en;
+
+    let sentence =
+        s + " " + v;
+
+    if(p !== ""){
+
+        sentence += " " + p;
+
+    }
+
+    sentence += " " + o;
+
+    document.getElementById(
+        "result"
+    ).innerText = sentence;
+
+    speak(sentence);
+
+    saveSentence(sentence);
+
+}
+
+function speak(text){
+
+    speechSynthesis.cancel();
+
+    const speech =
+        new SpeechSynthesisUtterance(text);
+
+    speech.lang = "en-US";
+
+    speech.rate = 0.9;
+
+    speechSynthesis.speak(speech);
+
+}
+
+function saveSentence(sentence){
+
+    let memory =
+        JSON.parse(
+            localStorage.getItem("memory")
+        ) || [];
+
+    memory.unshift(sentence);
+
+    localStorage.setItem(
+        "memory",
+        JSON.stringify(memory)
+    );
+
+    renderMemory();
+
+}
+
+function renderMemory(){
+
+    const memory =
+        JSON.parse(
+            localStorage.getItem("memory")
+        ) || [];
+
+    const list =
+        document.getElementById(
+            "memoryList"
+        );
+
+    list.innerHTML = "";
+
+    memory.forEach(item=>{
+
+        const div =
+            document.createElement("div");
+
+        div.className =
+            "memory-item";
+
+        div.innerText = item;
+
+        list.appendChild(div);
+
+    });
+
+}
+
+renderMemory();
 
 </script>
+
 </body>
 </html>
