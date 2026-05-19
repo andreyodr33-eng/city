@@ -3,54 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+content="width=device-width, initial-scale=1.0,
+maximum-scale=1.0,user-scalable=no">
 <link rel="manifest" href="manifest.json" />
-<title>PWA Navigator</title>
+<title><PWA Navigator/title>
 
 <style>
 
 *{
     box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 body{
-    margin:0;
     background:#111;
     color:white;
     font-family:Arial,sans-serif;
-    overflow-x:hidden;
+    overflow:hidden;
+    touch-action:none;
 }
 
-.wrapper{
-    width:100%;
-    max-width:100vw;
+.app{
+    height:100vh;
     display:flex;
     flex-direction:column;
     align-items:center;
+    justify-content:flex-start;
     padding:10px;
 }
 
 h1{
-    font-size:26px;
-    margin:10px 0 20px;
+    margin:10px 0 15px;
+    font-size:24px;
 }
 
 .container{
     width:100%;
     display:flex;
     justify-content:center;
-    gap:6px;
+    gap:5px;
 }
 
 .wheel{
     position:relative;
-    width:24vw;
-    max-width:140px;
-    min-width:78px;
-    height:350px;
+    width:24%;
+    height:150px;
     overflow:hidden;
     background:#222;
-    border-radius:16px;
+    border-radius:14px;
     border:2px solid #444;
 }
 
@@ -73,7 +74,7 @@ h1{
 
 .center{
     position:absolute;
-    top:150px;
+    top:50px;
     width:100%;
     height:50px;
     border-top:2px solid #00ff99;
@@ -82,42 +83,93 @@ h1{
     pointer-events:none;
 }
 
+.buttons{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+}
+
 button{
-    margin-top:25px;
-    padding:14px 24px;
-    font-size:18px;
+    padding:12px 18px;
     border:none;
     border-radius:12px;
     background:#00cc88;
     color:white;
+    font-size:18px;
 }
 
 .result{
     margin-top:20px;
-    font-size:30px;
+    font-size:28px;
     text-align:center;
-    min-height:45px;
+    min-height:40px;
     padding:0 10px;
 }
 
-.memory{
-    width:95%;
-    max-width:700px;
-    margin-top:25px;
+.history-panel{
+
+    position:fixed;
+
+    left:0;
+    bottom:-100%;
+
+    width:100%;
+    height:50%;
+
+    background:#1b1b1b;
+
+    border-top-left-radius:20px;
+    border-top-right-radius:20px;
+
+    transition:0.3s;
+
+    overflow-y:auto;
+
+    padding:20px;
+
+}
+
+.history-panel.active{
+
+    bottom:0;
+
+}
+
+.history-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:15px;
+
 }
 
 .memory-item{
-    background:#222;
-    padding:10px;
+
+    background:#2a2a2a;
+
+    padding:12px;
+
     border-radius:10px;
-    margin-top:6px;
+
+    margin-bottom:8px;
+
+}
+
+.close-btn{
+
+    background:#ff5555;
+
 }
 
 </style>
 </head>
 <body>
 
-<div class="wrapper">
+<div class="app">
 
 <h1>English Constructor</h1>
 
@@ -141,19 +193,38 @@ button{
 
 </div>
 
+<div class="buttons">
+
 <button onclick="buildSentence()">
-Собрать предложение
+Предложение
 </button>
 
-<div class="result" id="result"></div>
-
-<div class="memory">
-
-<h2>Память</h2>
-
-<div id="memoryList"></div>
+<button onclick="toggleHistory()">
+История
+</button>
 
 </div>
+
+<div class="result" id="result"></div>
+<div id="analysis"
+style="margin-top:15px; font-size:22px; text-align:center; padding:10px;"></div>
+
+</div>
+
+<div class="history-panel" id="historyPanel">
+
+<div class="history-header">
+
+<h2>История</h2>
+
+<button class="close-btn"
+onclick="toggleHistory()">
+Закрыть
+</button>
+
+</div>
+
+<div id="memoryList"></div>
 
 </div>
 
@@ -161,11 +232,116 @@ button{
 
 const itemHeight = 50;
 
+const verbs = [
+
+{ru:"хочу",en:"want",third:"wants",
+p:{
+d:["{s} wants {o}","хочет"]
+}},
+
+{ru:"нуждаюсь",en:"need",third:"needs",
+p:{
+d:["{s} needs {o}","нужен"],
+help:["{s} needs help","нужна помощь"]
+}},
+
+{ru:"люблю",en:"like",third:"likes",
+p:{
+d:["{s} likes {o}","нравится"]
+}},
+
+{ru:"вижу",en:"see",third:"sees",
+p:{
+d:["{s} sees {o}","видит"],
+help:["{s} needs help","нужна помощь"]
+}},
+
+{ru:"имею",en:"have",third:"has",
+p:{
+d:["{s} has {o}","имеет"]
+}},
+
+{ru:"знаю",en:"know",third:"knows",
+p:{
+d:["{s} knows {o}","знает"]
+}},
+
+{ru:"ем",en:"eat",third:"eats",
+p:{
+d:["{s} eats {o}","ест"]
+}},
+
+{ru:"пью",en:"drink",third:"drinks",
+p:{
+d:["{s} drinks {o}","пьёт"]
+}},
+
+{ru:"иду",en:"go",third:"goes",
+p:{
+d:["{s} goes to {o}","идёт"]
+}},
+
+{ru:"прихожу",en:"come",third:"comes",
+p:{
+d:["{s} comes to {o}","приходит"]
+}},
+
+{ru:"работаю",en:"work",third:"works",
+p:{
+d:["{s} works in {o}","работает"]
+}},
+
+{ru:"живу",en:"live",third:"lives",
+p:{
+d:["{s} lives in {o}","живёт"]
+}},
+
+{ru:"говорю",en:"speak",third:"speaks",
+p:{
+d:["{s} speaks about {o}","говорит"]
+}},
+
+{ru:"помогаю",en:"help",third:"helps",
+p:{
+d:["{s} helps {o}","помогает"]
+}},
+
+{ru:"использую",en:"use",third:"uses",
+p:{
+d:["{s} uses {o}","использует"]
+}},
+
+{ru:"беру",en:"take",third:"takes",
+p:{
+d:["{s} takes {o}","берёт"]
+}},
+
+{ru:"даю",en:"give",third:"gives",
+p:{
+d:["{s} gives {o}","даёт"]
+}},
+
+{ru:"делаю",en:"do",third:"does",
+p:{
+d:["{s} does {o}","делает"]
+}},
+
+{ru:"создаю",en:"make",third:"makes",
+p:{
+d:["{s} makes {o}","создаёт"]
+}},
+
+{ru:"вижу",en:"watch",third:"watches",
+p:{
+d:["{s} watches {o}","смотрит"]
+}}
+
+];
 const wheelsData = [
 
 [
 {ru:"Я", en:"I"},
-{ru:"Ты/Вы", en:"You"},
+{ru:"Ты", en:"You"},
 {ru:"Он", en:"He"},
 {ru:"Она", en:"She"},
 {ru:"Это", en:"It"},
@@ -173,31 +349,17 @@ const wheelsData = [
 {ru:"Они", en:"They"}
 ],
 
-[
-{ru:"быть", en:"am/is/are"},
-{ru:"идти", en:"go"},
-{ru:"приходить", en:"come"},
-{ru:"хочу", en:"want"},
-{ru:"нуждаюсь", en:"need"},
-{ru:"люблю", en:"like"},
-{ru:"вижу", en:"see"},
-{ru:"имею", en:"have"},
-{ru:"знаю", en:"know"},
-{ru:"ем", en:"eat"},
-{ru:"пить", en:"drink"},
-{ru:"давать", en:"give"}
-],
+verbs,
 
 [
+
 {ru:"", en:""},
 {ru:"в", en:"in"},
 {ru:"на", en:"on"},
-{ru:"у/в", en:"at"},
 {ru:"с", en:"with"},
 {ru:"для", en:"for"},
 {ru:"к", en:"to"},
-{ru:"от/из", en:"from"},
-{ru:"о", en:"about"}
+{ru:"из", en:"from"}
 ],
 
 [
@@ -226,22 +388,15 @@ function createWheel(id,data,index){
 
     wheel.appendChild(track);
 
-    // 3 пустых сверху
-
-    for(let i=0;i<3;i++){
+    for(let i=0;i<1;i++){
 
         const empty =
             document.createElement("div");
 
         empty.className = "item";
 
-        empty.innerHTML = "&nbsp;";
-
         track.appendChild(empty);
-
-    }
-
-    // слова
+}
 
     data.forEach(word=>{
 
@@ -256,16 +411,12 @@ function createWheel(id,data,index){
 
     });
 
-    // 3 пустых снизу
-
-    for(let i=0;i<3;i++){
+    for(let i=0;i<1;i++){
 
         const empty =
             document.createElement("div");
 
         empty.className = "item";
-
-        empty.innerHTML = "&nbsp;";
 
         track.appendChild(empty);
 
@@ -275,14 +426,53 @@ function createWheel(id,data,index){
 
     updateWheel(track,index);
 
-    // mouse wheel
+    let startY = 0;
+
+    wheel.addEventListener("touchstart",e=>{
+
+        startY =
+            e.touches[0].clientY;
+
+    });
+
+    wheel.addEventListener("touchend",e=>{
+
+        let endY =
+            e.changedTouches[0].clientY;
+
+        handleSwipe(
+            startY-endY,
+            index,
+            data,
+            track
+        );
+
+    });
+
+    wheel.addEventListener("mousedown",e=>{
+
+        startY = e.clientY;
+
+    });
+
+    wheel.addEventListener("mouseup",e=>{
+
+        handleSwipe(
+            startY-e.clientY,
+            index,
+            data,
+            track
+        );
+
+    });
 
     wheel.addEventListener("wheel",e=>{
 
         e.preventDefault();
 
         if(e.deltaY > 0){
-moveDown(index,data);
+
+            moveDown(index,data);
 
         }else{
 
@@ -294,47 +484,9 @@ moveDown(index,data);
 
     });
 
-    // drag mouse
-
-    let startY = 0;
-
-    wheel.addEventListener("mousedown",e=>{
-
-        startY = e.clientY;
-
-    });
-
-    wheel.addEventListener("mouseup",e=>{
-
-        let diff =
-            startY - e.clientY;
-
-        processSwipe(diff,index,data,track);
-
-    });
-
-    // touch
-
-    wheel.addEventListener("touchstart",e=>{
-
-        startY =
-            e.touches[0].clientY;
-
-    });
-
-    wheel.addEventListener("touchend",e=>{
-
-        let diff =
-            startY -
-            e.changedTouches[0].clientY;
-
-        processSwipe(diff,index,data,track);
-
-    });
-
 }
 
-function processSwipe(
+function handleSwipe(
     diff,
     index,
     data,
@@ -365,10 +517,10 @@ function moveDown(index,data){
     states[index]++;
 
     if(states[index] >
-        data.length - 1){
+        data.length-1){
 
         states[index] =
-            data.length - 1;
+            data.length-1;
     }
 
 }
@@ -386,11 +538,11 @@ function moveUp(index){
 
 function updateWheel(track,index){
 
-    const translateY =
+    const y =
         -(states[index] * itemHeight);
 
     track.style.transform =
-        `translateY(${translateY}px)`;
+        `translateY(${y}px)`;
 
 }
 
@@ -399,42 +551,103 @@ createWheel("wheel2",wheelsData[1],1);
 createWheel("wheel3",wheelsData[2],2);
 createWheel("wheel4",wheelsData[3],3);
 
-function buildSentence(){
+function buildNaturalSentence(
+    subjectObj,
+    verbObj,
+    objectObj
+){
 
-    const s =
-        wheelsData[0][states[0]].en;
+    // специальный шаблон
 
-    const v =
-        wheelsData[1][states[1]].en;
+    if(
+        verbObj.p &&
+        verbObj.p[objectObj.en]
+    ){
 
-    const p =
-        wheelsData[2][states[2]].en;
+        let pattern =
+            verbObj.p[objectObj.en];
 
-    const o =
-        wheelsData[3][states[3]].en;
+        return {
 
-    let sentence =
-        s + " " + v;
+            en: pattern[0]
+                .replace(
+                    "{s}",
+                    subjectObj.en
+                ),
 
-    if(p !== ""){
+            ru: pattern[1]
 
-        sentence += " " + p;
+        };
 
     }
 
-    sentence += " " + o;
+    // стандартный шаблон
 
-    document.getElementById(
-        "result"
-    ).innerText = sentence;
+    let pattern =
+        verbObj.p.d;
 
-    speak(sentence);
+    return {
 
-    saveSentence(sentence);
+        en: pattern[0]
+            .replace(
+                "{s}",
+                subjectObj.en
+            )
+            .replace(
+                "{o}",
+                objectObj.en
+            ),
+
+        ru: pattern[1]
+
+    };
 
 }
 
-function speak(text){
+
+ function buildSentence(){
+
+    const subjectObj =
+        wheelsData[0][states[0]];
+
+    const verbObj =
+        wheelsData[1][states[1]];
+
+    const objectObj =
+        wheelsData[3][states[3]];
+
+    const result =
+        buildNaturalSentence(
+            subjectObj,
+            verbObj,
+            objectObj
+        );
+
+    document.getElementById(
+        "result"
+    ).innerText = result.en;
+
+    document.getElementById(
+        "analysis"
+    ).innerHTML =
+
+    `
+    <div style="
+    color:#00ff99;
+    margin-top:10px;
+    font-size:22px;
+    ">
+    ${result.ru}
+    </div>
+    `;
+
+    speak(result.en);
+
+    saveSentence(result.en);
+
+}
+
+    function speak(text){
 
     speechSynthesis.cancel();
 
@@ -466,7 +679,6 @@ function saveSentence(sentence){
     renderMemory();
 
 }
-
 function renderMemory(){
 
     const memory =
@@ -481,19 +693,201 @@ function renderMemory(){
 
     list.innerHTML = "";
 
-    memory.forEach(item=>{
+    memory.forEach((item,index)=>{
 
-        const div =
+        const row =
             document.createElement("div");
 
-        div.className =
+        row.className =
             "memory-item";
 
-        div.innerText = item;
+        row.style.display = "flex";
 
-        list.appendChild(div);
+        row.style.justifyContent =
+            "space-between";
+
+        row.style.alignItems =
+            "center";
+
+        const text =
+            document.createElement("div");
+
+        text.innerText = item;
+
+        const del =
+            document.createElement("button");
+
+        del.innerText = "Удалить";
+
+        del.style.background =
+            "#ff5555";
+
+        del.style.padding =
+            "8px 10px";
+
+        del.style.fontSize =
+            "14px";
+
+        del.onclick = ()=>{
+
+            memory.splice(index,1);
+
+            localStorage.setItem(
+                "memory",
+                JSON.stringify(memory)
+            );
+
+            renderMemory();
+
+        };
+
+        row.appendChild(text);
+
+        row.appendChild(del);
+
+        list.appendChild(row);
 
     });
+
+}
+function analyzeSentence(s,v,p,o){
+
+    let analysis =
+        document.getElementById(
+            "analysis"
+        );
+
+    let correct =
+        "";
+        
+    let translate =
+        "";
+
+    // he/she/it + s
+
+    if(
+        (s === "He" ||
+         s === "She" ||
+         s === "It")
+    ){
+
+        if(v === "have"){
+
+            correct =
+                s + " has " + o;
+
+        }
+
+        else if(v === "need"){
+
+            correct =
+                s + " needs " + o;
+
+        }
+
+        else if(v === "want"){
+
+            correct =
+                s + " wants " + o;
+
+        }
+
+        else if(v === "like"){
+
+            correct =
+                s + " likes " + o;
+
+        }
+
+    }
+
+
+    // like + in = ошибка
+
+    if(v === "like" && p === "in"){
+
+        correct =
+            s + " like " + o;
+
+    }
+
+    // go to
+
+    if(v === "go" && p === ""){
+
+        correct =
+            s + " go to " + o;
+
+    }
+
+    // перевод
+
+    if(correct.includes("needs")){
+
+        translate =
+            "Ему/ей нужно: " + o;
+
+    }
+
+    else if(correct.includes("has")){
+
+        translate =
+            "У него/неё есть " + o;
+
+    }
+
+    else if(correct.includes("likes")){
+
+        translate =
+            "Ему нравится " + o;
+
+    }
+
+    // вывод
+
+    if(correct !== ""){
+
+        analysis.innerHTML =
+
+        `
+        <div style="
+        color:#ff6666;
+        margin-bottom:10px;
+        ">
+        ${s} ${v}
+        ${p}
+        ${o} ❌
+        </div>
+
+        <div style="
+        color:#00ff99;
+        margin-bottom:10px;
+        ">
+        ${correct} ✅
+        </div>
+
+        <div style="
+        color:#ffffff;
+        font-size:20px;
+        ">
+        ${translate}
+        </div>
+        `;
+
+    }else{
+
+        analysis.innerHTML = "";
+
+    }
+
+}
+
+function toggleHistory(){
+
+    document
+    .getElementById("historyPanel")
+    .classList
+    .toggle("active");
 
 }
 
@@ -502,4 +896,4 @@ renderMemory();
 </script>
 
 </body>
-</html>
+</html>  
