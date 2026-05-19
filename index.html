@@ -7,7 +7,6 @@ content="width=device-width, initial-scale=1.0,
 maximum-scale=1.0,user-scalable=no">
 <link rel="manifest" href="manifest.json" />
 <title><PWA Navigator</title>
-
 <style>
 
 *{
@@ -233,120 +232,223 @@ onclick="toggleHistory()">
 const itemHeight = 50;
 
 const verbs = [
+{
+ru:"быть",
+en:"be",
+third:"is",
 
-{ru:"хочу",en:"want",third:"wants",
 p:{
-d:["{s} wants {o}","хочет"]
+d:[
+"{s} {v} at {o}",
+{
+I:"Я на {o}",
+You:"Ты на {o}",
+He:"Он на {o}",
+She:"Она на {o}",
+We:"Мы на {o}",
+They:"Они на {o}",
+It:"Это в {o}"
+}
+],
+
+past:{
+d:[
+"{s} was at {o}",
+{
+I:"Я был на {o}",
+You:"Ты был на {o}",
+He:"Он был на {o}",
+She:"Она была на {o}",
+We:"Мы были на {o}",
+They:"Они были на {o}",
+It:"Это было в {o}"
+}
+]
+}
+}
+},
+{ru:"хотеть",en:"want",third:"wants",
+p:{
+d:["{s} {v} {o}",
+{
+I:"Я хочу {or}",You:"Ты хочешь {or}",He:"Он хочет {or}",She:"Она хочет {or}",
+We:"Мы хотим {or}",They:"Они хотят {or}",It:"Это хочет {or}"
+}]
 }},
 
-{ru:"нуждаюсь",en:"need",third:"needs",
+{ru:"нуждаться",en:"need",third:"needs",
 p:{
-d:["{s} needs {o}","нужен"],
-help:["{s} needs help","нужна помощь"]
+d:["{s} {v} {o}",{
+I:"Мне нужна {or}",You:"Тебе нужна {or}",He:"Ему нужна {or}",She:"Ей нужна {or}",
+We:"Нам нужна {or}",They:"Им нужна {or}",It:"Нужна {or}"
+}],
+help:["{s} needs help",{
+I:"Мне нужна помощь",You:"Тебе нужна помощь",He:"Ему нужна помощь",She:"Ей нужна помощь",
+We:"Нам нужна помощь",They:"Им нужна помощь",It:"Нужна помощь"
+}]
 }},
 
-{ru:"люблю",en:"like",third:"likes",
+{ru:"любить",en:"like",third:"likes",
 p:{
-d:["{s} likes {o}","нравится"]
+d:["{s} {v} {o}",{
+I:"Мне нравится {or}",You:"Тебе нравится {or}",He:"Ему нравится {or}",She:"Ей нравится {or}",
+We:"Нам нравится {or}",They:"Им нравится {or}",It:"Мне нравится {or}"
+}]
 }},
 
-{ru:"вижу",en:"see",third:"sees",
+{ru:"видеть",en:"see",third:"sees",
 p:{
-d:["{s} sees {o}","видит"],
-help:["{s} needs help","нужна помощь"]
+d:["{s} {v} {o}",{
+I:"Я вижу {or}",You:"Ты видишь {or}",He:"Он видит {or}",She:"Она видит {or}",
+We:"Мы видим {or}",They:"Они видят {or}",It:"Это видит {or}"
+}],
+help:["{s} needs help",{
+I:"Мне нужна помощь",You:"Тебе нужна помощь",He:"Ему нужна помощь",She:"Ей нужна помощь",
+We:"Нам нужна помощь",They:"Им нужна помощь",It:"Нужна помощь"
+}]
 }},
 
-{ru:"имею",en:"have",third:"has",
+{ru:"иметь",en:"have",third:"has",
 p:{
-d:["{s} has {o}","имеет"]
+d:["{s} {v} {o}",{
+I:"У меня есть {or}",You:"У тебя есть {or}",He:"У него есть {or}",She:"У неё есть {or}",
+We:"У нас есть {or}",They:"У них есть {or}",It:"Есть {or}"
+}]
 }},
 
-{ru:"знаю",en:"know",third:"knows",
+{ru:"знать",en:"know",third:"knows",
 p:{
-d:["{s} knows {o}","знает"]
+d:["{s} {v} {o}",{
+I:"Я знаю {or}",You:"Ты знаешь {or}",He:"Он знает {or}",She:"Она знает {or}",
+We:"Мы знаем {or}",They:"Они знают {or}",It:"Это знает {or}"
+}]
 }},
 
 {ru:"ем",en:"eat",third:"eats",
 p:{
-d:["{s} eats {o}","ест"]
+d:["{s} {v} {o}",{
+I:"Я ем {or}",You:"Ты ешь {or}",He:"Он ест {or}",She:"Она ест {or}",
+We:"Мы едим {or}",They:"Они едят {or}",It:"Это ест {or}"
+}]
 }},
 
-{ru:"пью",en:"drink",third:"drinks",
+{ru:"пить",en:"drink",third:"drinks",
 p:{
-d:["{s} drinks {o}","пьёт"]
+d:["{s} {v} {o}",{
+I:"Я пью {or}",You:"Ты пьёшь {or}",He:"Он пьёт {or}",She:"Она пьёт {or}",
+We:"Мы пьём {or}",They:"Они пьют {or}",It:"Это пьёт {or}"
+}]
 }},
 
-{ru:"иду",en:"go",third:"goes",
+{ru:"идти",en:"go",third:"goes",
 p:{
-d:["{s} goes to {o}","идёт"]
+d:["{s} {v} {o}",{
+I:"Я иду {or}",You:"Ты идёшь {or}",He:"Он идёт {or}",She:"Она идёт {or}",
+We:"Мы идём {or}",They:"Они идут {or}",It:"Это идёт {or}"
+}]
 }},
 
-{ru:"прихожу",en:"come",third:"comes",
+{ru:"приходить",en:"come",third:"comes",
 p:{
-d:["{s} comes to {o}","приходит"]
+d:["{s} {v} {o}",{
+I:"Я прихожу {or}",You:"Ты приходишь {or}",He:"Он приходит {or}",She:"Она приходит {or}",
+We:"Мы приходим {or}",They:"Они приходят {or}",It:"Это приходит {or}"
+}]
 }},
 
-{ru:"работаю",en:"work",third:"works",
+{ru:"работать",en:"work",third:"works",
 p:{
-d:["{s} works in {o}","работает"]
+d:["{s} {v} {o}",{
+I:"Я работаю {or}",You:"Ты работаешь {or}",He:"Он работает {or}",She:"Она работает {or}",
+We:"Мы работаем {or}",They:"Они работают {or}",It:"Это работает {or}"
+}]
 }},
 
-{ru:"живу",en:"live",third:"lives",
+{ru:"жить",en:"live",third:"lives",
 p:{
-d:["{s} lives in {o}","живёт"]
+d:["{s} {v} {o}",{
+I:"Я живу {or}",You:"Ты живёшь {or}",He:"Он живёт {or}",She:"Она живёт {or}",
+We:"Мы живём {or}",They:"Они живут {or}",It:"Это живёт {or}"
+}]
 }},
 
-{ru:"говорю",en:"speak",third:"speaks",
+{ru:"говорить",en:"speak",third:"speaks",
 p:{
-d:["{s} speaks about {o}","говорит"]
+d:["{s} {v} {o}",{
+I:"Я говорю {or}",You:"Ты говоришь {or}",He:"Он говорит {or}",She:"Она говорит {or}",
+We:"Мы говорим {or}",They:"Они говорят {or}",It:"Это говорит {or}"
+}]
 }},
 
-{ru:"помогаю",en:"help",third:"helps",
+{ru:"помогать",en:"help",third:"helps",
 p:{
-d:["{s} helps {o}","помогает"]
+d:["{s} {v} {o}",{
+I:"Я помогаю {or}",You:"Ты помогаешь {or}",He:"Он помогает {or}",She:"Она помогает {or}",
+We:"Мы помогаем {or}",They:"Они помогают {or}",It:"Это помогает {or}"
+}]
 }},
 
-{ru:"использую",en:"use",third:"uses",
+{ru:"использовать",en:"use",third:"uses",
 p:{
-d:["{s} uses {o}","использует"]
+d:["{s} {v} {o}",{
+I:"Я использую {or}",You:"Ты используешь {or}",He:"Он использует {or}",She:"Она использует {or}",
+We:"Мы используем {or}",They:"Они используют {or}",It:"Это использует {or}"
+}]
 }},
 
-{ru:"беру",en:"take",third:"takes",
+{ru:"брать",en:"take",third:"takes",
 p:{
-d:["{s} takes {o}","берёт"]
+d:["{s} {v} {o}",{
+I:"Я беру {or}",You:"Ты берёшь {or}",He:"Он берёт {or}",She:"Она берёт {or}",
+We:"Мы берём {or}",They:"Они берут {or}",It:"Это берёт {or}"
+}]
 }},
 
-{ru:"даю",en:"give",third:"gives",
+{ru:"давать",en:"give",third:"gives",
 p:{
-d:["{s} gives {o}","даёт"]
+d:["{s} {v} {o}",{
+I:"Я даю {or}",You:"Ты даёшь {or}",He:"Он даёт {or}",She:"Она даёт {or}",
+We:"Мы даём {or}",They:"Они дают {or}",It:"Это даёт {or}"
+}]
 }},
 
-{ru:"делаю",en:"do",third:"does",
+{ru:"делать",en:"do",third:"does",
 p:{
-d:["{s} does {o}","делает"]
+d:["{s} {v} {o}",{
+I:"Я делаю {or}",You:"Ты делаешь {or}",He:"Он делает {or}",She:"Она делает {or}",
+We:"Мы делаем {or}",They:"Они делают {or}",It:"Это делает {or}"
+}]
 }},
 
-{ru:"создаю",en:"make",third:"makes",
+{ru:"создавать",en:"make",third:"makes",
 p:{
-d:["{s} makes {o}","создаёт"]
+d:["{s} {v} {o}",{
+I:"Я создаю {or}",You:"Ты создаёшь {or}",He:"Он создаёт {or}",She:"Она создаёт {or}",
+We:"Мы создаём {or}",They:"Они создают {or}",It:"Это создаёт {or}"
+}]
 }},
 
-{ru:"вижу",en:"watch",third:"watches",
+{ru:"смотреть",en:"watch",third:"watches",
 p:{
-d:["{s} watches {o}","смотрит"]
+d:["{s} {v} {o}",{
+I:"Я смотрю {or}",You:"Ты смотришь {or}",He:"Он смотрит {or}",She:"Она смотрит {or}",
+We:"Мы смотрим {or}",They:"Они смотрят {or}",It:"Это смотрит {or}"
+}]
 }}
 
 ];
+
+
 const wheelsData = [
 
 [
-{ru:"Я", en:"I"},
-{ru:"Ты", en:"You"},
-{ru:"Он", en:"He"},
-{ru:"Она", en:"She"},
-{ru:"Это", en:"It"},
-{ru:"Мы", en:"We"},
-{ru:"Они", en:"They"}
+{ru:"Я",ru2:"Мне", en:"I"},
+{ru:"Ты",ru2:"Тебе", en:"You"},
+{ru:"Он",ru2:"Ему", en:"He"},
+{ru:"Она",ru2:"Ей", en:"She"},
+{ru:"Это",ru2:"Это", en:"It"},
+{ru:"Мы",ru2:"Нам", en:"We"},
+{ru:"Они",ru2:"Им", en:"They"}
 ],
 
 verbs,
@@ -363,13 +465,13 @@ verbs,
 ],
 
 [
-{ru:"вода", en:"water"},
-{ru:"еда", en:"food"},
-{ru:"деньги", en:"money"},
-{ru:"работа", en:"work"},
-{ru:"город", en:"city"},
-{ru:"семья", en:"family"},
-{ru:"помощь", en:"help"}
+{ru:"вода",ru2:"воды",en:"water"},
+{ru:"еда",ru2:"еда",en:"food"},
+{ru:"деньги",ru2:"денег",en:"money"},
+{ru:"работе",ru2:"работы",en:"work"},
+{ru:"город",ru2:"городе",en:"city"},
+{ru:"семья",ru2:"семью",en:"family"},
+{ru:"помощь",ru2:"помощи",en:"help"}
 ]
 
 ];
@@ -551,6 +653,40 @@ createWheel("wheel2",wheelsData[1],1);
 createWheel("wheel3",wheelsData[2],2);
 createWheel("wheel4",wheelsData[3],3);
 
+function getVerbForm(
+    subjectObj,
+    verbObj
+){
+
+    if(
+        subjectObj.en === "He" ||
+        subjectObj.en === "She" ||
+        subjectObj.en === "It"
+    ){
+
+        return verbObj.third;
+
+    }
+
+    return verbObj.en;
+
+}
+function getVerb(subjectObj, verbObj){
+
+    if(verbObj.en === "be"){
+        return verbObj.states[subjectObj.en];
+    }
+
+    if(
+        subjectObj.en === "He" ||
+        subjectObj.en === "She" ||
+        subjectObj.en === "It"
+    ){
+        return verbObj.third;
+    }
+
+    return verbObj.en;
+}
 function buildNaturalSentence(
     subjectObj,
     verbObj,
@@ -576,6 +712,7 @@ function buildNaturalSentence(
                 ),
 
             ru: pattern[1]
+              
 
         };
 
@@ -586,25 +723,25 @@ function buildNaturalSentence(
     let pattern =
         verbObj.p.d;
 
-    return {
+   
+ const verb =
+    getVerbForm(
+        subjectObj,
+        verbObj
+    );
 
-        en: pattern[0]
-            .replace(
-                "{s}",
-                subjectObj.en
-            )
-            .replace(
-                "{o}",
-                objectObj.en
-            ),
+ return {
 
-        ru: pattern[1]
+    en: pattern[0]
+        .replace("{s}",subjectObj.en)
+        .replace("{v}",verb)
+        .replace("{o}",objectObj.en),
 
-    };
-
+    ru: pattern[1][subjectObj.en]
+      .replace("{or}", objectObj.ru2 || objectObj.ru)
+      .replace("{o}", objectObj.ru)
+ };
 }
-
-
  function buildSentence(){
 
     const subjectObj =
@@ -896,4 +1033,5 @@ renderMemory();
 </script>
 
 </body>
-</html>  
+</html>
+  
