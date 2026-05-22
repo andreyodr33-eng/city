@@ -205,18 +205,15 @@ const subjects = [
 ];
 
 const actionRules = [
-
 {en:"want",base:"want",third:"wants",ru:"хотеть",
 types:["drink","food","object","media","visual","place","people","abstract"]},
 
 {en:"need",base:"need",third:"needs",ru:"нуждаться",
 types:["drink","food","object","media","visual","place","people","abstract"]},
 
-{en:"like",base:"like",third:"likes",ru:"нравиться",
-types:["food","object","media","visual","abstract","people"]},
+{en:"like",base:"like",third:"likes",ru:"нравиться",subjectTypes:["human","object"],types:["food","object","media","visual","abstract","people"]},
 
-{en:"see",base:"see",third:"sees",ru:"видеть",
-types:["object","visual","place","people"]},
+{en:"see",base:"see",third:"sees",ru:"видеть",subjectTypes:["human","object"],types:["object","visual","place","people"]},
 
 {en:"have",base:"have",third:"has",ru:"иметь",
 types:["object","people","abstract"]},
@@ -227,14 +224,11 @@ types:["place"]},
 {en:"live in",base:"live in",third:"lives in",ru:"жить в",
 types:["place"]},
 
-{en:"work at",base:"work at",third:"works at",ru:"работа в",
-types:["workplace"]},
+{en:"work at",base:"work at",third:"works at",ru:"работа в",subjectTypes:["human"],types:["workplace"]},
 
-{en:"eat",base:"eat",third:"eats",ru:"есть",
-types:["food"]},
+{en:"eat",base:"eat",third:"eats",ru:"есть",subjectTypes:["human"],types:["food"]},
 
-{en:"drink",base:"drink",third:"drinks",ru:"пить",
-types:["drink"]},
+{en:"drink",base:"drink",third:"drinks",ru:"пить",subjectTypes:["human"],types:["drink"]},
 
 {en:"give",base:"give",third:"gives",ru:"давать",
 types:["object","food","drink"]},
@@ -244,6 +238,9 @@ types:["object","abstract"]},
 
 {en:"watch",base:"watch",third:"watches",ru:"смотреть",
 types:["media","visual","people"]}
+
+
+
 
 ];
 
