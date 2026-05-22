@@ -300,7 +300,10 @@ subjects.map((s,i)=>
 
 `<div class="item ${selected.s===i?"active":""}"
 onclick="selectS(${i})">
-${s.en} / ${s.ru}
+
+<div class="en">${s.en}</div>
+<div class="ru">${s.ru}</div>
+
 </div>`
 
 ).join("");
@@ -314,7 +317,9 @@ filteredActions.map((a,i)=>
 
 `<div class="item ${selected.a===i?"active":""}"
 onclick="selectA(${i})">
-${a.en} / ${a.ru}
+
+<div class="en">${a.en}</div>
+<div class="ru">${a.ru}</div>
 </div>`
 
 ).join("");
@@ -328,12 +333,15 @@ filteredObjects.map((o,i)=>
 
 `<div class="item ${selected.o===i?"active":""}"
 onclick="selectO(${i})">
-${o.en} / ${o.ru}
+
+<div class="en">${o.en}</div>
+<div class="ru">${o.ru}</div>
 </div>`
 
 ).join("");
 
 }
+
 
 function selectS(i){
 
