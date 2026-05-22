@@ -20,6 +20,8 @@ body{
 html,body{
    width:100%
    overflow-x:hidden;
+   margin:0;
+   padding:0;
 }   
 .container{
     display:flex;
@@ -27,14 +29,12 @@ html,body{
     align-items:center;
     gap:10px;
     margin-top:20px;
-    overflow-x:auto;
-    overflow-y:hidden;
-    padding:10px;
+    overflow-x:hidden;
+    padding:10px 0;
     width:100%
     max-width:100%;
-    
     box-sizing:border-box;
-   -webkit-overflow-scrolling:touch;
+   
 }
 
 .wheel{
@@ -48,22 +48,11 @@ html,body{
     overflow-x:hidden;
 
     scroll-snap-type:y mandatory;
-
     border:2px solid #444;
     border-radius:16px;
-
     background:#1b1b1b;
-
-    scrollbar-width:none;
-
-    cursor:grab;
-
-    user-select:none;
-
-    -webkit-overflow-scrolling:touch;
-
-    flex-shrink:1;
-
+   flex-shrink:1;
+   box-sizing:border-box;
 }
 
 .wheel:active{
