@@ -237,9 +237,9 @@ types:["object","food","drink"]},
 types:["object","abstract"]},
 
 {en:"watch",base:"watch",third:"watches",ru:"смотреть",
-types:["media","visual","people"]}
+types:["media","visual","people"]},
 
-
+{en:"top up",base:"top up",third:"tops up",ru:"пополнить",types:["object"],article:"the"]}
 
 
 ];
@@ -422,7 +422,9 @@ return /^[aeiou]/i.test(word);
 }
 
 function getArticle(action, object){
-
+if(action.article){
+   return action.article + " ";
+}   
 if(object.en==="home"){
 return "";
 }
