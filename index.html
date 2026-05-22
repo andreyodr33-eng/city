@@ -8,1028 +8,550 @@ maximum-scale=1.0,user-scalable=no">
 <link rel="manifest" href="manifest.json" />
 <title><PWA Navigator</title>
 <style>
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
 body{
+    font-family:Arial;
     background:#111;
     color:white;
-    font-family:Arial,sans-serif;
-    overflow:hidden;
-    touch-action:none;
-}
-
-.app{
-    height:100vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:flex-start;
-    padding:10px;
-}
-
-h1{
-    margin:10px 0 15px;
-    font-size:24px;
+    text-align:center;
+    margin:0;
+    padding:20px;
 }
 
 .container{
-    width:100%;
-    display:flex;
-    justify-content:center;
-    gap:5px;
-}
-
-.wheel{
-    position:relative;
-    width:24%;
-    height:150px;
-    overflow:hidden;
-    background:#222;
-    border-radius:14px;
-    border:2px solid #444;
-}
-
-.track{
-    position:absolute;
-    width:100%;
-    top:0;
-    left:0;
-    transition:transform 0.15s;
-}
-
-.item{
-    height:50px;
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:18px;
+    gap:12px;
+    margin-top:20px;
+    overflow-x:auto;
+    padding-bottom:10px;
+    scrollbar-width:none;
+}
+
+.wheel{
+
+    min-width:180px;
+    width:180px;
+
+    height:180px;
+
+    overflow-y:scroll;
+    overflow-x:hidden;
+
+    scroll-snap-type:y mandatory;
+
+    border:2px solid #444;
+    border-radius:16px;
+
+    background:#1b1b1b;
+
+    scrollbar-width:none;
+
+    cursor:grab;
+
     user-select:none;
+
+    -webkit-overflow-scrolling:touch;
+
+    flex-shrink:0;
+
 }
 
-.center{
-    position:absolute;
-    top:50px;
-    width:100%;
-    height:50px;
-    border-top:2px solid #00ff99;
-    border-bottom:2px solid #00ff99;
-    background:rgba(0,255,153,0.08);
-    pointer-events:none;
+.whell:active{
+    cursor:grabbing;
 }
 
-.buttons{
+.wheel::-webkit-scrollbar{
+    display:none;
+}
+
+.item{
+
+    height:60px;
+
+    min-height:60px;
+
     display:flex;
-    gap:10px;
+
+    align-items:center;
+    justify-content:center;
+
+    scroll-snap-align:center;
+
+    border-bottom:1px solid #333;
+
+    font-size:20px;
+
+    cursor:pointer;
+
+    user-select:none;
+
+    padding:0 10px;
+
+    box-sizing:border-box;
+
+}
+
+.item.active{
+    background:#2e5cff;
+}
+
+.controls{
     margin-top:20px;
 }
 
 button{
-    padding:12px 18px;
+    padding:12px 20px;
     border:none;
-    border-radius:12px;
-    background:#00cc88;
-    color:white;
-    font-size:18px;
-}
-
-.result{
-    margin-top:20px;
-    font-size:28px;
-    text-align:center;
-    min-height:40px;
-    padding:0 10px;
-}
-
-.history-panel{
-
-    position:fixed;
-
-    left:0;
-    bottom:-100%;
-
-    width:100%;
-    height:50%;
-
-    background:#1b1b1b;
-
-    border-top-left-radius:20px;
-    border-top-right-radius:20px;
-
-    transition:0.3s;
-
-    overflow-y:auto;
-
-    padding:20px;
-
-}
-
-.history-panel.active{
-
-    bottom:0;
-
-}
-
-.history-header{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    margin-bottom:15px;
-
-}
-
-.memory-item{
-
-    background:#2a2a2a;
-
-    padding:12px;
-
     border-radius:10px;
-
-    margin-bottom:8px;
-
+    font-size:16px;
+    cursor:pointer;
 }
 
-.close-btn{
-
-    background:#ff5555;
-
+#result{
+    margin-top:20px;
+    font-size:26px;
+    line-height:1.6;
 }
+
+#history{
+    margin-top:30px;
+    max-width:900px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.historyItem{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#1b1b1b;
+    margin-bottom:10px;
+    padding:12px;
+    border-radius:10px;
+    gap:10px;
+}
+
+.historyText{
+    text-align:left;
+    line-height:1.5;
+}
+
+.deleteBtn{
+    background:#b00020;
+    color:white;
+    border:none;
+    padding:8px 12px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
 
 </style>
-</head>
+
 <body>
 
-<div class="app">
-
-<h1>English Constructor</h1>
+<h2>Grammar Wheels</h2>
 
 <div class="container">
 
-<div class="wheel" id="wheel1">
-<div class="center"></div>
-</div>
+<div class="wheel" id="w1"></div>
 
-<div class="wheel" id="wheel2">
-<div class="center"></div>
-</div>
+<div class="wheel" id="w2"></div>
 
-<div class="wheel" id="wheel3">
-<div class="center"></div>
-</div>
-
-<div class="wheel" id="wheel4">
-<div class="center"></div>
-</div>
+<div class="wheel" id="w3"></div>
 
 </div>
 
-<div class="buttons">
-
-<button onclick="buildSentence()">
-Предложение
-</button>
-
-<button onclick="toggleHistory()">
-История
-</button>
-
+<div class="controls">
+<button onclick="build()">Build sentence</button>
 </div>
 
-<div class="result" id="result"></div>
-<div id="analysis"
-style="margin-top:15px; font-size:22px; text-align:center; padding:10px;"></div>
+<div id="result"></div>
 
-</div>
+<h3>History</h3>
 
-<div class="history-panel" id="historyPanel">
-
-<div class="history-header">
-
-<h2>История</h2>
-
-<button class="close-btn"
-onclick="toggleHistory()">
-Закрыть
-</button>
-
-</div>
-
-<div id="memoryList"></div>
-
-</div>
+<div id="history"></div>
 
 <script>
 
-const itemHeight = 50;
+const subjects = [
+{ en:"I", ru:"Я" },
+{ en:"You", ru:"Ты" },
+{ en:"He", ru:"Он" },
+{ en:"She", ru:"Она" },
+{ en:"It", ru:"Это" },
+{ en:"We", ru:"Мы" },
+{ en:"They", ru:"Они" }
+];
 
-const verbs = [
-{
-ru:"быть",
-en:"be",
-third:"is",
+const actionRules = [
 
-p:{
-d:[
-"{s} {v} at {o}",
-{
-I:"Я на {o}",
-You:"Ты на {o}",
-He:"Он на {o}",
-She:"Она на {o}",
-We:"Мы на {o}",
-They:"Они на {o}",
-It:"Это в {o}"
-}
-],
+{en:"want",base:"want",third:"wants",ru:"хотеть",
+types:["drink","food","object","media","visual","place","people","abstract"]},
 
-past:{
-d:[
-"{s} was at {o}",
-{
-I:"Я был на {o}",
-You:"Ты был на {o}",
-He:"Он был на {o}",
-She:"Она была на {o}",
-We:"Мы были на {o}",
-They:"Они были на {o}",
-It:"Это было в {o}"
-}
-]
-}
-}
-},
-{ru:"хотеть",en:"want",third:"wants",
-p:{
-d:["{s} {v} {o}",
-{
-I:"Я хочу {or}",You:"Ты хочешь {or}",He:"Он хочет {or}",She:"Она хочет {or}",
-We:"Мы хотим {or}",They:"Они хотят {or}",It:"Это хочет {or}"
-}]
-}},
+{en:"need",base:"need",third:"needs",ru:"нуждаться",
+types:["drink","food","object","media","visual","place","people","abstract"]},
 
-{ru:"нуждаться",en:"need",third:"needs",
-p:{
-d:["{s} {v} {o}",{
-I:"Мне нужна {or}",You:"Тебе нужна {or}",He:"Ему нужна {or}",She:"Ей нужна {or}",
-We:"Нам нужна {or}",They:"Им нужна {or}",It:"Нужна {or}"
-}],
-help:["{s} needs help",{
-I:"Мне нужна помощь",You:"Тебе нужна помощь",He:"Ему нужна помощь",She:"Ей нужна помощь",
-We:"Нам нужна помощь",They:"Им нужна помощь",It:"Нужна помощь"
-}]
-}},
+{en:"like",base:"like",third:"likes",ru:"нравиться",
+types:["food","object","media","visual","abstract","people"]},
 
-{ru:"любить",en:"like",third:"likes",
-p:{
-d:["{s} {v} {o}",{
-I:"Мне нравится {or}",You:"Тебе нравится {or}",He:"Ему нравится {or}",She:"Ей нравится {or}",
-We:"Нам нравится {or}",They:"Им нравится {or}",It:"Мне нравится {or}"
-}]
-}},
+{en:"see",base:"see",third:"sees",ru:"видеть",
+types:["object","visual","place","people"]},
 
-{ru:"видеть",en:"see",third:"sees",
-p:{
-d:["{s} {v} {o}",{
-I:"Я вижу {or}",You:"Ты видишь {or}",He:"Он видит {or}",She:"Она видит {or}",
-We:"Мы видим {or}",They:"Они видят {or}",It:"Это видит {or}"
-}],
-help:["{s} needs help",{
-I:"Мне нужна помощь",You:"Тебе нужна помощь",He:"Ему нужна помощь",She:"Ей нужна помощь",
-We:"Нам нужна помощь",They:"Им нужна помощь",It:"Нужна помощь"
-}]
-}},
+{en:"have",base:"have",third:"has",ru:"иметь",
+types:["object","people","abstract"]},
 
-{ru:"иметь",en:"have",third:"has",
-p:{
-d:["{s} {v} {o}",{
-I:"У меня есть {or}",You:"У тебя есть {or}",He:"У него есть {or}",She:"У неё есть {or}",
-We:"У нас есть {or}",They:"У них есть {or}",It:"Есть {or}"
-}]
-}},
+{en:"go to",base:"go to",third:"goes to",ru:"идти в",
+types:["place"]},
 
-{ru:"знать",en:"know",third:"knows",
-p:{
-d:["{s} {v} {o}",{
-I:"Я знаю {or}",You:"Ты знаешь {or}",He:"Он знает {or}",She:"Она знает {or}",
-We:"Мы знаем {or}",They:"Они знают {or}",It:"Это знает {or}"
-}]
-}},
+{en:"live in",base:"live in",third:"lives in",ru:"жить в",
+types:["place"]},
 
-{ru:"ем",en:"eat",third:"eats",
-p:{
-d:["{s} {v} {o}",{
-I:"Я ем {or}",You:"Ты ешь {or}",He:"Он ест {or}",She:"Она ест {or}",
-We:"Мы едим {or}",They:"Они едят {or}",It:"Это ест {or}"
-}]
-}},
+{en:"work at",base:"work at",third:"works at",ru:"работать в",
+types:["workplace"]},
 
-{ru:"пить",en:"drink",third:"drinks",
-p:{
-d:["{s} {v} {o}",{
-I:"Я пью {or}",You:"Ты пьёшь {or}",He:"Он пьёт {or}",She:"Она пьёт {or}",
-We:"Мы пьём {or}",They:"Они пьют {or}",It:"Это пьёт {or}"
-}]
-}},
+{en:"eat",base:"eat",third:"eats",ru:"есть",
+types:["food"]},
 
-{ru:"идти",en:"go",third:"goes",
-p:{
-d:["{s} {v} {o}",{
-I:"Я иду {or}",You:"Ты идёшь {or}",He:"Он идёт {or}",She:"Она идёт {or}",
-We:"Мы идём {or}",They:"Они идут {or}",It:"Это идёт {or}"
-}]
-}},
+{en:"drink",base:"drink",third:"drinks",ru:"пить",
+types:["drink"]},
 
-{ru:"приходить",en:"come",third:"comes",
-p:{
-d:["{s} {v} {o}",{
-I:"Я прихожу {or}",You:"Ты приходишь {or}",He:"Он приходит {or}",She:"Она приходит {or}",
-We:"Мы приходим {or}",They:"Они приходят {or}",It:"Это приходит {or}"
-}]
-}},
+{en:"give",base:"give",third:"gives",ru:"давать",
+types:["object","food","drink"]},
 
-{ru:"работать",en:"work",third:"works",
-p:{
-d:["{s} {v} {o}",{
-I:"Я работаю {or}",You:"Ты работаешь {or}",He:"Он работает {or}",She:"Она работает {or}",
-We:"Мы работаем {or}",They:"Они работают {or}",It:"Это работает {or}"
-}]
-}},
+{en:"take",base:"take",third:"takes",ru:"брать",
+types:["object","abstract"]},
 
-{ru:"жить",en:"live",third:"lives",
-p:{
-d:["{s} {v} {o}",{
-I:"Я живу {or}",You:"Ты живёшь {or}",He:"Он живёт {or}",She:"Она живёт {or}",
-We:"Мы живём {or}",They:"Они живут {or}",It:"Это живёт {or}"
-}]
-}},
-
-{ru:"говорить",en:"speak",third:"speaks",
-p:{
-d:["{s} {v} {o}",{
-I:"Я говорю {or}",You:"Ты говоришь {or}",He:"Он говорит {or}",She:"Она говорит {or}",
-We:"Мы говорим {or}",They:"Они говорят {or}",It:"Это говорит {or}"
-}]
-}},
-
-{ru:"помогать",en:"help",third:"helps",
-p:{
-d:["{s} {v} {o}",{
-I:"Я помогаю {or}",You:"Ты помогаешь {or}",He:"Он помогает {or}",She:"Она помогает {or}",
-We:"Мы помогаем {or}",They:"Они помогают {or}",It:"Это помогает {or}"
-}]
-}},
-
-{ru:"использовать",en:"use",third:"uses",
-p:{
-d:["{s} {v} {o}",{
-I:"Я использую {or}",You:"Ты используешь {or}",He:"Он использует {or}",She:"Она использует {or}",
-We:"Мы используем {or}",They:"Они используют {or}",It:"Это использует {or}"
-}]
-}},
-
-{ru:"брать",en:"take",third:"takes",
-p:{
-d:["{s} {v} {o}",{
-I:"Я беру {or}",You:"Ты берёшь {or}",He:"Он берёт {or}",She:"Она берёт {or}",
-We:"Мы берём {or}",They:"Они берут {or}",It:"Это берёт {or}"
-}]
-}},
-
-{ru:"давать",en:"give",third:"gives",
-p:{
-d:["{s} {v} {o}",{
-I:"Я даю {or}",You:"Ты даёшь {or}",He:"Он даёт {or}",She:"Она даёт {or}",
-We:"Мы даём {or}",They:"Они дают {or}",It:"Это даёт {or}"
-}]
-}},
-
-{ru:"делать",en:"do",third:"does",
-p:{
-d:["{s} {v} {o}",{
-I:"Я делаю {or}",You:"Ты делаешь {or}",He:"Он делает {or}",She:"Она делает {or}",
-We:"Мы делаем {or}",They:"Они делают {or}",It:"Это делает {or}"
-}]
-}},
-
-{ru:"создавать",en:"make",third:"makes",
-p:{
-d:["{s} {v} {o}",{
-I:"Я создаю {or}",You:"Ты создаёшь {or}",He:"Он создаёт {or}",She:"Она создаёт {or}",
-We:"Мы создаём {or}",They:"Они создают {or}",It:"Это создаёт {or}"
-}]
-}},
-
-{ru:"смотреть",en:"watch",third:"watches",
-p:{
-d:["{s} {v} {o}",{
-I:"Я смотрю {or}",You:"Ты смотришь {or}",He:"Он смотрит {or}",She:"Она смотрит {or}",
-We:"Мы смотрим {or}",They:"Они смотрят {or}",It:"Это смотрит {or}"
-}]
-}}
+{en:"watch",base:"watch",third:"watches",ru:"смотреть",
+types:["media","visual","people"]}
 
 ];
 
+const objects = [
 
-const wheelsData = [
+{ en:"water", ru:"вода", type:"drink", countable:false },
 
-[
-{ru:"Я",ru2:"Мне", en:"I"},
-{ru:"Ты",ru2:"Тебе", en:"You"},
-{ru:"Он",ru2:"Ему", en:"He"},
-{ru:"Она",ru2:"Ей", en:"She"},
-{ru:"Это",ru2:"Это", en:"It"},
-{ru:"Мы",ru2:"Нам", en:"We"},
-{ru:"Они",ru2:"Им", en:"They"}
-],
+{ en:"food", ru:"еда", type:"food", countable:false },
 
-verbs,
+{ en:"book", ru:"книга", type:"object", countable:true },
 
-[
+{ en:"movie", ru:"фильм", type:"media", countable:true },
 
-{ru:"", en:""},
-{ru:"в", en:"in"},
-{ru:"на", en:"on"},
-{ru:"с", en:"with"},
-{ru:"для", en:"for"},
-{ru:"к", en:"to"},
-{ru:"из", en:"from"}
-],
+{ en:"picture", ru:"картина", type:"visual", countable:true },
 
-[
-{ru:"вода",ru2:"воды",en:"water"},
-{ru:"еда",ru2:"еда",en:"food"},
-{ru:"деньги",ru2:"денег",en:"money"},
-{ru:"работе",ru2:"работы",en:"work"},
-{ru:"город",ru2:"городе",en:"city"},
-{ru:"семья",ru2:"семью",en:"family"},
-{ru:"помощь",ru2:"помощи",en:"help"}
-]
+{ en:"school", ru:"школа", type:"place", countable:true },
+
+{ en:"home", ru:"дом", type:"place", countable:false },
+
+{ en:"city", ru:"город", type:"place", countable:true },
+
+{ en:"family", ru:"семья", type:"people", countable:true },
+
+{ en:"friend", ru:"друг", type:"people", countable:true },
+
+{ en:"company", ru:"компания", type:"workplace", countable:true },
+
+{ en:"office", ru:"офис", type:"workplace", countable:true },
+
+{ en:"hospital", ru:"больница", type:"workplace", countable:true },
+
+{ en:"music", ru:"музыка", type:"abstract", countable:false },
+
+{ en:"help", ru:"помощь", type:"abstract", countable:false }
 
 ];
 
-const states = [];
+let selected = { s:0, a:0, o:0 };
 
-function createWheel(id,data,index){
+let filteredActions = [];
+let filteredObjects = [];
 
-    const wheel =
-        document.getElementById(id);
+let history =
+JSON.parse(localStorage.getItem("history")) || [];
 
-    const track =
-        document.createElement("div");
+init();
 
-    track.className = "track";
+function init(){
 
-    wheel.appendChild(track);
+renderSubjects();
 
-    for(let i=0;i<1;i++){
+filterActions();
 
-        const empty =
-            document.createElement("div");
+filterObjects();
 
-        empty.className = "item";
-
-        track.appendChild(empty);
-}
-
-    data.forEach(word=>{
-
-        const div =
-            document.createElement("div");
-
-        div.className = "item";
-
-        div.innerText = word.ru;
-
-        track.appendChild(div);
-
-    });
-
-    for(let i=0;i<1;i++){
-
-        const empty =
-            document.createElement("div");
-
-        empty.className = "item";
-
-        track.appendChild(empty);
-
-    }
-
-    states[index] = 0;
-
-    updateWheel(track,index);
-
-    let startY = 0;
-
-    wheel.addEventListener("touchstart",e=>{
-
-        startY =
-            e.touches[0].clientY;
-
-    });
-
-    wheel.addEventListener("touchend",e=>{
-
-        let endY =
-            e.changedTouches[0].clientY;
-
-        handleSwipe(
-            startY-endY,
-            index,
-            data,
-            track
-        );
-
-    });
-
-    wheel.addEventListener("mousedown",e=>{
-
-        startY = e.clientY;
-
-    });
-
-    wheel.addEventListener("mouseup",e=>{
-
-        handleSwipe(
-            startY-e.clientY,
-            index,
-            data,
-            track
-        );
-
-    });
-
-    wheel.addEventListener("wheel",e=>{
-
-        e.preventDefault();
-
-        if(e.deltaY > 0){
-
-            moveDown(index,data);
-
-        }else{
-
-            moveUp(index);
-
-        }
-
-        updateWheel(track,index);
-
-    });
+renderHistory();
 
 }
 
-function handleSwipe(
-    diff,
-    index,
-    data,
-    track
+function renderSubjects(){
+
+document.getElementById("w1").innerHTML =
+subjects.map((s,i)=>
+
+`<div class="item ${selected.s===i?"active":""}"
+onclick="selectS(${i})">
+${s.en} / ${s.ru}
+</div>`
+
+).join("");
+
+}
+
+function renderActions(){
+
+document.getElementById("w2").innerHTML =
+filteredActions.map((a,i)=>
+
+`<div class="item ${selected.a===i?"active":""}"
+onclick="selectA(${i})">
+${a.en} / ${a.ru}
+</div>`
+
+).join("");
+
+}
+
+function renderObjects(){
+
+document.getElementById("w3").innerHTML =
+filteredObjects.map((o,i)=>
+
+`<div class="item ${selected.o===i?"active":""}"
+onclick="selectO(${i})">
+${o.en} / ${o.ru}
+</div>`
+
+).join("");
+
+}
+
+function selectS(i){
+
+selected.s=i;
+
+filterActions();
+
+filterObjects();
+
+renderSubjects();
+
+}
+
+function selectA(i){
+
+selected.a=i;
+
+filterObjects();
+
+renderActions();
+
+}
+
+function selectO(i){
+
+selected.o=i;
+
+renderObjects();
+
+}
+
+function filterActions(){
+
+filteredActions = actionRules;
+
+renderActions();
+
+}
+
+function filterObjects(){
+
+const action = filteredActions[selected.a];
+
+filteredObjects =
+objects.filter(o =>
+action.types.includes(o.type)
+);
+
+renderObjects();
+
+}
+
+function getActionForm(subject, action){
+
+if(
+subject.en==="He" ||
+subject.en==="She" ||
+subject.en==="It"
 ){
+return action.third;
+}
 
-    if(Math.abs(diff) < 15){
-
-        return;
-    }
-
-    if(diff > 0){
-
-        moveDown(index,data);
-
-    }else{
-
-        moveUp(index);
-
-    }
-
-    updateWheel(track,index);
+return action.base;
 
 }
 
-function moveDown(index,data){
+function startsWithVowel(word){
 
-    states[index]++;
-
-    if(states[index] >
-        data.length-1){
-
-        states[index] =
-            data.length-1;
-    }
+return /^[aeiou]/i.test(word);
 
 }
 
-function moveUp(index){
+function getArticle(action, object){
 
-    states[index]--;
-
-    if(states[index] < 0){
-
-        states[index] = 0;
-    }
-
+if(object.en==="home"){
+return "";
 }
 
-function updateWheel(track,index){
-
-    const y =
-        -(states[index] * itemHeight);
-
-    track.style.transform =
-        `translateY(${y}px)`;
-
-}
-
-createWheel("wheel1",wheelsData[0],0);
-createWheel("wheel2",wheelsData[1],1);
-createWheel("wheel3",wheelsData[2],2);
-createWheel("wheel4",wheelsData[3],3);
-
-function getVerbForm(
-    subjectObj,
-    verbObj
+if(
+action.base==="go to" &&
+object.en==="school"
 ){
-
-    if(
-        subjectObj.en === "He" ||
-        subjectObj.en === "She" ||
-        subjectObj.en === "It"
-    ){
-
-        return verbObj.third;
-
-    }
-
-    return verbObj.en;
-
+return "";
 }
-function getVerb(subjectObj, verbObj){
 
-    if(verbObj.en === "be"){
-        return verbObj.states[subjectObj.en];
-    }
-
-    if(
-        subjectObj.en === "He" ||
-        subjectObj.en === "She" ||
-        subjectObj.en === "It"
-    ){
-        return verbObj.third;
-    }
-
-    return verbObj.en;
+if(!object.countable){
+return "";
 }
-function buildNaturalSentence(
-    subjectObj,
-    verbObj,
-    objectObj
-){
 
-    // специальный шаблон
-
-    if(
-        verbObj.p &&
-        verbObj.p[objectObj.en]
-    ){
-
-        let pattern =
-            verbObj.p[objectObj.en];
-
-        return {
-
-            en: pattern[0]
-                .replace(
-                    "{s}",
-                    subjectObj.en
-                ),
-
-            ru: pattern[1]
-              
-
-        };
-
-    }
-
-    // стандартный шаблон
-
-    let pattern =
-        verbObj.p.d;
-
-   
- const verb =
-    getVerbForm(
-        subjectObj,
-        verbObj
-    );
-
- return {
-
-    en: pattern[0]
-        .replace("{s}",subjectObj.en)
-        .replace("{v}",verb)
-        .replace("{o}",objectObj.en),
-
-    ru: pattern[1][subjectObj.en]
-      .replace("{or}", objectObj.ru2 || objectObj.ru)
-      .replace("{o}", objectObj.ru)
- };
-}
- function buildSentence(){
-
-    const subjectObj =
-        wheelsData[0][states[0]];
-
-    const verbObj =
-        wheelsData[1][states[1]];
-
-    const objectObj =
-        wheelsData[3][states[3]];
-
-    const result =
-        buildNaturalSentence(
-            subjectObj,
-            verbObj,
-            objectObj
-        );
-
-    document.getElementById(
-        "result"
-    ).innerText = result.en;
-
-    document.getElementById(
-        "analysis"
-    ).innerHTML =
-
-    `
-    <div style="
-    color:#00ff99;
-    margin-top:10px;
-    font-size:22px;
-    ">
-    ${result.ru}
-    </div>
-    `;
-
-    speak(result.en);
-
-    saveSentence(result.en);
+return startsWithVowel(object.en)
+? "an "
+: "a ";
 
 }
 
-    function speak(text){
+function renderSentence(subject, action, object){
 
-    speechSynthesis.cancel();
+const actionWord =
+getActionForm(subject, action);
 
-    const speech =
-        new SpeechSynthesisUtterance(text);
+const article =
+getArticle(action, object);
 
-    speech.lang = "en-US";
+return (
+subject.en +
+" " +
+actionWord +
+" " +
+article +
+object.en
+);
 
-    speech.rate = 0.9;
+}
 
-    speechSynthesis.speak(speech);
+function build(){
+
+const s = subjects[selected.s];
+
+const a = filteredActions[selected.a];
+
+const o = filteredObjects[selected.o];
+
+const sentence =
+renderSentence(s,a,o);
+
+const russian =
+s.ru + " " + a.ru + " " + o.ru;
+
+history.unshift({sentence,russian});
+
+localStorage.setItem(
+"history",
+JSON.stringify(history)
+);
+
+renderHistory();
+
+document.getElementById("result").innerHTML =
+sentence + "<br>" + russian;
+
+speechSynthesis.speak(
+new SpeechSynthesisUtterance(sentence)
+);
 
 }
 
-function saveSentence(sentence){
+function deleteHistory(index){
 
-    let memory =
-        JSON.parse(
-            localStorage.getItem("memory")
-        ) || [];
+history.splice(index,1);
 
-    memory.unshift(sentence);
+localStorage.setItem(
+"history",
+JSON.stringify(history)
+);
 
-    localStorage.setItem(
-        "memory",
-        JSON.stringify(memory)
-    );
-
-    renderMemory();
+renderHistory();
 
 }
-function renderMemory(){
 
-    const memory =
-        JSON.parse(
-            localStorage.getItem("memory")
-        ) || [];
+function renderHistory(){
 
-    const list =
-        document.getElementById(
-            "memoryList"
-        );
+document.getElementById("history").innerHTML =
+history.map((h,i)=>
 
-    list.innerHTML = "";
+`<div class="historyItem">
 
-    memory.forEach((item,index)=>{
+<div class="historyText">
+<div>${h.sentence}</div>
+<div>${h.russian}</div>
+</div>
 
-        const row =
-            document.createElement("div");
+<button class="deleteBtn"
+onclick="deleteHistory(${i})">
+Delete
+</button>
 
-        row.className =
-            "memory-item";
+</div>`
 
-        row.style.display = "flex";
-
-        row.style.justifyContent =
-            "space-between";
-
-        row.style.alignItems =
-            "center";
-
-        const text =
-            document.createElement("div");
-
-        text.innerText = item;
-
-        const del =
-            document.createElement("button");
-
-        del.innerText = "Удалить";
-
-        del.style.background =
-            "#ff5555";
-
-        del.style.padding =
-            "8px 10px";
-
-        del.style.fontSize =
-            "14px";
-
-        del.onclick = ()=>{
-
-            memory.splice(index,1);
-
-            localStorage.setItem(
-                "memory",
-                JSON.stringify(memory)
-            );
-
-            renderMemory();
-
-        };
-
-        row.appendChild(text);
-
-        row.appendChild(del);
-
-        list.appendChild(row);
-
-    });
+).join("");
 
 }
-function analyzeSentence(s,v,p,o){
+document.querySelectorAll(".wheel")
+.forEach(wheel => {
 
-    let analysis =
-        document.getElementById(
-            "analysis"
-        );
+let isDown = false;
 
-    let correct =
-        "";
-        
-    let translate =
-        "";
+let startY;
 
-    // he/she/it + s
+let scrollTop;
 
-    if(
-        (s === "He" ||
-         s === "She" ||
-         s === "It")
-    ){
+wheel.addEventListener("mousedown", e => {
 
-        if(v === "have"){
+isDown = true;
 
-            correct =
-                s + " has " + o;
+startY = e.pageY - wheel.offsetTop;
 
-        }
+scrollTop = wheel.scrollTop;
 
-        else if(v === "need"){
+});
 
-            correct =
-                s + " needs " + o;
+wheel.addEventListener("mouseleave", () => {
 
-        }
+isDown = false;
 
-        else if(v === "want"){
+});
 
-            correct =
-                s + " wants " + o;
+wheel.addEventListener("mouseup", () => {
 
-        }
+isDown = false;
 
-        else if(v === "like"){
+});
 
-            correct =
-                s + " likes " + o;
+wheel.addEventListener("mousemove", e => {
 
-        }
+if(!isDown) return;
 
-    }
+e.preventDefault();
 
+const y = e.pageY - wheel.offsetTop;
 
-    // like + in = ошибка
+const walk = (y - startY) * 1.5;
 
-    if(v === "like" && p === "in"){
+wheel.scrollTop = scrollTop - walk;
 
-        correct =
-            s + " like " + o;
+});
 
-    }
-
-    // go to
-
-    if(v === "go" && p === ""){
-
-        correct =
-            s + " go to " + o;
-
-    }
-
-    // перевод
-
-    if(correct.includes("needs")){
-
-        translate =
-            "Ему/ей нужно: " + o;
-
-    }
-
-    else if(correct.includes("has")){
-
-        translate =
-            "У него/неё есть " + o;
-
-    }
-
-    else if(correct.includes("likes")){
-
-        translate =
-            "Ему нравится " + o;
-
-    }
-
-    // вывод
-
-    if(correct !== ""){
-
-        analysis.innerHTML =
-
-        `
-        <div style="
-        color:#ff6666;
-        margin-bottom:10px;
-        ">
-        ${s} ${v}
-        ${p}
-        ${o} ❌
-        </div>
-
-        <div style="
-        color:#00ff99;
-        margin-bottom:10px;
-        ">
-        ${correct} ✅
-        </div>
-
-        <div style="
-        color:#ffffff;
-        font-size:20px;
-        ">
-        ${translate}
-        </div>
-        `;
-
-    }else{
-
-        analysis.innerHTML = "";
-
-    }
-
-}
-
-function toggleHistory(){
-
-    document
-    .getElementById("historyPanel")
-    .classList
-    .toggle("active");
-
-}
-
-renderMemory();
-
+});
 </script>
 
 </body>
