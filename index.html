@@ -169,6 +169,7 @@ button{
     margin-top:4px;
 }
 
+
 .selector{
     position:absolute;
     top:50%;
@@ -215,8 +216,9 @@ button{
 
 <script>
 
+
 const subjects = [
-   
+
 { en:"I", ru:"Я", type:"human" },
 
 { en:"You", ru:"Ты", type:"human" },
@@ -234,6 +236,7 @@ const subjects = [
 ];
 
 const actionRules = [
+
 {en:"want",base:"want",third:"wants",ru:"хотеть",
 types:["drink","food","object","media","visual","place","people","abstract"]},
 
@@ -268,8 +271,7 @@ types:["object","abstract"]},
 {en:"watch",base:"watch",third:"watches",ru:"смотреть",
 types:["media","visual","people"]},
 
-{en:"top up",base:"top up",third:"tops up",ru:"пополнить",types:["object"],article:"the"}
-
+{en:"top up",base:"top up",third:"tops up",ru:"пополнить",types:["refillable"],article:"the"}
 
 ];
 
@@ -280,8 +282,6 @@ const objects = [
 { en:"food", ru:"еда", type:"food", countable:false },
 
 { en:"book", ru:"книга", type:"object", countable:true },
-
-{en:"card", ru:"карта", type:"object", countable:true },   
 
 { en:"movie", ru:"фильм", type:"media", countable:true },
 
@@ -305,7 +305,9 @@ const objects = [
 
 { en:"music", ru:"музыка", type:"abstract", countable:false },
 
-{ en:"help", ru:"помощь", type:"abstract", countable:false }
+{ en:"help", ru:"помощь", type:"abstract", countable:false },
+
+{ en:"card", ru:"карта", type:"refillable", countable:true }
 
 ];
 
@@ -330,6 +332,7 @@ filterObjects();
 renderHistory();
 
 }
+
 
 function renderSubjects(){
 
@@ -377,40 +380,21 @@ filteredObjects.map((o,i)=>
 
 }
 
-
-function selectS(i){
-
-selected.s=i;
-
-filterActions();
-
-filterObjects();
-
-renderSubjects();
-
-}
-
-function selectA(i){
-
-selected.a=i;
-
-filterObjects();
-
-renderActions();
-
-}
-
-function selectO(i){
-
-selected.o=i;
-
-renderObjects();
-
-}
-
 function filterActions(){
 
-filteredActions = actionRules;
+const subject =
+subjects[selected.s];
+
+filteredActions =
+actionRules.filter(action =>
+
+!action.subjectTypes ||
+
+action.subjectTypes.includes(subject.type)
+
+);
+
+selected.a = 0;
 
 renderActions();
 
@@ -450,9 +434,11 @@ return /^[aeiou]/i.test(word);
 }
 
 function getArticle(action, object){
+
 if(action.article){
    return action.article + " ";
-}   
+}
+
 if(object.en==="home"){
 return "";
 }
@@ -606,8 +592,185 @@ wheel.scrollTop = scrollTop - walk;
 });
 
 });
+
+function setupWheel(wheelId,type){
+
+const wheel = document.getElementById(wheelId);
+
+wheel.addEventListener("scroll",()=>{
+
+const index =
+Math.round(wheel.scrollTop / 60);
+
+if(type==="s"){
+
+selected.s =
+Math.max(0,
+Math.min(index,subjects.length-1));
+
+filterActions();
+filterObjects();
+renderSubjects();
+
+}
+
+if(type==="a"){
+
+selected.a =
+Math.max(0,
+Math.min(index,filteredActions.length-1));
+
+filterObjects();
+renderActions();
+
+}
+
+if(type==="o"){
+
+selected.o =
+Math.max(0,
+Math.min(index,filteredObjects.length-1));
+
+renderObjects();
+
+}
+
+});
+
+}
+
+setupWheel("w1","s");
+setupWheel("w2","a");
+setupWheel("w3","o");
 </script>
 
 </body>
 </html>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
   
