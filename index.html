@@ -513,7 +513,7 @@ return "Ошибка перевода";
 
 }
 
-function build(){
+async function build(){
 
 const s = subjects[selected.s];
 
@@ -524,10 +524,16 @@ const o = filteredObjects[selected.o];
 const sentence =
 renderSentence(s,a,o);
 
-const russian =
-s.ru + " " + a.ru + " " + o.ru;
+document.getElementById("result").innerHTML =
+sentence + "<br>Translating...";
 
-history.unshift({sentence,russian});
+const russian =
+await translateText(sentence);
+
+history.unshift({
+sentence,
+russian
+});
 
 localStorage.setItem(
 "history",
@@ -543,18 +549,6 @@ const utterance =
 new SpeechSynthesisUtterance(sentence);
 
 utterance.lang = "en-US";
-
-const voices =
-speechSynthesis.getVoices();
-
-const englishVoice =
-voices.find(v =>
-v.lang.includes("en")
-);
-
-if(englishVoice){
-   utterance.voice = englishVoice;
-}
 
 speechSynthesis.speak(utterance);
 
