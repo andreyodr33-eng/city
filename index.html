@@ -481,14 +481,17 @@ getActionForm(subject, action);
 const article =
 getArticle(action, object);
 
-return (
-subject.en +
-" " +
-actionWord +
-" " +
-article +
-object.en
-);
+const parts = [
+
+subject.en,
+actionWord,
+article + object.en
+
+];
+
+return parts
+.filter(p => p && p.trim() !== "")
+.join(" ");
 
 }
 async function translateText(text){
