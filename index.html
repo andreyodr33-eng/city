@@ -336,8 +336,7 @@ function renderSubjects(){
 document.getElementById("w1").innerHTML =
 subjects.map((s,i)=>
 
-`<div class="item ${selected.s===i?"active":""}"
-onclick="selectS(${i})">
+`<div class="item"> 
 
 <div class="en">${s.en}</div>
 <div class="ru">${s.ru}</div>
@@ -353,8 +352,7 @@ function renderActions(){
 document.getElementById("w2").innerHTML =
 filteredActions.map((a,i)=>
 
-`<div class="item ${selected.a===i?"active":""}"
-onclick="selectA(${i})">
+`<div class="item">
 
 <div class="en">${a.en}</div>
 <div class="ru">${a.ru}</div>
@@ -369,8 +367,7 @@ function renderObjects(){
 document.getElementById("w3").innerHTML =
 filteredObjects.map((o,i)=>
 
-`<div class="item ${selected.o===i?"active":""}"
-onclick="selectO(${i})">
+`<div class="item">
 
 <div class="en">${o.en}</div>
 <div class="ru">${o.ru}</div>
