@@ -642,6 +642,33 @@ renderObjects();
 setupWheel("w1","s");
 setupWheel("w2","a");
 setupWheel("w3","o");
+
+document.querySelectorAll(".wheel")
+.forEach(wheel => {
+
+let timeout;
+
+wheel.addEventListener("scroll",()=>{
+
+clearTimeout(timeout);
+
+timeout = setTimeout(()=>{
+
+const itemHeight = 60;
+
+const index =
+Math.round(wheel.scrollTop / itemHeight);
+
+wheel.scrollTo({
+top:index * itemHeight,
+behavior:"smooth"
+});
+
+},80);
+
+});
+
+});   
 </script>
 
 </body>
