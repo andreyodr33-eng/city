@@ -505,9 +505,24 @@ renderHistory();
 document.getElementById("result").innerHTML =
 sentence + "<br>" + russian;
 
-speechSynthesis.speak(
-new SpeechSynthesisUtterance(sentence)
+const utterance =
+new SpeechSynthesisUtterance(sentence);
+
+utterance.lang = "en-US";
+
+const voices =
+speechSynthesis.getVoices();
+
+const englishVoice =
+voices.find(v =>
+v.lang.includes("en")
 );
+
+if(englishVoice){
+   utterance.voice = englishVoice;
+}
+
+speechSynthesis.speak(utterance);
 
 }
 
