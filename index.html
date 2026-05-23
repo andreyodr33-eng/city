@@ -219,6 +219,8 @@ button{
 
 const subjects = [
 
+{ en:"", ru:"", type:"none" },   
+
 { en:"I", ru:"Я", type:"human" },
 
 { en:"You", ru:"Ты", type:"human" },
@@ -240,6 +242,8 @@ const subjects = [
 ];
 
 const actionRules = [
+
+{en:"",base:"",third:"",ru:"",types:["drink","food","object","media","visual","place","people","abstract","workplace","refillable"]},   
 
 {en:"want",base:"want",third:"wants",ru:"хотеть",
 types:["drink","food","object","media","visual","place","people","abstract"]},
@@ -284,6 +288,8 @@ types:["media","visual","people"]},
 ];
 
 const objects = [
+
+   { en:"", ru:"", type:"object", countable:false },
 
 { en:"water", ru:"вода", type:"drink", countable:false },
 
