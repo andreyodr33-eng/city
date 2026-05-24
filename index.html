@@ -396,21 +396,25 @@ function filterActions(){
 
 const subject = subjects[selected.s];
 
-filteredActions =
-actionRules.filter(action =>
+const isExploration = subject.type === "none";
 
-!action.subjectTypes ||
+if(isExploration){
 
-action.subjectTypes.includes(subject.type)
+  filteredActions = actionRules;
 
-);
+} else {
+
+  filteredActions = actionRules.filter(action =>
+    !action.subjectTypes ||
+    action.subjectTypes.includes(subject.type)
+  );
+
+}
 
 selected.a = 0;
 
 renderActions();
-
 }
-
 function filterObjects(){
 
 const action = filteredActions[selected.a];
