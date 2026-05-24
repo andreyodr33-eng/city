@@ -396,9 +396,12 @@ function filterActions(){
 
 const subject = subjects[selected.s];
 
-const subjectType =
-subject.type === "none" ? "human" : subject.type;   
-
+actionRules.forEach(action => {
+   if (!action.subjectTypes || action.subjectTypes.length === 0) {
+      action.subjectTypes = ["human","object","place"];
+   }
+});   
+  
 filteredActions =
 actionRules.filter(action =>
 
