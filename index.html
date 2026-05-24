@@ -219,7 +219,7 @@ button{
 
 const subjects = [
 
-{ en:"", ru:"", type:"none" },   
+{ en:"", ru:"", type:"none" }, 
 
 { en:"I", ru:"Я", type:"human" },
 
@@ -233,63 +233,59 @@ const subjects = [
 
 { en:"We", ru:"Мы", type:"human" },
 
-{ en:"They", ru:"Они", type:"human" },
-
- {en:"My", ru:"Моё", type:"human" },
-
- {en:"This", ru:"Этот", type:"human" }  
+{ en:"They", ru:"Они", type:"human" }
 
 ];
+
+
 
 const actionRules = [
 
-{en:"",base:"",third:"",ru:"",types:["drink","food","object","media","visual","place","people","abstract","workplace","refillable"]},   
+{en:"",ru:"",mode:"action",forms:{base:"",third:""},types:["drink","food","object","media","visual","place","people","abstract","workplace","refillable"]},
 
-{en:"want",base:"want",third:"wants",ru:"хотеть",
-types:["drink","food","object","media","visual","place","people","abstract"]},
+{en:"be",ru:"быть",mode:"state",forms:{I:"am",You:"are",He:"is",She:"is",It:"is",We:"are",They:"are"},types:["state"]},
 
-{en:"need",base:"need",third:"needs",ru:"нуждаться",
-types:["drink","food","object","media","visual","place","people","abstract"]},
+{en:"want",ru:"хотеть",mode:"action",forms:{base:"want",third:"wants"},types:["drink","food","object","media","visual","place","people","abstract"]},
 
-{en:"like",base:"like",third:"likes",ru:"нравиться",subjectTypes:["human","object"],types:["food","object","media","visual","abstract","people"]},
+{en:"need",ru:"нуждаться",mode:"action",forms:{base:"need",third:"needs"},types:["drink","food","object","media","visual","place","people","abstract"]},
 
-{en:"see",base:"see",third:"sees",ru:"видеть",subjectTypes:["human","object"],types:["object","visual","place","people"]},
+{en:"like",ru:"нравиться",mode:"action",forms:{base:"like",third:"likes"},types:["food","object","visual"]},
 
-{en:"have",base:"have",third:"has",ru:"иметь",
-types:["object","people","abstract"]},
+{en:"see",ru:"видеть",mode:"action",forms:{base:"see",third:"sees"},subjectTypes:["human","object"],types:["object","visual","place","people"]},
 
-{en:"go to",base:"go to",third:"goes to",ru:"идти в",
-types:["place"]},
+{en:"have",ru:"иметь",mode:"action",forms:{base:"have",third:"has"},types:["object","people","abstract"]},
 
-{en:"live in",base:"live in",third:"lives in",ru:"жить в",
-types:["place"]},
+{en:"go to",ru:"идти в",mode:"action",forms:{base:"go to",third:"goes to"},types:["place"]},
 
-{en:"work at",base:"work at",third:"works at",ru:"работа в",subjectTypes:["human"],types:["workplace"]},
+{en:"live in",ru:"жить в",mode:"action",forms:{base:"live in",third:"lives in"},types:["place"]},
 
-{en:"eat",base:"eat",third:"eats",ru:"есть",subjectTypes:["human"],types:["food"]},
+{en:"work at",ru:"работать в",mode:"action",forms:{base:"work at",third:"works at"},subjectTypes:["human"],types:["workplace"]},
 
-{en:"drink",base:"drink",third:"drinks",ru:"пить",subjectTypes:["human"],types:["drink"]},
+{en:"eat",ru:"есть",mode:"action",forms:{base:"eat",third:"eats"},subjectTypes:["human"],types:["food"]},
 
-{en:"give",base:"give",third:"gives",ru:"давать",
-types:["object","food","drink"]},
+{en:"drink",ru:"пить",mode:"action",forms:{base:"drink",third:"drinks"},subjectTypes:["human"],types:["drink"]},
 
-{en:"take",base:"take",third:"takes",ru:"брать",
-types:["object","abstract"]},
+{en:"give",ru:"давать",mode:"action",forms:{base:"give",third:"gives"},types:["object","food","drink"]},
 
-{en:"watch",base:"watch",third:"watches",ru:"смотреть",
-types:["media","visual","people"]},
+{en:"take",ru:"брать",mode:"action",forms:{base:"take",third:"takes"},types:["object","abstract"]},
 
-{en:"top up",base:"top up",third:"tops up",ru:"пополнить",types:["refillable"],article:"the"},
+{en:"watch",ru:"смотреть",mode:"action",forms:{base:"watch",third:"watches"},types:["media","visual","people"]},
 
-{ en:"last name", base:"last name", third:"last names", ru:"фамилия", types:["abstract"]},
-
-{ en:"first name", base:"first name", third:"first names", ru:"имя",  type:["abstract"]}
+{en:"top up",ru:"пополнить",mode:"action",forms:{base:"top up",third:"tops up"},types:["refillable"],article:"the"}
 
 ];
 
+
+
 const objects = [
 
-   { en:"", ru:"", type:"object", countable:false },
+{ en:"",ru:"",type:"object",countable:false },
+
+{ en:"free", ru:"свободен", type:"state", countable:false },
+
+{ en:"happy", ru:"счастлив", type:"state", countable:false },
+ 
+{ en:"ready", ru:"готов", type:"state", countable:false },
 
 { en:"water", ru:"вода", type:"drink", countable:false },
 
@@ -323,11 +319,8 @@ const objects = [
 
 { en:"card", ru:"карта", type:"refillable", countable:true },
 
-{ en:"width", ru:"ширина",  type:"abstract",  countable:true },  
+{ en:"name", ru:"имя", type:"abstract", countable:true }
 
-{ en:"height", ru:"высота",  type:"abstract",  countable:true },
-
-{ en:"time", ru:"время",  type:"abstract",  countable:true }
 ];
 
 let selected = { s:0, a:0, o:0 };
@@ -423,10 +416,13 @@ function filterObjects(){
 
 const action = filteredActions[selected.a];
 
-filteredObjects =
-objects.filter(o =>
+if(!action) return;
+
+filteredObjects = objects.filter(o =>
 action.types.includes(o.type)
 );
+
+selected.o = 0;
 
 renderObjects();
 
@@ -434,15 +430,19 @@ renderObjects();
 
 function getActionForm(subject, action){
 
+if(action.mode === "state"){
+     return action.forms[subject.en];
+}
+
 if(
 subject.en==="He" ||
 subject.en==="She" ||
 subject.en==="It"
 ){
-return action.third;
+return action.forms.third;
 }
 
-return action.base;
+return action.forms.base;
 
 }
 
@@ -463,7 +463,7 @@ return "";
 }
 
 if(
-action.base==="go to" &&
+action.forms.base==="go to" &&
 object.en==="school"
 ){
 return "";
@@ -500,6 +500,7 @@ return parts
 .join(" ");
 
 }
+
 async function translateText(text){
 
 try{
@@ -532,7 +533,7 @@ const o = filteredObjects[selected.o];
 
 const sentence =
 renderSentence(s,a,o);
-   
+
 const utterance =
 new SpeechSynthesisUtterance(sentence);
 
@@ -573,9 +574,7 @@ renderHistory();
 document.getElementById("result").innerHTML =
 sentence + "<br>" + russian;
 
-
 }
-
 function deleteHistory(index){
 
 history.splice(index,1);
@@ -696,8 +695,6 @@ selected.o =
 Math.max(0,
 Math.min(index,filteredObjects.length-1));
 
-renderObjects();
-
 }
 
 });
@@ -733,12 +730,12 @@ behavior:"smooth"
 
 });
 
-});   
+});
 </script>
 
 </body>
 </html>
-  
+   
 
 
 
