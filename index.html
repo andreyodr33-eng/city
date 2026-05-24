@@ -293,7 +293,7 @@ const objects = [
 
 { en:"book", ru:"книга", type:"object", countable:true },
 
-{ en:"movie", ru:"фильм", type:"media",types:["media"], countable:true },
+{ en:"movie", ru:"фильм", type:"media", countable:true },
 
 { en:"picture", ru:"картина", type:"visual", countable:true },
 
@@ -394,8 +394,10 @@ filteredObjects.map((o,i)=>
 
 function filterActions(){
 
-const subject =
-subjects[selected.s];
+const subject = subjects[selected.s];
+
+const subjectType =
+subject.type === "none" ? "human" : subject.type;   
 
 filteredActions =
 actionRules.filter(action =>
