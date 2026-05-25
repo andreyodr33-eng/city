@@ -301,7 +301,7 @@ const objects = [
 
 { en:"school", ru:"школа", type:"place", countable:true },
 
-{ en:"home", ru:"дом", type:"place", countable:false },
+{ en:"home", ru:"дом", type:"place", countable:false,dropPreposition:true },
 
 { en:"city", ru:"город", type:"place", countable:true },
 
@@ -488,10 +488,13 @@ function renderSentence(subject, action, object){
 
 const actionWord =
 getActionForm(subject, action);
-
+if(object.dropPreposition){
+   actionWord =  actionWord.replace(" to", "");
+}   
 const article =
 getArticle(action, object);
-
+const prep =
+object.needsPreposition || "";   
 const parts = [
 
 subject.en,
