@@ -486,7 +486,7 @@ return startsWithVowel(object.en)
 
 function renderSentence(subject, action, object){
 
-const actionWord =
+let actionWord =
 getActionForm(subject, action);
 if(object.dropPreposition){
    actionWord =  actionWord.replace(" to", "");
