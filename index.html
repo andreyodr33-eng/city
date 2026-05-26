@@ -273,6 +273,20 @@ const actionRules = [
 
 {en:"watch",ru:"смотреть",mode:"action",forms:{base:"watch",third:"watches"},types:["media","visual","people"]},
 
+{en:"listen to",ru:"слушать",mode:"action",forms:{base:"listen to",third:"listens to"},types:["audio"]},
+
+{en:"open",ru:"открывать",mode:"action",forms:{base:"open",third:"opens"},types:["openable"]},
+
+{en:"close",ru:"закрывать",mode:"action",forms:{base:"close",third:"closes"},types:["openable"]},
+
+{en:"read",ru:"читать",mode:"action",forms:{base:"read",third:"reads"},types:["media","text"]},
+
+{en:"sleep",ru:"спать",mode:"state",forms:{base:"sleep",third:"sleeps"}},
+
+{en:"buy",ru:"покупать",mode:"action",forms:{base:"buy",third:"buys"},types:["object"]},
+
+{en:"sell",ru:"продавать",mode:"action",forms:{base:"sell",third:"sells"},types:["object"]},
+
 {en:"top up",ru:"пополнить",mode:"action",forms:{base:"top up",third:"tops up"},types:["refillable"],article:"the"}
 
 ];
@@ -293,9 +307,9 @@ const objects = [
 
 { en:"food", ru:"еда", type:"food", countable:false },
 
-{ en:"book", ru:"книга", type:"object", countable:true },
+{ en:"book", ru:"книга", types:["object","text","media"], countable:true },
 
-{ en:"movie", ru:"фильм", type:"media", countable:true },
+{ en:"movie", ru:"фильм", types:["media","visual"], countable:true },
 
 { en:"picture", ru:"картина", type:"visual", countable:true },
 
@@ -313,15 +327,39 @@ const objects = [
 
 { en:"office", ru:"офис", type:"workplace", countable:true },
 
-{ en:"hospital", ru:"больница", type:"workplace", countable:true },
+{ en:"hospital", ru:"больница", types:["place","workplace"], countable:true },
 
-{ en:"music", ru:"музыка",  type:"media", countable:false },
+{ en:"music", ru:"музыка",  types:["media","audio","abstract"], countable:false },
 
 { en:"help", ru:"помощь", type:"abstract", countable:false },
 
-{ en:"card", ru:"карта", type:"refillable", countable:true },
+{ en:"card", ru:"карта", types:["object","refillable"], countable:true },
 
-{ en:"name", ru:"имя", type:"abstract", countable:true }
+{ en:"name", ru:"имя", type:"abstract", countable:true },
+
+{ en:"door", ru:"дверь",types:["object","openable"], countable:true },
+
+{ en:"soup", ru:"суп",type:"food", countable:false },
+
+{ en:"spoon", ru:"ложка",type:"object", countable:true },
+
+{ en:"chair", ru:"стул",type:"object", countable:true },
+
+{ en:"tea", ru:"чай",type:"drink", countable:false },
+
+{ en:"coffee", ru:"кофе",type:"drink", countable:false },
+
+{ en:"milk", ru:"молоко",type:"drink", countable:false },
+
+{ en:"chicken", ru:"курица",type:"food", countable:false },
+
+{ en:"prescription", ru:"рецепт",type:"object", countable:true },
+
+{ en:"pharmacy", ru:"аптека",type:"place", countable:true },
+
+{ en:"shop", ru:"магазин",types:["place"], countable:true},
+
+{ en:"bed", ru:"кровать",types:["object"],countable:true}
 
 ];
 
@@ -417,6 +455,7 @@ selected.a = 0;
 
 renderActions();
 }
+
 function filterObjects(){
 
 const action = filteredActions[selected.a];
@@ -424,9 +463,14 @@ const action = filteredActions[selected.a];
 if(!action) return;
 
 filteredObjects = objects.filter(o =>
-action.types.includes(o.type)
-);
 
+(o.types &&
+o.types.some(t =>
+action.types.includes(t)
+))
+||
+(action.types.includes(o.type))
+);
 selected.o = 0;
 
 renderObjects();
@@ -485,11 +529,14 @@ return startsWithVowel(object.en)
 }
 
 function renderSentence(subject, action, object){
-
+if(!subject || !action || !object){
+    return ""; 
+}
 let actionWord =
 getActionForm(subject, action);
 if(object.dropPreposition){
-   actionWord =  actionWord.replace(" to", "");
+actionWord = 
+actionWord.replace(" to", "");
 }   
 const article =
 getArticle(action, object);
@@ -744,6 +791,10 @@ behavior:"smooth"
 
 </body>
 </html>
+   
+
+
+
    
 
 
