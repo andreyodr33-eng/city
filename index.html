@@ -237,8 +237,6 @@ const subjects = [
 
 ];
 
-
-
 const actionRules = [
 
 {en:"",ru:"",mode:"action",forms:{base:"",third:""},types:["drink","food","object","media","visual","place","people","abstract","workplace","refillable"]},
@@ -291,8 +289,6 @@ const actionRules = [
 
 ];
 
-
-
 const objects = [
 
 { en:"",ru:"",type:"object",countable:false },
@@ -317,7 +313,7 @@ const objects = [
 
 { en:"home", ru:"дом", type:"place", countable:false,dropPreposition:true },
 
-{ en:"city", ru:"город", type:"place", countable:true },
+{ en:"city", ru:"город", types:["place"], countable:true },
 
 { en:"family", ru:"семья", type:"people", countable:true },
 
@@ -384,8 +380,6 @@ filterObjects();
 renderHistory();
 
 }
-
-
 function renderSubjects(){
 
 document.getElementById("w1").innerHTML =
@@ -464,6 +458,8 @@ if(!action) return;
 
 filteredObjects = objects.filter(o =>
 
+
+
 (o.types &&
 o.types.some(t =>
 action.types.includes(t)
@@ -471,6 +467,7 @@ action.types.includes(t)
 ||
 (action.types.includes(o.type))
 );
+
 selected.o = 0;
 
 renderObjects();
@@ -532,6 +529,7 @@ function renderSentence(subject, action, object){
 if(!subject || !action || !object){
     return ""; 
 }
+
 let actionWord =
 getActionForm(subject, action);
 if(object.dropPreposition){
@@ -791,6 +789,8 @@ behavior:"smooth"
 
 </body>
 </html>
+   
+
    
 
 
