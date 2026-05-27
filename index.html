@@ -233,59 +233,61 @@ const subjects = [
 
 { en:"We", ru:"Мы", type:"human" },
 
-{ en:"They", ru:"Они", type:"human" }
+{ en:"They", ru:"Они", type:"human" },
+
+{ en:"There", ru:"Там",type:"placeword"},
+
+{ en:"Here", ru:"Здесь",type:"placeword"}
 
 ];
-
 const actionRules = [
 
-{en:"",ru:"",mode:"action",forms:{base:"",third:""},types:["drink","food","object","media","visual","place","people","abstract","workplace","refillable"]},
+{en:"",ru:"",mode:"action",forms:{base:"",third:""}},
 
-{en:"be",ru:"быть",mode:"state",forms:{I:"am",You:"are",He:"is",She:"is",It:"is",We:"are",They:"are"},types:["state"]},
+{en:"be",ru:"быть",mode:"state",forms:{I:"am",You:"are",He:"is",She:"is",It:"is",We:"are",They:"are"}},
+{en:"buy",ru:"покупать",mode:"action",forms:{base:"buy",third:"buys"}},
 
-{en:"use", ru:"использовать",mode:"action",forms:{base:"use",third:"uses"},types:["drink","food","object","media","visual","place","people","abstract"]}, 
+{en:"close",ru:"закрывать",mode:"action",forms:{base:"close",third:"closes"}},
+{en:"can",ru:"могу",mode:"action",forms:{base:"can",third:"can"}},
+{en:"call", ru:"звонить",mode:"action",forms:{base:"call",third:"calls"}},
 
-{en:"want",ru:"хотеть",mode:"action",forms:{base:"want",third:"wants"},types:["drink","food","object","media","visual","place","people","abstract"]},
+{en:"drink",ru:"пить",mode:"action",forms:{base:"drink",third:"drinks"}},
+{en:"drink",ru:"пить",mode:"action",forms:{base:"drink",third:"drinks"}},
+{en:"drive", ru:"водить",mode:"action",forms:{base:"drive",third:"drives"}},
 
-{en:"need",ru:"нуждаться",mode:"action",forms:{base:"need",third:"needs"},types:["drink","food","object","media","visual","place","people","abstract"]},
+{en:"eat",ru:"есть",mode:"action",forms:{base:"eat",third:"eats"}},
 
-{en:"like",ru:"нравиться",mode:"action",forms:{base:"like",third:"likes"},types:["food","object","media","visual"]},
+{en:"go to",ru:"идти в",mode:"action",forms:{base:"go to",third:"goes to"}},
+{en:"give",ru:"давать",mode:"action",forms:{base:"give",third:"gives"}},
+{ en:"get", ru:"получать",mode:"action",forms:{base:"get",third:"gets"}},
 
-{en:"see",ru:"видеть",mode:"action",forms:{base:"see",third:"sees"},subjectTypes:["human","object"],types:["object","visual","place","people"]},
+{en:"have",ru:"иметь",mode:"action",forms:{base:"have",third:"has"}},
+{en:"help", ru:"помогать",mode:"action",forms:{base:"help",third:"helps"}},
 
-{en:"have",ru:"иметь",mode:"action",forms:{base:"have",third:"has"},types:["object","people","refillable","abstract"]},
+{en:"like",ru:"нравится",mode:"action",forms:{base:"like",third:"likes"}},
+{en:"live in",ru:"жить в",mode:"action",forms:{base:"live in",third:"lives in"}},
+{en:"listen to",ru:"слушать",mode:"action",forms:{base:"listen to",third:"listens to"}},
 
-{en:"go to",ru:"идти в",mode:"action",forms:{base:"go to",third:"goes to"},types:["place"]},
+{en:"need",ru:"нужен",mode:"action",forms:{base:"need",third:"needs"}},
 
-{en:"live in",ru:"жить в",mode:"action",forms:{base:"live in",third:"lives in"},types:["place"]},
+{en:"open",ru:"открывать",mode:"action",forms:{base:"open",third:"opens"}},
 
-{en:"work at",ru:"работать в",mode:"action",forms:{base:"work at",third:"works at"},subjectTypes:["human"],types:["workplace"]},
+{en:"read",ru:"читать",mode:"action",forms:{base:"read",third:"reads"}},
 
-{en:"eat",ru:"есть",mode:"action",forms:{base:"eat",third:"eats"},subjectTypes:["human"],types:["food"]},
+{en:"see",ru:"видеть",mode:"action",forms:{base:"see",third:"sees"}},
+{en:"sleep",ru:"спать",mode:"action",forms:{base:"sleep",third:"sleeps"}},
+{en:"sell",ru:"продавать",mode:"action",forms:{base:"sell",third:"sells"}},
+{en:"study", ru:"учить",mode:"action",forms:{base:"study",third:"studies"}},
+{en:"sit on", ru:"сидеть на",mode:"action",forms:{base:"sit on",third:"sits on"}},
 
-{en:"drink",ru:"пить",mode:"action",forms:{base:"drink",third:"drinks"},subjectTypes:["human"],types:["drink"]},
+{en:"take",ru:"брать",mode:"action",forms:{base:"take",third:"takes"}},
+{en:"top up",ru:"пополнить",mode:"action",forms:{base:"top up",third:"tops up"},article:"the"},
 
-{en:"give",ru:"давать",mode:"action",forms:{base:"give",third:"gives"},types:["object","food","drink"]},
+{en:"use", ru:"использовать",mode:"action",forms:{base:"use",third:"uses"}},
 
-{en:"take",ru:"брать",mode:"action",forms:{base:"take",third:"takes"},types:["object","abstract"]},
-
-{en:"watch",ru:"смотреть",mode:"action",forms:{base:"watch",third:"watches"},types:["media","visual","people"]},
-
-{en:"listen to",ru:"слушать",mode:"action",forms:{base:"listen to",third:"listens to"},types:["audio"]},
-
-{en:"open",ru:"открывать",mode:"action",forms:{base:"open",third:"opens"},types:["openable"]},
-
-{en:"close",ru:"закрывать",mode:"action",forms:{base:"close",third:"closes"},types:["openable"]},
-
-{en:"read",ru:"читать",mode:"action",forms:{base:"read",third:"reads"},types:["media","text"]},
-
-{en:"sleep",ru:"спать",mode:"action",forms:{base:"sleep",third:"sleeps"},types:["rest"]},
-
-{en:"buy",ru:"покупать",mode:"action",forms:{base:"buy",third:"buys"},types:["object"]},
-
-{en:"sell",ru:"продавать",mode:"action",forms:{base:"sell",third:"sells"},types:["object"]},
-
-{en:"top up",ru:"пополнить",mode:"action",forms:{base:"top up",third:"tops up"},types:["refillable"],article:"the"}
+{en:"want",ru:"хотеть",mode:"action",forms:{base:"want",third:"wants"}},
+{en:"work at",ru:"работать в",mode:"action",forms:{base:"work at",third:"works at"}},
+{en:"watch",ru:"смотреть",mode:"action",forms:{base:"watch",third:"watches"}}
 
 ];
 
@@ -293,76 +295,65 @@ const objects = [
 
 { en:"",ru:"",type:"object",countable:false },
 
-{ en:"free", ru:"свободен", type:"state", countable:false },
+{en:"bus", ru:"автобус",types:["transport","object"], countable:true},
+{en:"book", ru:"книга", types:["object","text","media"], countable:true},
+{en:"bed", ru:"кровать",types:["rest","object"],countable:true},
 
-{ en:"happy", ru:"счастлив", type:"state", countable:false },
+{en:"car", ru:"автомобиль",types:["transport","object"], countable:true},
+{en:"city", ru:"город", types:["place"], countable:true},
+{en:"card", ru:"карта", types:["object","refillable"], countable:true},
+{en:"company", ru:"компания", type:"workplace", countable:true},
+{en:"chair", ru:"стул",type:"object", countable:true},
+{en:"chicken", ru:"курица",type:"food", countable:false},
+{en:"coffee", ru:"кофе",type:"drink", countable:false},
+{en:"computer", ru:"компьютер",type:"object", countable:true},
+
+{en:"door", ru:"дверь",types:["object","openable"], countable:true},
+{en:"doctor", ru:"врач",types:["person","medical"], countable:true},
+
+{en:"family", ru:"семья", types:["people","group"], countable:true},
+{en:"friend", ru:"друг", type:"people", countable:true},
+{en:"free", ru:"свободен", type:"state", countable:false},
+{en:"food", ru:"еда", type:"food", countable:false},
+
+{en:"home", ru:"дом", type:"place", countable:false,dropArticle:true},
+{en:"happy", ru:"счастлив", type:"state", countable:false},
+{en:"hospital", ru:"больница", types:["place","workplace","medical"], countable:true},
+{en:"help", ru:"помощь", type:"abstract", countable:false},
+
+{en:"lawyer", ru:"юрист",type:"person", countable:true},
+
+{en:"music", ru:"музыка",  types:["media","audio","abstract"], countable:false},
+{en:"milk", ru:"молоко",type:"drink", countable:false},
+{en:"movie", ru:"фильм", types:["media","visual"], countable:true},
+
+{en:"name", ru:"имя", type:"abstract", countable:true},
+
+{en:"office", ru:"офис", type:"workplace", countable:true},
+
+{en:"picture", ru:"картина", type:"visual", countable:true},
+{en:"phone", ru:"телефон",type:"object", countable:true},
+{en:"prescription", ru:"рецепт",types:["object","medical"], countable:true},
+{en:"pharmacy", ru:"аптека",types:["place","medical"], countable:true},
+
+{en:"ready", ru:"готов", type:"state", countable:false},
+
+{en:"soup", ru:"суп",type:"food", countable:false},
+{en:"spoon", ru:"ложка",type:"object", countable:true},
+{en:"student", ru:"студент",types:["person","education"], countable:true},
+{en:"school", ru:"школа", type:"place", countable:false},
+{en:"shop", ru:"магазин",types:["place"], countable:true},
+
+{en:"tea", ru:"чай",type:"drink", countable:false},
+{en:"translator", ru:"переводчик",types:["person","language"],countable:true},
+{en:"table", ru:"стол",type:"object", countable:true},
+{en:"teacher", ru:"учитель",types:["person","education"], countable:true},
  
-{ en:"ready", ru:"готов", type:"state", countable:false },
-
-{ en:"water", ru:"вода", type:"drink", countable:false },
-
-{ en:"food", ru:"еда", type:"food", countable:false },
-
-{ en:"book", ru:"книга", types:["object","text","media"], countable:true },
-
-{ en:"movie", ru:"фильм", types:["media","visual"], countable:true },
-
-{ en:"picture", ru:"картина", type:"visual", countable:true },
-
-{ en:"school", ru:"школа", type:"place", countable:true },
-
-{ en:"home", ru:"дом", type:"place", countable:false,dropPreposition:true },
-
-{ en:"city", ru:"город", types:["place"], countable:true },
-
-{ en:"family", ru:"семья", type:"people", countable:true },
-
-{ en:"friend", ru:"друг", type:"people", countable:true },
-
-{ en:"company", ru:"компания", type:"workplace", countable:true },
-
-{ en:"office", ru:"офис", type:"workplace", countable:true },
-
-{ en:"hospital", ru:"больница", types:["place","workplace"], countable:true },
-
-{ en:"music", ru:"музыка",  types:["media","audio","abstract"], countable:false },
-
-{ en:"help", ru:"помощь", type:"abstract", countable:false },
-
-{ en:"card", ru:"карта", types:["object","refillable"], countable:true },
-
-{ en:"name", ru:"имя", type:"abstract", countable:true },
-
-{ en:"door", ru:"дверь",types:["object","openable"], countable:true },
-
-{ en:"soup", ru:"суп",type:"food", countable:false },
-
-{ en:"spoon", ru:"ложка",type:"object", countable:true },
-
-{ en:"chair", ru:"стул",type:"object", countable:true },
-
-{ en:"tea", ru:"чай",type:"drink", countable:false },
-
-{ en:"coffee", ru:"кофе",type:"drink", countable:false },
-
-{ en:"milk", ru:"молоко",type:"drink", countable:false },
-
-{ en:"chicken", ru:"курица",type:"food", countable:false },
-
-{ en:"prescription", ru:"рецепт",type:"object", countable:true },
-
-{ en:"pharmacy", ru:"аптека",type:"place", countable:true },
-
-{ en:"shop", ru:"магазин",types:["place"], countable:true},
-
-{ en:"bed", ru:"кровать",types:["rest","object"],countable:true}
+{en:"water", ru:"вода", type:"drink", countable:false}
 
 ];
 
 let selected = { s:0, a:0, o:0 };
-
-let filteredActions = [];
-let filteredObjects = [];
 
 let history =
 JSON.parse(localStorage.getItem("history")) || [];
@@ -372,11 +363,8 @@ init();
 function init(){
 
 renderSubjects();
-
-filterActions();
-
-filterObjects();
-
+renderActions();
+renderObjects();
 renderHistory();
 
 }
@@ -399,7 +387,7 @@ subjects.map((s,i)=>
 function renderActions(){
 
 document.getElementById("w2").innerHTML =
-filteredActions.map((a,i)=>
+actionRules.map((a,i)=>
 
 `<div class="item">
 
@@ -414,7 +402,7 @@ filteredActions.map((a,i)=>
 function renderObjects(){
 
 document.getElementById("w3").innerHTML =
-filteredObjects.map((o,i)=>
+objects.map((o,i)=>
 
 `<div class="item">
 
@@ -425,55 +413,6 @@ filteredObjects.map((o,i)=>
 ).join("");
 
 }
-
-function filterActions(){
-
-const subject = subjects[selected.s];
-
-const isExploration = subject.type === "none";
-
-if(isExploration){
-
-  filteredActions = actionRules;
-
-} else {
-
-  filteredActions = actionRules.filter(action =>
-    !action.subjectTypes ||
-    action.subjectTypes.includes(subject.type)
-  );
-
-}
-
-selected.a = 0;
-
-renderActions();
-}
-
-function filterObjects(){
-
-const action = filteredActions[selected.a];
-
-if(!action) return;
-
-filteredObjects = objects.filter(o =>
-
-
-
-(o.types &&
-o.types.some(t =>
-action.types.includes(t)
-))
-||
-(action.types.includes(o.type))
-);
-
-selected.o = 0;
-
-renderObjects();
-
-}
-
 function getActionForm(subject, action){
 
 if(action.mode === "state"){
@@ -504,7 +443,7 @@ if(action.article){
    return action.article + " ";
 }
 
-if(object.en==="home"){
+if(object.dropArticle){
 return "";
 }
 
@@ -525,6 +464,43 @@ return startsWithVowel(object.en)
 
 }
 
+const phraseTemplates = {
+
+"you are free":
+"You are free to go",
+
+"i want book":
+"I want a book",
+
+"he go home":
+"He goes home",
+
+"she go home":
+"She goes home",
+
+"i drink water":
+"I drink some water",
+
+"you have translator":
+"Do you have a translator"
+
+};
+
+function improveSentence(sentence){
+
+const key =sentence
+.toLowerCase()
+.replace(/[?.!]/g,"")
+.replace(/\s+/g," ")
+.trim();
+
+if(phraseTemplates[key]){
+   return phraseTemplates[key];
+}
+
+return sentence;
+
+}
 function renderSentence(subject, action, object){
 if(!subject || !action || !object){
     return ""; 
@@ -581,12 +557,15 @@ async function build(){
 
 const s = subjects[selected.s];
 
-const a = filteredActions[selected.a];
+const a = actionRules[selected.a];
 
-const o = filteredObjects[selected.o];
+const o = objects[selected.o];
 
-const sentence =
+let sentence =
 renderSentence(s,a,o);
+
+sentence =
+improveSentence(sentence);
 
 const utterance =
 new SpeechSynthesisUtterance(sentence);
@@ -689,12 +668,6 @@ isDown = false;
 
 });
 
-wheel.addEventListener("mouseup", () => {
-
-isDown = false;
-
-});
-
 wheel.addEventListener("mousemove", e => {
 
 if(!isDown) return;
@@ -725,21 +698,14 @@ if(type==="s"){
 selected.s =
 Math.max(0,
 Math.min(index,subjects.length-1));
-
-filterActions();
-filterObjects();
-renderSubjects();
-
 }
 
 if(type==="a"){
 
 selected.a =
 Math.max(0,
-Math.min(index,filteredActions.length-1));
+Math.min(index,actionRules.length-1));
 
-filterObjects();
-renderActions();
 
 }
 
@@ -747,7 +713,7 @@ if(type==="o"){
 
 selected.o =
 Math.max(0,
-Math.min(index,filteredObjects.length-1));
+Math.min(index,objects.length-1));
 
 }
 
@@ -789,6 +755,13 @@ behavior:"smooth"
 
 </body>
 </html>
+   
+
+
+
+
+
+   
    
 
    
