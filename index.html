@@ -220,25 +220,13 @@ button{
 const subjects = [
 
 { en:"", ru:"", type:"none" }, 
-
 { en:"I", ru:"Я", type:"human" },
-
 { en:"You", ru:"Ты", type:"human" },
-
 { en:"He", ru:"Он", type:"human" },
-
 { en:"She", ru:"Она", type:"human" },
-
 { en:"It", ru:"Это", type:"object" },
-
 { en:"We", ru:"Мы", type:"human" },
-
-{ en:"They", ru:"Они", type:"human" },
-
-{ en:"There", ru:"Там",type:"placeword"},
-
-{ en:"Here", ru:"Здесь",type:"placeword"}
-
+{ en:"They", ru:"Они", type:"human" }
 ];
 
 const actionRules = [
@@ -322,6 +310,7 @@ const objects = [
 {en:"happy", ru:"счастлив", type:"state", countable:false},
 {en:"hospital", ru:"больница", types:["place","workplace","medical"], countable:true},
 {en:"help", ru:"помощь", type:"abstract", countable:false},
+{ en:"here", ru:"здесь",type:"place", countable:false},   
 
 {en:"lawyer", ru:"юрист",type:"person", countable:true},
 
@@ -350,7 +339,8 @@ const objects = [
 {en:"translator", ru:"переводчик",types:["person","language"],countable:true},
 {en:"table", ru:"стол",type:"object", countable:true},
 {en:"teacher", ru:"учитель",types:["person","education"], countable:true},
- 
+{ en:"there", ru:"там",type:"place", countable:false},
+   
 {en:"water", ru:"вода", type:"drink", countable:false}
 
 ];
