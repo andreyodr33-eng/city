@@ -216,7 +216,6 @@ button{
 
 <script>
 
-
 const subjects = [
 
 { en:"", ru:"", type:"none" }, 
@@ -240,6 +239,7 @@ const subjects = [
 { en:"Here", ru:"Здесь",type:"placeword"}
 
 ];
+
 const actionRules = [
 
 {en:"",ru:"",mode:"action",forms:{base:"",third:""}},
@@ -247,16 +247,17 @@ const actionRules = [
 {en:"be",ru:"быть",mode:"state",forms:{I:"am",You:"are",He:"is",She:"is",It:"is",We:"are",They:"are"}},
 {en:"buy",ru:"покупать",mode:"action",forms:{base:"buy",third:"buys"}},
 
-{en:"close",ru:"закрывать",mode:"action",forms:{base:"close",third:"closes"}},
+{en:"close",ru:"закрывать",mode:"action",forms:{base:"close",third:"closes"},objects:["door","company","card"]},
 {en:"can",ru:"могу",mode:"action",forms:{base:"can",third:"can"}},
 {en:"call", ru:"звонить",mode:"action",forms:{base:"call",third:"calls"}},
 
+
 {en:"drink",ru:"пить",mode:"action",forms:{base:"drink",third:"drinks"}},
-{en:"drive", ru:"водить",mode:"action",forms:{base:"drive",third:"drives"}},
+{en:"drive", ru:"водить",mode:"action",forms:{base:"drive",third:"drives"},objects:["car","bus"]},
 
-{en:"eat",ru:"есть",mode:"action",forms:{base:"eat",third:"eats"}},
+{en:"eat",ru:"есть",mode:"action",forms:{base:"eat",third:"eats"},objects:["food","soup","chicken"]},
 
-{en:"go to",ru:"идти в",mode:"action",forms:{base:"go to",third:"goes to"}},
+{ en:"go to",ru:"идти в",mode:"action",forms:{base:"go to",third:"goes to" }},
 {en:"give",ru:"давать",mode:"action",forms:{base:"give",third:"gives"}},
 { en:"get", ru:"получать",mode:"action",forms:{base:"get",third:"gets"}},
 
@@ -274,10 +275,11 @@ const actionRules = [
 {en:"read",ru:"читать",mode:"action",forms:{base:"read",third:"reads"}},
 
 {en:"see",ru:"видеть",mode:"action",forms:{base:"see",third:"sees"}},
-{en:"sleep",ru:"спать",mode:"action",forms:{base:"sleep",third:"sleeps"}},
-{en:"sell",ru:"продавать",mode:"action",forms:{base:"sell",third:"sells"}},
+{en:"sleep",ru:"спать",mode:"action",forms:{base:"sleep",third:"sleeps"},objects:["bed","home"]},
+{en:"sell",ru:"продавать",mode:"action",forms:{base:"sell",third:"sells"},objects:["book","food","car","house","ticket"]},
 {en:"study", ru:"учить",mode:"action",forms:{base:"study",third:"studies"}},
 {en:"sit on", ru:"сидеть на",mode:"action",forms:{base:"sit on",third:"sits on"}},
+
 
 {en:"take",ru:"брать",mode:"action",forms:{base:"take",third:"takes"}},
 {en:"top up",ru:"пополнить",mode:"action",forms:{base:"top up",third:"tops up"},article:"the"},
@@ -297,7 +299,6 @@ const objects = [
 {en:"bus", ru:"автобус",types:["transport","object"], countable:true},
 {en:"book", ru:"книга", types:["object","text","media"], countable:true},
 {en:"bed", ru:"кровать",types:["rest","object"],countable:true},
-
 {en:"car", ru:"автомобиль",types:["transport","object"], countable:true},
 {en:"city", ru:"город", types:["place"], countable:true},
 {en:"card", ru:"карта", types:["object","refillable"], countable:true},
@@ -314,8 +315,9 @@ const objects = [
 {en:"friend", ru:"друг", type:"people", countable:true},
 {en:"free", ru:"свободен", type:"state", countable:false},
 {en:"food", ru:"еда", type:"food", countable:false},
+{en:"ticket", ru:"билет",types:["travel","document"],countable:true},
 
-{en:"home", ru:"дом", type:"place", countable:false,dropArticle:true},
+{en:"home", ru:"дом", type:"place", countable:false, dropArticle:true},
 {en:"happy", ru:"счастлив", type:"state", countable:false},
 {en:"hospital", ru:"больница", types:["place","workplace","medical"], countable:true},
 {en:"help", ru:"помощь", type:"abstract", countable:false},
@@ -332,6 +334,7 @@ const objects = [
 
 {en:"picture", ru:"картина", type:"visual", countable:true},
 {en:"phone", ru:"телефон",type:"object", countable:true},
+{en:"script", ru:"рецепт",types:["object","medical"], countable:true},
 {en:"pharmacy", ru:"аптека",types:["place","medical"], countable:true},
 
 {en:"ready", ru:"готов", type:"state", countable:false},
@@ -341,8 +344,6 @@ const objects = [
 {en:"student", ru:"студент",types:["person","education"], countable:true},
 {en:"school", ru:"школа", type:"place", countable:false},
 {en:"shop", ru:"магазин",types:["place"], countable:true},
-{en:"script", ru:"рецепт",types:["object","medical"], countable:true},
-   
 
 {en:"tea", ru:"чай",type:"drink", countable:false},
 {en:"translator", ru:"переводчик",types:["person","language"],countable:true},
@@ -354,7 +355,7 @@ const objects = [
 ];
 
 let selected = { s:0, a:0, o:0 };
-
+let currenObjects = [];
 let history =
 JSON.parse(localStorage.getItem("history")) || [];
 
@@ -368,6 +369,8 @@ renderObjects();
 renderHistory();
 
 }
+
+
 function renderSubjects(){
 
 document.getElementById("w1").innerHTML =
@@ -401,16 +404,37 @@ actionRules.map((a,i)=>
 
 function renderObjects(){
 
-document.getElementById("w3").innerHTML =
-objects.map((o,i)=>
+const action =
+actionRules[selected.a];
 
-`<div class="item">
+const allowed =
+action?.objects || [];
+
+currentObjects =
+[...objects].sort((a,b)=>{
+
+const aGood =
+allowed.includes(a.en) ? 1 : 0;
+
+const bGood =
+allowed.includes(b.en) ? 1 : 0;
+
+return bGood - aGood;
+
+});
+
+document.getElementById("w3").innerHTML =
+
+currentObjects.map(o=>`
+
+<div class="item">
 
 <div class="en">${o.en}</div>
 <div class="ru">${o.ru}</div>
-</div>`
 
-).join("");
+</div>
+
+`).join("");
 
 }
 function getActionForm(subject, action){
@@ -465,33 +489,18 @@ return startsWithVowel(object.en)
 }
 
 const phraseTemplates = {
-
-"you are free":
-"You are free to go",
-
-"i want book":
-"I want a book",
-
-"he go to home":
-"He goes home",
-
-"she go to home":
-"She goes home",
-
-"i drink water":
-"I drink some water",
-
-"you have a translator":
-"Do you have a translator",
-
-"i need a script":
-"I need a prescription"  
-
+"you are free":"You are free to go",
+"i want book":"I want a book",
+"he goes to home":"He goes home",
+"she goes to home":"She goes home",
+"i drink water":"I drink some water",
+"you have translator":"Do you have a translator",
+"i need a script":"I need a prescription"
 };
 
 function improveSentence(sentence){
 
-const key =sentence
+const key = sentence
 .toLowerCase()
 .replace(/[?.!]/g,"")
 .replace(/\s+/g," ")
@@ -562,7 +571,7 @@ const s = subjects[selected.s];
 
 const a = actionRules[selected.a];
 
-const o = objects[selected.o];
+const o = currentObjects[selected.o];
 
 let sentence =
 renderSentence(s,a,o);
@@ -687,78 +696,64 @@ wheel.scrollTop = scrollTop - walk;
 
 });
 
-function setupWheel(wheelId,type){
+function setupWheel(wheelId,type,array){
 
-const wheel = document.getElementById(wheelId);
-
-wheel.addEventListener("scroll",()=>{
-
-const index =
-Math.round(wheel.scrollTop / 60);
-
-if(type==="s"){
-
-selected.s =
-Math.max(0,
-Math.min(index,subjects.length-1));
-}
-
-if(type==="a"){
-
-selected.a =
-Math.max(0,
-Math.min(index,actionRules.length-1));
-
-
-}
-
-if(type==="o"){
-
-selected.o =
-Math.max(0,
-Math.min(index,objects.length-1));
-
-}
-
-});
-
-}
-
-setupWheel("w1","s");
-setupWheel("w2","a");
-setupWheel("w3","o");
-
-document.querySelectorAll(".wheel")
-.forEach(wheel => {
+const wheel =
+document.getElementById(wheelId);
 
 let timeout;
 
 wheel.addEventListener("scroll",()=>{
-
-clearTimeout(timeout);
-
-timeout = setTimeout(()=>{
 
 const itemHeight = 60;
 
 const index =
 Math.round(wheel.scrollTop / itemHeight);
 
+if(type==="s"){
+selected.s =
+Math.max(0,
+Math.min(index,array.length-1));
+}
+
+if(type==="a"){
+selected.a =
+Math.max(0,
+Math.min(index,array.length-1));
+renderObjects();
+}
+
+if(type==="o"){
+selected.o =
+Math.max(0,
+Math.min(index,array.length-1));
+}
+
+clearTimeout(timeout);
+
+timeout = setTimeout(()=>{
+
 wheel.scrollTo({
 top:index * itemHeight,
 behavior:"smooth"
 });
 
-},80);
+},100);
 
 });
 
-});
+}
+setupWheel("w1","s",subjects);
+setupWheel("w2","a",actionRules);
+setupWheel("w3","o",objects);
+
 </script>
 
 </body>
 </html>
    
+
+
 
 
 
