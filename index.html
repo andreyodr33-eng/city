@@ -619,8 +619,10 @@ JSON.stringify(history)
 renderHistory();
 
 document.getElementById("result").innerHTML =
-sentence + "<br>" + russian;
-
+`   
+<div class="en">${sentence}</div>
+<div class="ru">${russian}</div>
+`;
 }
 function deleteHistory(index){
 
@@ -643,8 +645,8 @@ history.map((h,i)=>
 `<div class="historyItem">
 
 <div class="historyText">
-<div>${h.sentence}</div>
-<div>${h.russian}</div>
+<div class="en">${h.sentence}</div>
+<div class="ru">${h.russian}</div>
 </div>
 
 <button class="deleteBtn"
