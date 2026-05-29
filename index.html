@@ -52,8 +52,7 @@ html,body{
 
     overflow-y:scroll;
     overflow-x:hidden;
-   
-    touch-action: pan-y;
+
     scroll-snap-type:y mandatory;
 
     border:2px solid #444;
@@ -217,24 +216,43 @@ button{
 
 <script>
 
+
 const subjects = [
 
 { en:"", ru:"", type:"none" }, 
-{ en:"I", ru:"Я", type:"human" },
-{ en:"You", ru:"Ты", type:"human" },
-{ en:"He", ru:"Он", type:"human" },
-{ en:"She", ru:"Она", type:"human" },
-{ en:"It", ru:"Это", type:"object" },
-{ en:"We", ru:"Мы", type:"human" },
-{ en:"They", ru:"Они", type:"human" }
+
+{ en:"I", ru:"Я", type:"human",person:"first"},
+{ en:"You", ru:"Ты", type:"human",person:"second"},
+{ en:"He", ru:"Он", type:"human",person:"third"},
+{ en:"She", ru:"Она", type:"human",person:"third"},
+{ en:"It", ru:"Это", type:"object",person:"third"},
+{ en:"We", ru:"Мы", type:"human",person:"plural"},
+{ en:"They", ru:"Они", type:"human",person:"plural"},
+
+{en:"Man",ru:"Мужчина",type:"human",person:"third", articleMode:"indefinite"},
+{en:"Woman",ru:"Женщина",type:"human",person:"third",articleMode:"indefinite"},
+
+{en:"Their",ru:"Их",mode:"possessive",preferredObjects:["dog","house","car"]},
+{en:"My",ru:"Мой",mode:"possessive",preferredObjects:["book","phone","friend"]},
+{en:"Your",ru:"Твой",mode:"possessive",preferredObjects:["name","card"]},
+
+{en:"What", ru:"Что/Какой", type:"question" },
+{en:"Who", ru:"Кто", type:"question" },
+{en:"Where", ru:"Где", type:"question" },
+{en:"When", ru:"Когда", type:"question" },
+{en:"Why", ru:"Почему", type:"question" },
+{en:"How", ru:"Как", type:"question" }
+
 ];
+
+
 
 const actionRules = [
 
 {en:"",ru:"",mode:"action",forms:{base:"",third:""}},
 
-{en:"be",ru:"быть",mode:"state",forms:{I:"am",You:"are",He:"is",She:"is",It:"is",We:"are",They:"are"},objects:["free","here","happy","there"]},
-{en:"buy",ru:"покупать",mode:"action",forms:{base:"buy",third:"buys"}},
+{en:"be",ru:"быть",mode:"state",forms:{I:"am",You:"are",He:"is",She:"is",It:"is",We:"are",They:"are"},objects:["free","happy","ready","here","there","at home","at work"]},
+{en:"buy",ru:"покупать",mode:"action",forms:{base:"buy",third:"buys"},objects:["ticket","book","food","car"]},
 
 {en:"close",ru:"закрывать",mode:"action",forms:{base:"close",third:"closes"},objects:["door","company","card"]},
 {en:"can",ru:"могу",mode:"action",forms:{base:"can",third:"can"}},
@@ -246,12 +264,12 @@ const actionRules = [
 
 {en:"eat",ru:"есть",mode:"action",forms:{base:"eat",third:"eats"},objects:["food","soup","chicken"]},
 
-{ en:"go to",ru:"идти в",mode:"action",forms:{base:"go to",third:"goes to" }},
-{en:"give",ru:"давать",mode:"action",forms:{base:"give",third:"gives"}},
-{ en:"get", ru:"получать",mode:"action",forms:{base:"get",third:"gets"}},
+{ en:"go to",ru:"идти в",mode:"action",forms:{base:"go to",third:"goes to" },objects:["home","school","city"]},
+{en:"give",ru:"давать",mode:"action",forms:{base:"give",third:"gives"},objects:["ticket","card","food"]},
+{ en:"get", ru:"получать",mode:"action",forms:{base:"get",third:"gets"},objects:["ticket","card","food"]["ticket","card","food"]},
 
-{en:"have",ru:"иметь",mode:"action",forms:{base:"have",third:"has"}},
-{en:"help", ru:"помогать",mode:"action",forms:{base:"help",third:"helps"}},
+{en:"have",ru:"иметь",mode:"action",forms:{base:"have",third:"has"},objects:["book","car","house"]},
+{en:"help", ru:"помогать",mode:"action",forms:{base:"help",third:"helps"},objects:["friend","person"]},
 
 {en:"like",ru:"нравится",mode:"action",forms:{base:"like",third:"likes"}},
 {en:"live in",ru:"жить в",mode:"action",forms:{base:"live in",third:"lives in"}},
@@ -271,7 +289,7 @@ const actionRules = [
 
 
 {en:"take",ru:"брать",mode:"action",forms:{base:"take",third:"takes"}},
-{en:"top up",ru:"пополнить",mode:"action",forms:{base:"top up",third:"tops up"},article:"the"},
+{en:"top up",ru:"пополнить",mode:"action",forms:{base:"top up",third:"tops up"},objects:["card","phone","wallet"],article:"the"},
 
 {en:"use", ru:"использовать",mode:"action",forms:{base:"use",third:"uses"}},
 
@@ -304,19 +322,20 @@ const objects = [
 {en:"friend", ru:"друг", type:"people", countable:true},
 {en:"free", ru:"свободен", type:"state", countable:false},
 {en:"food", ru:"еда", type:"food", countable:false},
-{en:"ticket", ru:"билет",types:["travel","document"],countable:true},
+
 
 {en:"home", ru:"дом", type:"place", countable:false, dropArticle:true},
 {en:"happy", ru:"счастлив", type:"state", countable:false},
 {en:"hospital", ru:"больница", types:["place","workplace","medical"], countable:true},
 {en:"help", ru:"помощь", type:"abstract", countable:false},
-{ en:"here", ru:"здесь",type:"place", countable:false},   
+{en:"here", ru:"здесь",type:"place", countable:false},
 
 {en:"lawyer", ru:"юрист",type:"person", countable:true},
 
 {en:"music", ru:"музыка",  types:["media","audio","abstract"], countable:false},
 {en:"milk", ru:"молоко",type:"drink", countable:false},
 {en:"movie", ru:"фильм", types:["media","visual"], countable:true},
+{en:"money",ru:"деньги", type:"object", countable:true},
 
 {en:"name", ru:"имя", type:"abstract", countable:true},
 
@@ -324,6 +343,7 @@ const objects = [
 
 {en:"picture", ru:"картина", type:"visual", countable:true},
 {en:"phone", ru:"телефон",type:"object", countable:true},
+{en:"script", ru:"рецепт",types:["object","medical"], countable:true},
 {en:"pharmacy", ru:"аптека",types:["place","medical"], countable:true},
 
 {en:"ready", ru:"готов", type:"state", countable:false},
@@ -333,20 +353,23 @@ const objects = [
 {en:"student", ru:"студент",types:["person","education"], countable:true},
 {en:"school", ru:"школа", type:"place", countable:false},
 {en:"shop", ru:"магазин",types:["place"], countable:true},
-{en:"script", ru:"рецепт",types:["object","medical"], countable:true},
-   
+
 {en:"tea", ru:"чай",type:"drink", countable:false},
 {en:"translator", ru:"переводчик",types:["person","language"],countable:true},
 {en:"table", ru:"стол",type:"object", countable:true},
 {en:"teacher", ru:"учитель",types:["person","education"], countable:true},
-{ en:"there", ru:"там",type:"place", countable:false},
-   
-{en:"water", ru:"вода", type:"drink", countable:false}
+{en:"ticket", ru:"билет",types:["travel","document"],countable:true},
+ 
+{en:"water", ru:"вода", type:"drink", countable:false},
+{en:"wallet",ru:"кошелёк",type:"object", countable:true}
 
 ];
 
 let selected = { s:0, a:0, o:0 };
-let currenObjects = [];
+let currentSubjects = [...subjects];
+let currentObjects = [...objects];
+let filteredActions = [];
+let filteredObjects = [];
 let history =
 JSON.parse(localStorage.getItem("history")) || [];
 
@@ -398,25 +421,39 @@ function renderObjects(){
 const action =
 actionRules[selected.a];
 
-const allowed =
+const subject =
+currentSubjects[selected.s];
+
+const actionHints =
 action?.objects || [];
 
-currentObjects =
+const subjectHints =
+subject?.preferredObjects || [];
+
+const sorted =
 [...objects].sort((a,b)=>{
 
-const aGood =
-allowed.includes(a.en) ? 1 : 0;
+const aScore =
 
-const bGood =
-allowed.includes(b.en) ? 1 : 0;
+(actionHints.includes(a.en) ? 2 : 0) +
 
-return bGood - aGood;
+(subjectHints.includes(a.en) ? 1 : 0);
+
+const bScore =
+
+(actionHints.includes(b.en) ? 2 : 0) +
+
+(subjectHints.includes(b.en) ? 1 : 0);
+
+return bScore - aScore;
 
 });
 
+currentObjects = sorted;
+
 document.getElementById("w3").innerHTML =
 
-currentObjects.map(o=>`
+sorted.map(o=>`
 
 <div class="item">
 
@@ -428,18 +465,16 @@ currentObjects.map(o=>`
 `).join("");
 
 }
+
+
 function getActionForm(subject, action){
 
 if(action.mode === "state"){
      return action.forms[subject.en];
 }
 
-if(
-subject.en==="He" ||
-subject.en==="She" ||
-subject.en==="It"
-){
-return action.forms.third;
+if(subject.person === "third"){
+  return action.forms.third;
 }
 
 return action.forms.base;
@@ -452,25 +487,40 @@ return /^[aeiou]/i.test(word);
 
 }
 
+function addAorAn(word){
+
+if(startsWithVowel(word)){
+   return "An " + word;
+}
+
+return "A " + word;
+
+}
+
+function getSubjectText(subject){
+
+if(subject.articleMode === "indefinite"){
+   return addAorAn(subject.en);
+}
+if(subject.articleMode === "definite"){
+   return "The " + subject.en;
+}
+
+return subject.en;
+}
+
 function getArticle(action, object){
 
 if(action.article){
    return action.article + " ";
 }
 
-if(object.dropArticle){
-return "";
-}
-
-if(
-action.forms.base==="go to" &&
-object.en==="school"
-){
-return "";
+if(object.articleRule === "none"){
+   return "";
 }
 
 if(!object.countable){
-return "";
+   return "";
 }
 
 return startsWithVowel(object.en)
@@ -480,13 +530,31 @@ return startsWithVowel(object.en)
 }
 
 const phraseTemplates = {
-"you are free":"You are free to go",
-"i want book":"I want a book",
-"he goes to home":"He goes home",
-"she goes to home":"She goes home",
-"i drink water":"I drink some water",
-"you have translator":"Do you have a translator",
-"i need a script":"I need a prescription"
+
+"you are free":
+"You are free to go",
+
+"i want book":
+"I want a book",
+
+"he goes to home":
+"He goes home",
+
+"she goes to home":
+"She goes home",
+
+"i drink water":
+"I drink some water",
+
+"you have translator":
+"Do you have a translator",
+
+"i need a script":
+"I need a prescription",
+
+"your name":
+"What is your name"
+
 };
 
 function improveSentence(sentence){
@@ -504,24 +572,26 @@ if(phraseTemplates[key]){
 return sentence;
 
 }
+
 function renderSentence(subject, action, object){
 if(!subject || !action || !object){
     return ""; 
 }
 
-let actionWord =
-getActionForm(subject, action);
+console.log("RAW:", subject.en);
+console.log("FORMATTED:", getSubjectText(subject));
+if(subject.mode === "possessive"){
+    return `${getSubjectText(subject)} ${object.en}`;
+}
+let actionWord = getActionForm(subject, action);
 if(object.dropPreposition){
-actionWord = 
-actionWord.replace(" to", "");
+actionWord = actionWord.replace(" to", "");
 }   
-const article =
-getArticle(action, object);
-const prep =
-object.needsPreposition || "";   
+const article = getArticle(action, object);
+const prep = object.needsPreposition || "";   
 const parts = [
 
-subject.en,
+getSubjectText(subject),
 actionWord,
 prep,   
 article + object.en
@@ -558,7 +628,7 @@ return "Ошибка перевода";
 
 async function build(){
 
-const s = subjects[selected.s];
+const s = currentSubjects[selected.s];
 
 const a = actionRules[selected.a];
 
@@ -608,7 +678,7 @@ JSON.stringify(history)
 renderHistory();
 
 document.getElementById("result").innerHTML =
-`   
+`
 <div class="en">${sentence}</div>
 <div class="ru">${russian}</div>
 `;
@@ -704,22 +774,61 @@ const index =
 Math.round(wheel.scrollTop / itemHeight);
 
 if(type==="s"){
+
 selected.s =
 Math.max(0,
 Math.min(index,array.length-1));
+
+const subject =
+currentSubjects[selected.s];
+
+if(subject.mode === "possessive"){
+
+selected.a = 0;
+
+const w2 =
+document.getElementById("w2");
+
+w2.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+w2.style.opacity = "0.4";
+
+w2.style.pointerEvents = "none";
+
+}else{
+
+const w2 =
+document.getElementById("w2");
+
+w2.style.opacity = "1";
+
+w2.style.pointerEvents = "auto";
+
+}
+
+renderObjects();
+
 }
 
 if(type==="a"){
+
 selected.a =
 Math.max(0,
 Math.min(index,array.length-1));
+
 renderObjects();
+
 }
 
 if(type==="o"){
+
 selected.o =
 Math.max(0,
 Math.min(index,array.length-1));
+
 }
 
 clearTimeout(timeout);
@@ -755,6 +864,7 @@ navigator.serviceWorker.register("./service-worker.js")
 </body>
 </html>
    
+
 
 
 
