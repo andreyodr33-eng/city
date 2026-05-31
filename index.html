@@ -244,9 +244,6 @@ const subjects = [
 {en:"How", ru:"Как", type:"question" }
 
 ];
-
-
-
 const actionRules = [
 
 {en:"",ru:"",mode:"action",forms:{base:"",third:""}},
@@ -305,14 +302,11 @@ const actionRules = [
 {en:"want",ru:"хотеть",mode:"action",forms:{base:"want",third:"wants"},objects:["dance","book"],infinitiveMode:"to"},
 {en:"work at",ru:"работать в",mode:"action",forms:{base:"work at",third:"works at"}},
 {en:"watch",ru:"смотреть",mode:"action",forms:{base:"watch",third:"watches"}}
-
-
 ];
 
 const objects = [
 
 { en:"",ru:"",type:"object",countable:false },
-
 
 {en:"bus", ru:"автобус",types:["transport","object"], countable:true},
 {en:"book", ru:"книга", type:"noun",infinitive:false, countable:true},
@@ -388,7 +382,6 @@ const objects = [
 {en:"run",ru:"бегать",type:"verb_infinitive",countable:false},
 {en:"drive",ru:"водить",type:"verb_infinitive",countable:false}
 
-
 ];
 
 let selected = { s:0, a:0, o:0 };
@@ -400,17 +393,12 @@ let history =
 JSON.parse(localStorage.getItem("history")) || [];
 
 init();
-
 function init(){
-
 renderSubjects();
 renderActions();
 renderObjects();
 renderHistory();
-
 }
-
-
 function renderSubjects(){
 
 document.getElementById("w1").innerHTML =
@@ -491,7 +479,6 @@ sorted.map(o=>`
 `).join("");
 
 }
-
 
 function getActionForm(subject, action){
 
