@@ -891,9 +891,17 @@ history.map((h,i)=>
 
 `<div class="historyItem">
 
-<div class="historyText">
-<div class="en">${h.sentence}</div>
-<div class="ru">${h.russian}</div>
+<div class="historyText"
+onclick="speakHistory(${i})">
+
+<div class="en">
+🔊 ${h.sentence}
+</div>
+
+<div class="ru">
+${h.russian}
+</div>
+
 </div>
 
 <button class="deleteBtn"
