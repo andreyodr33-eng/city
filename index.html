@@ -869,7 +869,21 @@ JSON.stringify(history)
 renderHistory();
 
 }
+function speakHistory(index){
 
+    speechSynthesis.cancel();
+
+    const utterance =
+    new SpeechSynthesisUtterance(
+        history[index].sentence
+    );
+
+    utterance.lang = "en-US";
+
+    utterance.rate = 0.9;
+
+    speechSynthesis.speak(utterance);
+}
 function renderHistory(){
 
 document.getElementById("history").innerHTML =
