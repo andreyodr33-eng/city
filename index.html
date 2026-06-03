@@ -689,7 +689,6 @@ return sentence;
 
 }
 
-  
    function renderSentence(subject, action, object){
 
     if(!subject || !action || !object){
@@ -710,21 +709,25 @@ return sentence;
     console.log("COMBINED:", article + object.en);
     if(rule.article === false){
         article = "";
-    }
-
+   }
+    /*новое правило*/
+   if(object.type === "verb_infinitive"){
+   
+   const toWord =
+      action.infinitiveMode === "to"
+      ? " to"
+      : "";
+    return `${getSubjectText(subject)} ${actionWord}${toWord} ${object.en}`;
+  }
     return [
         subjectText,
         actionWord,
         prep,
         article + object.en
     ]
-
-  
-  
     .filter(Boolean)
     .join(" ");
 }
-
 async function translateText(text){
 
 try{
