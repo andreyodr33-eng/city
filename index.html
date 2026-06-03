@@ -867,20 +867,6 @@ console.log("AFTER renderSentence:", sentence);
 sentence =
 improveSentence(sentence);
 console.log("AFTER improveSentence:", sentence);
-const localCheck =
-validateLocal(s,a,o);
-
-let grammarCheck = {
-    valid:true
-};
-
-if(localCheck.valid){
-
-    grammarCheck =
-    await validateGrammar(sentence);
-
-}
-
 const utterance =
 new SpeechSynthesisUtterance(sentence);
 
@@ -899,7 +885,20 @@ if(englishVoice){
 }
 
 speechSynthesis.speak(utterance);
+   
+const localCheck =
+validateLocal(s,a,o);
 
+let grammarCheck = {
+    valid:true
+};
+
+if(localCheck.valid){
+
+    grammarCheck =
+    await validateGrammar(sentence);
+
+}
 document.getElementById("result").innerHTML =
 sentence + "<br>Translating...";
 
