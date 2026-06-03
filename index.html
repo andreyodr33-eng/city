@@ -852,21 +852,6 @@ function getGrammarRule(action, object){
         //article: object.article ? null : false
     };
 }
-function speakHistory(index){
-
-    speechSynthesis.cancel();
-
-    const utterance =
-    new SpeechSynthesisUtterance(
-        history[index].sentence
-    );
-
-    utterance.lang = "en-US";
-
-    utterance.rate = 0.9;
-
-    speechSynthesis.speak(utterance);
-}
 
 async function build(){
 
@@ -988,6 +973,22 @@ JSON.stringify(history)
 
 renderHistory();
 
+}
+   
+function speakHistory(index){
+
+    speechSynthesis.cancel();
+
+    const utterance =
+    new SpeechSynthesisUtterance(
+        history[index].sentence
+    );
+
+    utterance.lang = "en-US";
+
+    utterance.rate = 0.9;
+
+    speechSynthesis.speak(utterance);
 }
 
 function renderHistory(){
