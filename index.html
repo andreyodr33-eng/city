@@ -620,7 +620,9 @@ function getArticle(action, object){
 if(action.article){
    return action.article + " ";
 }
-
+if(object.article){
+   return object.article + " ";
+}   
 if(object.articleRule === "none"){
    return "";
 }
