@@ -370,7 +370,7 @@ const objects = [
 {en:"cash",ru:"наличные",type:"object",countable:true},
 
 {en:"door", ru:"дверь",types:["object","openable"], countable:true},
-{en:"doctor", ru:"врач",types:["person","medical"], countable:true},
+{en:"doctor", ru:"врач",types:["person","medical"], countable:true,article:"the"},
 {en:"dishes",ru:"тарелки",type:"object",countable:true,plural:true},
 
 {en:"English",ru:"английский",type:"place",countable:true},
@@ -385,7 +385,7 @@ const objects = [
 {en:"game",ru:"игра",type:"activity",countable:false},
 
 
-{en:"house",ru:"дом", type:"place", countable:false, dropArticle:true},
+{en:"house",ru:"дом", type:"place", countable:true},
 { en:"home", ru:"дом", type:"special_place", article:false },
 {en:"happy", ru:"счастлив", type:"state", countable:false},
 {en:"hospital", ru:"больница",type:"institution",article:true },
@@ -414,8 +414,8 @@ const objects = [
 {en:"office", ru:"офис", type:"workplace", countable:true},
 
 {en:"picture", ru:"картина", type:"visual", countable:true},
-{en:"phone", ru:"телефон",type:"object", countable:true},
-{en:"pharmacy", ru:"аптека",types:["place","medical"], countable:true,articleRulle:"the"},
+{en:"phone", ru:"телефон",type:"object", countable:true,article:"the"},
+{en:"pharmacy", ru:"аптека",types:["place","medical"], countable:true,article:"the"},
 {en:"park", ru:"парк",type:"place", article:true },
 {en:"parents",ru:"родители",type:"people",countable:true,plural:true},
 
