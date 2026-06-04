@@ -416,7 +416,7 @@ const objects = [
 {en:"picture", ru:"картина", type:"visual", countable:true},
 {en:"phone", ru:"телефон",type:"object", countable:true,article:"the"},
 {en:"pharmacy", ru:"аптека",types:["place","medical"], countable:true,article:"the"},
-{en:"park", ru:"парк",type:"place", article:true },
+{en:"park", ru:"парк",type:"place",preposition:"in", article:"the" },
 {en:"parents",ru:"родители",type:"people",countable:true,plural:true},
 
 {en:"question",ru:"вопрос",type:"abstract",countable:true},  
@@ -667,9 +667,7 @@ const phraseTemplates = {
 "i dance music":"I dance to music",
 "i finish run":"I finish running",
 "i finish read":"I finis reading",
-"i put a bag":"I put a bag in the room",
-"i run a park":"I run in the park"
-
+"i put a bag":"I put a bag in the room"
 
 };
 
@@ -701,7 +699,7 @@ return sentence;
 
     const rule = getGrammarRule(action, object);
 
-    let prep = rule.prep || "";
+    let prep = object.preposition || rule.prep || "";
 
     let article = getArticle(action, object);
     console.log("ARTICLE DEBUG:", article);
