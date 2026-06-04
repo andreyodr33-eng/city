@@ -277,7 +277,6 @@ const actionRules = [
 {en:"finish",ru:"закончить",mode:"action",forms:{base:"finish",third:"finishes"},objects:["reading","running"]},
 {en:"find",ru:"находить",forms:{base:"find",third:"finds"},objects:["key","cash","answer"]},
 
-
 {en:"go",ru:"идти",mode:"action",forms:{base:"go",third:"goes" },defaultPreposition:"to",objects:["home","school","city","work"]},
 {en:"give",ru:"давать",mode:"action",forms:{base:"give",third:"gives"},objects:["ticket","card","food"]},
 {en:"get", ru:"получать",mode:"action",forms:{base:"get",third:"gets"},objects:["message","letter"]},
@@ -304,7 +303,6 @@ const actionRules = [
 {en:"read",ru:"читать",mode:"action",forms:{base:"read",third:"reads"},objects:["book"]},
 {en:"run",ru:"бегать",mode:"action",forms:{base:"run",third:"runs"},objects:["park","street","company","business"]},
 
-
 {en:"see",ru:"видеть",mode:"action",forms:{base:"see",third:"sees"},objects:["movie"]},
 {en:"sleep",ru:"спать",mode:"action",forms:{base:"sleep",third:"sleeps"},objects:["bed","home"]},
 {en:"sell",ru:"продавать",mode:"action",forms:{base:"sell",third:"sells"},objects:["book","car","ticket"]},
@@ -328,33 +326,25 @@ const actionRules = [
 {en:"want",ru:"хотеть",mode:"action",forms:{base:"want",third:"wants"},objects:["dance","book"],infinitiveMode:"to"},
 {en:"work",ru:"работать",mode:"action",forms:{base:"work",third:"works"},objects:["shop","factory","bank"]},
 {en:"watch",ru:"смотреть",mode:"action",forms:{base:"watch",third:"watches"},objects:["movies","news","cartoons","TV"]}
-
-
 ];
 
 const objects = [
 
 { en:"",ru:"",type:"object",countable:false },
 
-
-//{ en:"school", ru:"школа", type:"institution", article:true },
-//{ en:"hospital", ru:"больница", type:"institution", article:true },
-//{ en:"park", ru:"парк", type:"place", article:true },
-//{ en:"home", ru:"дом", type:"special_place", article:false },
-
 {en:"again",ru:"снова",type:"abstract",countable:false },
-
+{en:"answer",ru:"ответ",type:"noun",countable:true },
 
 {en:"bus", ru:"автобус",types:["transport","object"], countable:true},
 {en:"book", ru:"книга", type:"noun",infinitive:false, countable:true},
-{en:"bed", ru:"кровать",types:["rest","object"],countable:true},
+{en:"bed", ru:"кровать",types:["rest","object"],preposition:"in",countable:true},
 {en:"bank",ru:"банк",type:"object",countable:true},
 {en:"bread",ru:"хлеб",type:"food",countable:false},
 {en:"bag",ru:"сумка",type:"object",countable:true},
 
 {en:"car", ru:"автомобиль",types:["transport","object"], countable:true},
 {en:"city", ru:"город", type:"place", countable:true},
-{en:"card", ru:"карта", types:["object","refillable"], countable:true},
+{en:"card", ru:"карта", type:"special_place", countable:true},
 {en:"company", ru:"компания", type:"workplace", countable:true},
 {en:"chair", ru:"стул",type:"object", countable:true},
 {en:"chicken", ru:"курица",type:"food", countable:false},
@@ -362,37 +352,39 @@ const objects = [
 {en:"computer", ru:"компьютер",type:"object", countable:true},
 {en:"cartoons",ru:"мультфильмы",type:"media",countable:false},
 {en:"cake",ru:"торт",type:"food",countable:true},
-{en:"cash",ru:"наличные",type:"object",countable:true},
+{en:"cash",ru:"наличные",type:"object",countable:false},
+{en:"classes,ru:"занятия",type:"abstract",countable:false},
 
 {en:"door", ru:"дверь",types:["object","openable"], countable:true},
-{en:"doctor", ru:"врач",types:["person","medical"], countable:true,article:"the"},
+{en:"doctor", ru:"врач",types:["person","medical"],article:"the", countable:true},
 {en:"dishes",ru:"тарелки",type:"object",countable:true,plural:true},
 
-{en:"English",ru:"английский",type:"place",countable:true},
+{en:"English",ru:"английский",type:"place",countable:false,article:""},
 
 {en:"family", ru:"семья", types:["people","group"], countable:false},
 {en:"friend", ru:"друг", type:"people", countable:true},
 {en:"free", ru:"свободен", type:"state", countable:false},
 {en:"food", ru:"еда", type:"food", countable:false},
-{en:"factory",ru:"фабрика",type:"object", countable:true},
+{en:"factory",ru:"фабрика",type:"object",countable:true},
 
-{en:"guitar",ru:"гитара",type:"object",articleRule:"none", countable:true},
+{en:"guitar",ru:"гитара",type:"object",article:"the", countable:true},
 {en:"game",ru:"игра",type:"activity",countable:false},
 
-
-{en:"house",ru:"дом", type:"place", countable:true},
-{ en:"home", ru:"дом", type:"special_place", article:false },
+{en:"house",ru:"дом", type:"place", countable:false, dropArticle:true},
+{en:"home", ru:"дом", type:"special_place", article:false },
 {en:"happy", ru:"счастлив", type:"state", countable:false},
 {en:"hospital", ru:"больница",type:"institution",article:true },
 {en:"help", ru:"помощь", type:"abstract", countable:false},
 {en:"hello", ru:"здесь",type:"place", countable:false},
 {en:"homework",ru:"уроки",type:"abstract",countable:false},
 {en:"here", ru:"здесь",type:"abstract",countable:false},
+{en:"history",ru:"история",type:"object",countable:false},
 
 {en:"key",ru:"ключь",type:"object",countable:true},
 
 {en:"lawyer", ru:"юрист",type:"person", countable:true},
 {en:"letter", ru:"письмо",type:"visual",countable:true},
+{en:"line", ru:"линия",type:"object",preposition:"in",countable:false},
 
 {en:"music", ru:"музыка",  types:["media","audio","abstract"], countable:false},
 {en:"milk", ru:"молоко",type:"drink", countable:false},
@@ -401,23 +393,28 @@ const objects = [
 {en:"medicine",ru:"лекарство",type:"medical",countable:false},
 {en:"major",ru:"специальность",type:"abstract",countable:false},
 {en:"morning",ru:"утро",type:"abstract",countable:false},
-{en:"message",ru:"сообщение",type:"abstract",countable:false},
+{en:"message",ru:"сообщение",type:"abstract",countable:true},
+{en:"math", ru:"математика",type:"object",countable:false},
+{en:"month",ru:"месяц",type:"abstract",countable:true},
 
 {en:"name", ru:"имя", type:"abstract", countable:true},
-{en:"news",ru:"новости", type:"media",countable:true,plural:true},
+{en:"news",ru:"новости", type:"media",countable:true,plural:true,article:"the"},
 
 {en:"office", ru:"офис", type:"workplace", countable:true},
 
 {en:"picture", ru:"картина", type:"visual", countable:true},
-{en:"phone", ru:"телефон",type:"object", countable:true,article:"the"},
+{en:"phone", ru:"телефон",type:"special_place",article:"the", countable:true},
 {en:"pharmacy", ru:"аптека",types:["place","medical"], countable:true,article:"the"},
-{en:"park", ru:"парк",type:"place",preposition:"in", article:"the" },
+{en:"park", ru:"парк",type:"object",preposition:"in", article:"the"},
 {en:"parents",ru:"родители",type:"people",countable:true,plural:true},
+{en:"pool",ru:"бассейн",type:"object",preposition:"in",countable:true},
 
-{en:"question",ru:"вопрос",type:"abstract",countable:true},  
+{en:"question",ru:"вопрос",type:"abstract",countable:true},
 
 {en:"ready", ru:"готов", type:"state", countable:false},
 {en:"road", ru:"дорога",type:"object",countable:false},
+{en:"reading",ru:"чтение",type:"noun",countable:false},
+{en:"running",ru:"бег",type:"noun",countable:false},
 
 {en:"soup", ru:"суп",type:"food", countable:false},
 {en:"spoon", ru:"ложка",type:"object", countable:true},
@@ -438,12 +435,14 @@ const objects = [
 {en:"time", ru:"время",type:"abstract",countable:true},
 {en:"taxi", ru:"такси",type:"object",countable:true},
 {en:"TV", ru:"телевизор",type:"object",countable:false},
+{en:"town",ru:"городок", type:"place", countable:true},
 
 {en:"vegetables",ru:"овощи",type:"food",countable:false},
  
 {en:"water", ru:"вода", type:"drink", countable:false},
-{en:"wallet",ru:"кошелёк",type:"object", countable:true},
+{en:"wallet",ru:"кошелёк",type:"special_place", countable:true},
 {en:"work",ru:"работа",type:"special_place", article:false },
+{en:"week",ru:"неделя",type:"abstract",countable:true},
 
 {en:"go",ru:"идти",type:"verb_infinitive",infinitive:true,countable:false},
 {en:"top up",ru:"пополнить",type:"verb_infinitive",infinitive:true,countable:false},
@@ -452,8 +451,6 @@ const objects = [
 {en:"swim",ru:"плавать",type:"verb_infinitive",countable:false},
 {en:"cook",ru:"готовить",type:"verb_infinitive",countable:false},
 {en:"sing",ru:"петь",type:"verb_infinitive",countable:false},
-{en:"read",ru:"читать",type:"verb_infinitive",countable:false},
-{en:"run",ru:"бегать",type:"verb_infinitive",countable:false},
 {en:"drive",ru:"водить",type:"verb_infinitive",countable:false},
 {en:"happened",ru:"случилось",type:"verb_infinitive",countable:false}
 
@@ -467,7 +464,11 @@ go:{home:{prep:"",article:false}, school:{prep:"to",article:false}, work:{prep:"
 live:{home:{prep:"at",article:false}},
 answer:{phone:{article:"the"}},
 come:{home:{prep:"",article:false},work:{prep:"to",article:false},school:{prep:"to",article:false}},
+stay:{home:{prep:"at",article:false}},
+"top up":{card:{prep:"my",article:false},wallet:{prep:"my",article:false},phone:{prep:"my",article:false}},
+work:{factory:{prep:"in",article:true},bank:{prep:"in",article:true},shop:{prep:"at",article:true}},
 };
+   
 let selected = { s:0, a:0, o:0 };
 let currentSubjects = [...subjects];
 let currentObjects = [...objects];
@@ -486,7 +487,6 @@ renderObjects();
 renderHistory();
 
 }
-
 
 function renderSubjects(){
 
