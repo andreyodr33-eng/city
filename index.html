@@ -255,10 +255,10 @@ const actionRules = [
 
 {en:"",ru:"",mode:"action",forms:{base:"",third:""}},
 
-{en:"answer",ru:"отвечать",mode:"action",forms:{base:"answer",third:"answers"},objects:["phone","question","doctor"]},
+{en:"answer",ru:"отвечать",mode:"action",forms:{base:"answer",third:"answers"},objects:["phone","question"]},
 
 {en:"be",ru:"быть",mode:"state",type:"linking_verb",forms:{I:"am",You:"are",He:"is",She:"is",It:"is",We:"are",They:"are"},
- objects:["happy","free","home","ready","business"]},
+ objects:["happy","free","home","ready","doctor"]},
 {en:"buy",ru:"покупать",forms:{base:"buy",third:"buys"},objects:["medicine","ticket","bread"]},
 
 {en:"close",ru:"закрывать",mode:"action",forms:{base:"close",third:"closes"},defaultPreposition:"",objects:["door","company","card"]},
@@ -356,8 +356,8 @@ const objects = [
 {en:"cash",ru:"наличные",type:"object",countable:false},
 {en:"classes",ru:"занятия",type:"abstract",countable:false},
 
-{en:"door", ru:"дверь",types:["object","openable"], countable:true},
-{en:"doctor", ru:"врач",types:["person","medical"],article:"the", countable:true},
+{en:"door", ru:"дверь",types:["object","openable"],countable:true},
+{en:"doctor", ru:"врач",types:["person","medical"],countable:true},
 {en:"dishes",ru:"тарелки",type:"object",countable:true,plural:true},
 
 {en:"English",ru:"английский",type:"place",countable:false,article:""},
@@ -665,8 +665,8 @@ const phraseTemplates = {
 "i finish read":"I finis reading",
 "i put a bag":"I put a bag in the room",
  "i am home":"I am home already",
- "i am ready":"I am just ready",  
- "i am a business":"I am a busineessman"
+ "i am ready":"I am just ready"  
+ 
 };
 
 function improveSentence(sentence){
