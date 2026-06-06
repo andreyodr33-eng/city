@@ -295,7 +295,7 @@ const actionRules = [
 {en:"must",ru:"должен",mode:"action",forms:{base:"must",third:"must"},objects:["go"],infinitiveMode:"bare"},
 {en:"make",ru:"делать",mode:"action",forms:{base:"make",third:"makes"},objects:["cake","bread"]},
 
-{en:"need",ru:"нужен",mode:"action",forms:{base:"need",third:"needs"},objects:["go","script","ticket","card","food"],infinitiveMode:"to"},
+{en:"need",ru:"нужен",mode:"action",forms:{base:"need",third:"needs"},objects:["go","prescription","ticket","card","food"],infinitiveMode:"to"},
 
 {en:"open",ru:"открывать",mode:"action",forms:{base:"open",third:"opens"},objects:["door"]},
 
@@ -328,8 +328,8 @@ const actionRules = [
 
 {en:"want",ru:"хотеть",mode:"action",forms:{base:"want",third:"wants"},objects:["dance","book"],infinitiveMode:"to"},
 {en:"work",ru:"работать",mode:"action",forms:{base:"work",third:"works"},objects:["shop","factory","bank"]},
-{en:"watch",ru:"смотреть",mode:"action",forms:{base:"watch",third:"watches"},objects:["movies","news","cartoons","TV"]}
- {en:"would like", ru:"хотел бы",mode:"action",forms:{base:"would like",third:"would lik"},objects:["coffee","go"],infinitiveMode:"to"}
+{en:"watch",ru:"смотреть",mode:"action",forms:{base:"watch",third:"watches"},objects:["movies","news","cartoons","TV"]},
+{en:"would like", ru:"хотел бы",mode:"action",forms:{base:"would like",third:"would lik"},objects:["coffee","go"],infinitiveMode:"to"}
 ];
 
 const objects = [
@@ -413,6 +413,7 @@ const objects = [
 {en:"park", ru:"парк",type:"object",preposition:"in", article:"the"},
 {en:"parents",ru:"родители",type:"people",countable:true,plural:true},
 {en:"pool",ru:"бассейн",type:"object",preposition:"in",countable:true},
+{en:"prescription", ru:"рецепт",types:["object","medical"], countable:true},
 
 {en:"question",ru:"вопрос",type:"abstract",countable:true},
 
@@ -426,7 +427,6 @@ const objects = [
 {en:"student", ru:"студент",types:["person","education"], countable:true},
 {en:"school", ru:"школа",type:"special_place",article:false},
 {en:"shop", ru:"магазин",types:["place"], countable:true},
-{en:"script", ru:"рецепт",types:["object","medical"], countable:true},
 {en:"song", ru:"песня",type:"media",countable:true},
 {en:"shower",ru:"душ",type:"object",countable:true},
 {en:"street",ry:"улица",type:"object",preposition:"on",countable:true},
@@ -687,7 +687,8 @@ const phraseTemplates = {
 "i finish read":"I finis reading",
 "i put a bag":"I put a bag in the room",
  "i am home":"I am home already",
- "i am ready":"I am just ready"  
+ "i am ready":"I am just ready",
+ "i would like to go":"I'd like to go"
  
 };
 
