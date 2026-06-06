@@ -256,10 +256,11 @@ const actionRules = [
 
 {en:"",ru:"",mode:"action",forms:{base:"",third:""}},
 
-{en:"answer",ru:"отвечать",mode:"action",forms:{base:"answer",third:"answers"},objects:["phone","question"]},
+{en:"answer",ru:"отвечать",mode:"action",forms:{base:"answer",third:"answers"},objects:["phone","question","doctor"]},
+{en:"ask",ru:"просить",mode:"action",forms:{base:"ask",third:"asks"},defaultPreposition:"for",objects:["help"]},
 
 {en:"be",ru:"быть",mode:"state",type:"linking_verb",forms:{I:"am",You:"are",He:"is",She:"is",It:"is",We:"are",They:"are"},
- objects:["happy","free","home","ready","doctor"]},
+ objects:["happy","free","ready","home","doctor"]},
 {en:"buy",ru:"покупать",forms:{base:"buy",third:"buys"},objects:["medicine","ticket","bread"]},
 
 {en:"close",ru:"закрывать",mode:"action",forms:{base:"close",third:"closes"},defaultPreposition:"",objects:["door","company","card"]},
@@ -268,6 +269,7 @@ const actionRules = [
 {en:"cook",ru:"готовить",mode:"action",forms:{base:"cook",third:"cooks"},objects:["food","soup","chicken"]},
 {en:"come",ru:"приходить",mode:"action",forms:{base:"come",third:"comes"},defaultPreposition:"to",objects:["home","school","work"],infinitiveMode:"to"},
 {en:"check out",ru:"выселиться",mode:"action",forms:{base:"check out",third:"checks out"},defaultPreposition:"of",article:"the",objects:["hotel"]},
+{en:"clean",ru:"чистый",mode:"action",forms:{base:"clean",third:"cleans"},objects:["kitchen","bathroom"]},
 
 {en:"dance",ru:"танцевать",mode:"action",forms:{base:"dance",third:"dances"},objects:["music"]},
 {en:"drink",ru:"пить",mode:"action",forms:{base:"drink",third:"drinks"},objects:["coffee","tea","water"]},
@@ -278,6 +280,7 @@ const actionRules = [
 
 {en:"finish",ru:"закончить",mode:"action",forms:{base:"finish",third:"finishes"},objects:["reading","running"]},
 {en:"find",ru:"находить",forms:{base:"find",third:"finds"},objects:["key","cash","answer"]},
+{en:"feel",ru:"чувствовать",mode:"action",forms:{base:"feel",third:"feels"},objects:["good"]},
 
 {en:"go",ru:"идти",mode:"action",forms:{base:"go",third:"goes" },defaultPreposition:"to",objects:["home","school","city","work"]},
 {en:"give",ru:"давать",mode:"action",forms:{base:"give",third:"gives"},objects:["ticket","card","food"]},
@@ -285,6 +288,8 @@ const actionRules = [
 
 {en:"have",ru:"иметь",mode:"action",forms:{base:"have",third:"has"},objects:["book","car","house","translator"]},
 {en:"help", ru:"помогать",mode:"action",forms:{base:"help",third:"helps"},objects:["friend","family"]},
+{en:"hear",ru:"cлышать",mode:"action",forms:{base:"hear",third:"hears"},objects:["sound"]},
+{en:"hate",ru:"ненавидеть",mode:"action",forms:{base:"hate",third:"hates"},objects:["rain"]},
 
 {en:"like",ru:"нравится",mode:"action",forms:{base:"like",third:"likes"},objects:["sing","dance","cook"],infinitiveMode:"to"},
 {en:"live",ru:"жить",mode:"action",forms:{base:"live",third:"lives"},defaultPreposition:"in",objects:["home","city"]},
@@ -305,6 +310,7 @@ const actionRules = [
 {en:"read",ru:"читать",mode:"action",forms:{base:"read",third:"reads"},objects:["book"]},
 {en:"run",ru:"бегать",mode:"action",forms:{base:"run",third:"runs"},objects:["park","street","company","business"]},
 
+
 {en:"see",ru:"видеть",mode:"action",forms:{base:"see",third:"sees"},objects:["movie"]},
 {en:"sleep",ru:"спать",mode:"action",forms:{base:"sleep",third:"sleeps"},objects:["bed","home"]},
 {en:"sell",ru:"продавать",mode:"action",forms:{base:"sell",third:"sells"},objects:["book","car","ticket"]},
@@ -322,16 +328,18 @@ const actionRules = [
 {en:"take",ru:"брать",mode:"action",forms:{base:"take",third:"takes"},objects:["bus","medicine","shower","taxi"]},
 {en:"top up",ru:"пополнить",mode:"action",forms:{base:"top up",third:"tops up"},objects:["card","phone","wallet"]},
 {en:"try", ru:"пытаться",mode:"action",forms:{base:"try",third:"tries"},objects:["again"]},
+{en:"turn",ru:"повернуть",mode:"action",forms:{base:"turn",third:"turns"},objects:["left","right"]},
+{en:"tell",ru:"рассказывать",mode:"action",forms:{base:"tell",third:"tells"},objects:["joke"]},
 
 {en:"use", ru:"использовать",mode:"action",forms:{base:"use",third:"uses"},objects:["computer","card","phone"]},
-{en:"understand",ru:"понимаю",mode:"action",forms:{base:"understand",third:"undestands"},objects:["question","lesson","English"]},  
+{en:"understand",ru:"понимаю",mode:"action",forms:{base:"understand",third:"undestands"},objects:["question","lesson","English"]},
 
 {en:"want",ru:"хотеть",mode:"action",forms:{base:"want",third:"wants"},objects:["dance","book"],infinitiveMode:"to"},
 {en:"work",ru:"работать",mode:"action",forms:{base:"work",third:"works"},objects:["shop","factory","bank"]},
 {en:"watch",ru:"смотреть",mode:"action",forms:{base:"watch",third:"watches"},objects:["movies","news","cartoons","TV"]},
-{en:"would like", ru:"хотел бы",mode:"action",forms:{base:"would like",third:"would like"},objects:["coffee","go"],infinitiveMode:"to"}
+{en:"would like", ru:"хотел бы",mode:"action",forms:{base:"would like",third:"would like"},objects:["coffee","go"],infinitiveMode:"to"},
+{en:"walk",ru:"ходить",mode:"action",forms:{base:"walk",third:"walks"},defaultPreposition:"in",article:"the",objects:["morning"]}
 ];
-
 const objects = [
 
 { en:"",ru:"",type:"object",countable:false },
