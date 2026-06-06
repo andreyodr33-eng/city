@@ -157,9 +157,10 @@ button{
 
 .en{
     color:#00ff88;
-    font-size:24px;
     font-weight:bold;
     line-height:1.1;
+    white-space:nowrap;
+    width:100%;
 }
 
 .ru{
@@ -499,7 +500,7 @@ let size = 24;
 el.style.fontSize = size + "px";
 
 while(
-el.scrollWidth > el.clientWidth &&
+el.scrollWidth > el.parentElement.clientWidth - 8 &&
 size > 12
 ){
 size--;
