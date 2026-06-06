@@ -490,7 +490,25 @@ renderObjects();
 renderHistory();
 
 }
+function fitAllWords(){
 
+document.querySelectorAll(".en").forEach(el=>{
+
+let size = 24;
+
+el.style.fontSize = size + "px";
+
+while(
+el.scrollWidth > el.clientWidth &&
+size > 12
+){
+size--;
+el.style.fontSize = size + "px";
+}
+
+});
+
+}
 function renderSubjects(){
 
 document.getElementById("w1").innerHTML =
@@ -504,7 +522,7 @@ subjects.map((s,i)=>
 </div>`
 
 ).join("");
-
+ fitAllWords();
 }
 
 function renderActions(){
@@ -519,7 +537,7 @@ actionRules.map((a,i)=>
 </div>`
 
 ).join("");
-
+ fitAllWords();
 }
 
 function renderObjects(){
@@ -569,7 +587,7 @@ sorted.map(o=>`
 </div>
 
 `).join("");
-
+ fitAllWords();
 }
 
 
