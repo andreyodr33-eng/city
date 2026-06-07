@@ -257,7 +257,7 @@ const actionRules = [
 {en:"",ru:"",mode:"action",forms:{base:"",third:""}},
 
 {en:"answer",ru:"отвечать",mode:"action",forms:{base:"answer",third:"answers"},objects:["phone","question"]},
-{en:"ask",ru:"просить",mode:"action",forms:{base:"ask",third:"asks"},defaultPreposition:"for",objects:["help"]},
+{en:"ask",ru:"просить",mode:"action",forms:{base:"ask",third:"asks"},defaultPreposition:"for",objects:["help"],"teacher","friend"},
 
 {en:"be",ru:"быть",mode:"state",type:"linking_verb",forms:{I:"am",You:"are",He:"is",She:"is",It:"is",We:"are",They:"are"},
  objects:["happy","free","ready","home","doctor"]},
@@ -491,6 +491,7 @@ come:{home:{prep:"",article:false},work:{prep:"to",article:false},school:{prep:"
 stay:{home:{prep:"at",article:false}},
 "top up":{card:{prep:"my",article:false},wallet:{prep:"my",article:false},phone:{prep:"my",article:false}},
 work:{factory:{prep:"in",article:true},bank:{prep:"in",article:true},shop:{prep:"at",article:true}},
+ask:{friend:{prep:"my",article:false},teacher:{prep:"the",article:false}},
 };
    
 let selected = { s:0, a:0, o:0 };
