@@ -269,7 +269,7 @@ const actionRules = [
 {en:"cook",ru:"готовить",mode:"action",forms:{base:"cook",third:"cooks"},objects:["food","soup","chicken"]},
 {en:"come",ru:"приходить",mode:"action",forms:{base:"come",third:"comes"},defaultPreposition:"to",objects:["home","school","work"],infinitiveMode:"to"},
 {en:"check out",ru:"выселиться",mode:"action",forms:{base:"check out",third:"checks out"},defaultPreposition:"of",article:"the",objects:["hotel","restaurant","menu"]},
-{en:"clean",ru:"чистый",mode:"action",forms:{base:"clean",third:"cleans"},objects:["kitchen","bathroom","floor","table"]},
+{en:"clean",ru:"чистый",mode:"action",forms:{base:"clean",third:"cleans"},article:"the",objects:["kitchen","bathroom","floor","table"]},
 
 {en:"dance",ru:"танцевать",mode:"action",forms:{base:"dance",third:"dances"},objects:["music","ballet","parties"]},
 {en:"drink",ru:"пить",mode:"action",forms:{base:"drink",third:"drinks"},objects:["coffee","tea","water"]},
@@ -354,7 +354,7 @@ const objects = [
 {en:"bread",ru:"хлеб",type:"food",countable:false},
 {en:"bag",ru:"сумка",type:"object",countable:true},
 {en:"business",ru:"бизнес",type:"person",countable:true},
-{en:"bathroom",ru:"ванная",article:"the",countable:false},
+{en:"bathroom",ru:"ванная",countable:false},
 {en:"ballet",ru:"баллет",countable:false},
    
 
@@ -404,7 +404,7 @@ const objects = [
 {en:"joke",ru:"шутка",type:"abstract",countable:true},
 
 {en:"key",ru:"ключь",type:"object",countable:true},
-{en:"kitchen",ru:"кухня",type:"object",article:"the",countable:false},
+{en:"kitchen",ru:"кухня",type:"object",countable:false},
 
 {en:"lawyer", ru:"юрист",type:"person", countable:true},
 {en:"letter", ru:"письмо",type:"visual",countable:true},
