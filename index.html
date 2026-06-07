@@ -256,7 +256,7 @@ const actionRules = [
 
 {en:"",ru:"",mode:"action",forms:{base:"",third:""}},
 
-{en:"answer",ru:"отвечать",mode:"action",forms:{base:"answer",third:"answers"},objects:["phone","question","doctor"]},
+{en:"answer",ru:"отвечать",mode:"action",forms:{base:"answer",third:"answers"},objects:["phone","question"]},
 {en:"ask",ru:"просить",mode:"action",forms:{base:"ask",third:"asks"},defaultPreposition:"for",objects:["help"]},
 
 {en:"be",ru:"быть",mode:"state",type:"linking_verb",forms:{I:"am",You:"are",He:"is",She:"is",It:"is",We:"are",They:"are"},
@@ -1192,17 +1192,16 @@ setupWheel("w3","o",objects);
 
 </script>
 <script>
-
 if("serviceWorker" in navigator){
 
 navigator.serviceWorker.register("./service-worker.js")
 .then(()=>console.log("SW registered"));
-
+navigator.serviceWorker.addEventListener('controllerchange', () => {
+  window.location.reload();
+});
 }
-
-</script>
-
-</body>
+ </script>
+ </body>
 </html>
    
 
