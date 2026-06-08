@@ -287,7 +287,7 @@ const actionRules = [
 {en:"get", ru:"получать",mode:"action",forms:{base:"get",third:"gets"},objects:["work","letter","sick","tierd"]},
 
 {en:"have",ru:"иметь",mode:"action",forms:{base:"have",third:"has"},objects:["book","car","house","translator"]},
-{en:"help", ru:"помогать",mode:"action",forms:{base:"help",third:"helps"},objects:["friend","family"]},
+{en:"help", ru:"помогать",mode:"action",forms:{base:"help",third:"helps"},objects:["friend","family","teacher"]},
 {en:"hear",ru:"cлышать",mode:"action",forms:{base:"hear",third:"hears"},objects:["sound","phone","news"]},
 {en:"hate",ru:"ненавидеть",mode:"action",forms:{base:"hate",third:"hates"},objects:["rain"]},
 
@@ -510,6 +510,7 @@ stay:{home:{prep:"at",article:false}},
 work:{factory:{prep:"in",article:true},bank:{prep:"in",article:true},shop:{prep:"at",article:true}},
 ask:{friend:{prep:"my",article:false},teacher:{prep:"the",article:false}},
 "check out":{restaurant:{prep:"the",article:false},menu:{prep:"the",article:false}},
+ help:{teacher:{prep:"the",article:false}},
 };
    
 let selected = { s:0, a:0, o:0 };
