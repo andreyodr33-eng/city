@@ -311,7 +311,7 @@ const actionRules = [
 {en:"run",ru:"бегать",mode:"action",forms:{base:"run",third:"runs"},objects:["park","street","company","business"]},
 
 
-{en:"see",ru:"видеть",mode:"action",forms:{base:"see",third:"sees"},objects:["movie"]},
+{en:"see",ru:"видеть",mode:"action",forms:{base:"see",third:"sees"},objects:["movie","problem","difference"]},
 {en:"sleep",ru:"спать",mode:"action",forms:{base:"sleep",third:"sleeps"},objects:["bed","home"]},
 {en:"sell",ru:"продавать",mode:"action",forms:{base:"sell",third:"sells"},objects:["book","car","ticket"]},
 {en:"study", ru:"учить",mode:"action",forms:{base:"study",third:"studies"},objects:["English","math","history"]},
@@ -375,6 +375,7 @@ const objects = [
 {en:"door", ru:"дверь",types:["object","openable"], countable:true},
 {en:"doctor", ru:"врач",types:["person","medical"], countable:true},
 {en:"dishes",ru:"тарелки",type:"object",countable:true,plural:true},
+{en:"difference",ru:"разница",type:"abstract",article:"the",countable:false},
 
 {en:"English",ru:"английский",type:"place",countable:false,article:""},
 
@@ -437,6 +438,8 @@ const objects = [
 {en:"prescriptions", ru:"рецепт",types:["object","medical"], countable:true},
 {en:"parties",ru:"вечеринки",type:"abstract",article:"at",countable:false},
 {en:"plan",ru:"план",type:"abstract",countable:true},
+{en:"problem",ru:"проблема",type:"abstract",article:"the",countable:false},
+   
 {en:"question",ru:"вопрос",type:"abstract",countable:true},
 
 {en:"ready", ru:"готов", type:"state", countable:false},
