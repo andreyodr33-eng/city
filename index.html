@@ -292,7 +292,7 @@ const actionRules = [
 {en:"hate",ru:"ненавидеть",mode:"action",forms:{base:"hate",third:"hates"},objects:["rain","lies","waiting"]},
 
 {en:"like",ru:"нравится",mode:"action",forms:{base:"like",third:"likes"},objects:["sing","dance","cook"],infinitiveMode:"to"},
-{en:"live",ru:"жить",mode:"action",forms:{base:"live",third:"lives"},defaultPreposition:"in",objects:["home","city"]},
+{en:"live",ru:"жить",mode:"action",forms:{base:"live",third:"lives"},defaultPreposition:"in",objects:["home","alone","city"]},
 {en:"listen",ru:"слушать",mode:"action",forms:{base:"listen",third:"listens"},defaultPreposition:"to",objects:["music"]},
 {en:"love",ru:"любить",mode:"action",forms:{base:"love",third:"loves"},objects:["music","food"]},
 {en:"look",ru:"смотреть",mode:"action",forms:{base:"look",third:"looks"},defaultPreposition:"at",objects:["picture"]},
@@ -346,6 +346,7 @@ const objects = [
 
 {en:"again",ru:"снова",type:"abstract",countable:false },
 {en:"answer",ru:"ответ",type:"noun",countable:true },
+{en:"alone","один",type:"state", countable:false},
 
 {en:"bus", ru:"автобус",types:["transport","object"], countable:true},
 {en:"book", ru:"книга", type:"noun",infinitive:false, countable:true},
@@ -506,7 +507,7 @@ const objects = [
 const exceptions = {
 
 go:{home:{prep:"",article:false}, school:{prep:"to",article:false}, work:{prep:"to",article:false}}, 
-live:{home:{prep:"at",article:false}},
+live:{home:{prep:"at",article:false},alone:{prep:"",article:false}},
 come:{home:{prep:"",article:false},work:{prep:"to",article:false},school:{prep:"to",article:false}},
 stay:{home:{prep:"at",article:false}},
 "top up":{card:{prep:"my",article:false},wallet:{prep:"my",article:false},phone:{prep:"my",article:false}},
