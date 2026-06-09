@@ -263,7 +263,7 @@ const actionRules = [
  objects:["happy","free","ready","home","doctor"]},
 {en:"buy",ru:"покупать",forms:{base:"buy",third:"buys"},objects:["medicine","ticket","bread"]},
 
-{en:"close",ru:"закрывать",mode:"action",forms:{base:"close",third:"closes"},defaultPreposition:"",objects:["door","company","card"]},
+{en:"close",ru:"закрывать",mode:"action",forms:{base:"close",third:"closes"},defaultPreposition:"the",objects:["door","company","card"]},
 {en:"can",ru:"могу",mode:"action",forms:{base:"can",third:"can"},objects:["speak","dance","swim","cook","sing","read","run","drive"],infinitiveMode:"bare"},
 {en:"call", ru:"звонить",mode:"action",forms:{base:"call",third:"calls"},objects:["phone","friend","parents","doctor"]},
 {en:"cook",ru:"готовить",mode:"action",forms:{base:"cook",third:"cooks"},objects:["food","soup","chicken"]},
@@ -302,7 +302,7 @@ const actionRules = [
 
 {en:"need",ru:"нужен",mode:"action",forms:{base:"need",third:"needs"},objects:["go","prescription","ticket","card","food"],infinitiveMode:"to"},
 
-{en:"open",ru:"открывать",mode:"action",forms:{base:"open",third:"opens"},objects:["door"]},
+{en:"open",ru:"открывать",mode:"action",forms:{base:"open",third:"opens"},defaultPreposition:"the",objects:["door","window","fridge"]},
 
 {en:"put",ru:"ложить",mode:"action",forms:{base:"put",third:"puts"},objects:["key","phone","book"]},
 {en:"play",ru:"играть",mode:"action",forms:{base:"play",third:"plays"},objects:["sports","music","game","guitar"]},
@@ -373,7 +373,7 @@ const objects = [
 {en:"cash",ru:"наличные",type:"object",countable:false},
 {en:"classes",ru:"занятия",type:"abstract",countable:false},
 
-{en:"door", ru:"дверь",types:["object","openable"], countable:true},
+{en:"door", ru:"дверь",types:["object","openable"], countable:false},
 {en:"doctor", ru:"врач",types:["person","medical"], countable:true},
 {en:"dishes",ru:"тарелки",type:"object",countable:true,plural:true},
 {en:"difference",ru:"разница",type:"abstract",article:"the",countable:false},
@@ -387,6 +387,7 @@ const objects = [
 {en:"food", ru:"еда", type:"food", countable:false},
 {en:"factory",ru:"фабрика",type:"object",countable:true},
 {en:"floor",ru:"пол",type:"object",countable:false},
+{en:"fridge",ru:"холодильник",type:"object",countable:false},
 
 {en:"guitar",ru:"гитара",type:"object",article:"the", countable:true},
 {en:"game",ru:"игра",type:"activity",countable:false},
