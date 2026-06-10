@@ -312,7 +312,7 @@ const actionRules = [
 
 
 {en:"see",ru:"видеть",mode:"action",forms:{base:"see",third:"sees"},objects:["movie","problem","difference"]},
-{en:"sleep",ru:"спать",mode:"action",forms:{base:"sleep",third:"sleeps"},objects:["bed","home"]},
+{en:"sleep",ru:"спать",mode:"action",forms:{base:"sleep",third:"sleeps"},objects:["bed","home","hotel"]},
 {en:"sell",ru:"продавать",mode:"action",forms:{base:"sell",third:"sells"},objects:["book","car","ticket"]},
 {en:"study", ru:"учить",mode:"action",forms:{base:"study",third:"studies"},objects:["English","math","history"]},
 {en:"sit", ru:"сидеть на",mode:"action",forms:{base:"sit",third:"sits"},defaultPreposition:"on",objects:["chair"]},
@@ -350,7 +350,7 @@ const objects = [
 
 {en:"bus", ru:"автобус",types:["transport","object"], countable:true},
 {en:"book", ru:"книга", type:"noun",infinitive:false, countable:true},
-{en:"bed", ru:"кровать",types:["rest","object"],preposition:"in",countable:true},
+{en:"bed", ru:"кровать",types:["rest","object"],preposition:"in",countable:false},
 {en:"bank",ru:"банк",type:"object",countable:true},
 {en:"bread",ru:"хлеб",type:"food",countable:false},
 {en:"bag",ru:"сумка",type:"object",countable:true},
@@ -395,7 +395,7 @@ const objects = [
 
 
 {en:"house",ru:"дом", type:"place", countable:false, dropArticle:true},
-{en:"home", ru:"дом", type:"special_place", article:false },
+{en:"home", ru:"дом", type:"special_place",preposition:"at", article:false },
 {en:"happy", ru:"счастлив", type:"state", countable:false},
 {en:"hospital", ru:"больница",type:"institution",article:true },
 {en:"help", ru:"помощь", type:"abstract", countable:false},
@@ -403,7 +403,7 @@ const objects = [
 {en:"homework",ru:"уроки",type:"abstract",countable:false},
 {en:"here", ru:"здесь",type:"abstract",countable:false},
 {en:"history",ru:"история",type:"object",countable:false},
-{en:"hotel",ru:"отель",type:"object",countable:false},
+{en:"hotel",ru:"отель",type:"object",preposition:"in",countable:true},
 
 {en:"joke",ru:"шутка",type:"abstract",countable:true},
 {en:"job",ru:"работа",type:"abstract",countable:true},
