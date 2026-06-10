@@ -315,7 +315,7 @@ const actionRules = [
 {en:"sleep",ru:"спать",mode:"action",forms:{base:"sleep",third:"sleeps"},objects:["bed","home","hotel"]},
 {en:"sell",ru:"продавать",mode:"action",forms:{base:"sell",third:"sells"},objects:["book","car","ticket"]},
 {en:"study", ru:"учить",mode:"action",forms:{base:"study",third:"studies"},objects:["English","math","history"]},
-{en:"sit", ru:"сидеть на",mode:"action",forms:{base:"sit",third:"sits"},defaultPreposition:"on",objects:["chair"]},
+{en:"sit", ru:"сидеть на",mode:"action",forms:{base:"sit",third:"sits"},objects:["chair","table","home"]},
 {en:"swim",ru:"плавать",mode:"action",forms:{base:"swim",third:"swims"},objects:["pool","water"]},
 {en:"sing",ru:"петь",mode:"action",forms:{base:"sing",third:"sings"},objects:["song"]},
 {en:"stew",ru:"тушить",mode:"action",forms:{base:"stew",third:"stews"},objects:["vegetables"]},
@@ -364,7 +364,7 @@ const objects = [
 {en:"city", ru:"город", type:"place", countable:true},
 {en:"card", ru:"карта", type:"special_place", countable:true},
 {en:"company", ru:"компания", type:"workplace", countable:true},
-{en:"chair", ru:"стул",type:"object", countable:true},
+{en:"chair", ru:"стул",type:"object",preposition:"on", countable:true},
 {en:"chicken", ru:"курица",type:"food", countable:false},
 {en:"coffee", ru:"кофе",type:"drink", countable:false},
 {en:"computer", ru:"компьютер",type:"object", countable:true},
@@ -395,7 +395,7 @@ const objects = [
 
 
 {en:"house",ru:"дом", type:"place", countable:false, dropArticle:true},
-{en:"home", ru:"дом", type:"special_place",preposition:"at", article:false },
+{en:"home", ru:"дом", type:"special_place",preposition:"at",countable:false},
 {en:"happy", ru:"счастлив", type:"state", countable:false},
 {en:"hospital", ru:"больница",type:"institution",article:true },
 {en:"help", ru:"помощь", type:"abstract", countable:false},
@@ -473,7 +473,7 @@ const objects = [
 
 {en:"tea", ru:"чай",type:"drink", countable:false},
 {en:"translator", ru:"переводчик",types:["person","language"],countable:true},
-{en:"table", ru:"стол",type:"object", countable:true},
+{en:"table", ru:"стол",type:"object",preposition:"at", countable:true},
 {en:"teacher", ru:"учитель",types:["person","education"], countable:true},
 {en:"ticket", ru:"билет",types:["travel","document"],countable:true},
 {en:"time", ru:"время",type:"abstract",countable:true},
