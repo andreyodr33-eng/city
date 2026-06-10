@@ -316,7 +316,7 @@ const actionRules = [
 {en:"sell",ru:"продавать",mode:"action",forms:{base:"sell",third:"sells"},objects:["book","car","ticket"]},
 {en:"study", ru:"учить",mode:"action",forms:{base:"study",third:"studies"},objects:["English","math","history"]},
 {en:"sit", ru:"сидеть на",mode:"action",forms:{base:"sit",third:"sits"},objects:["chair","table","home"]},
-{en:"swim",ru:"плавать",mode:"action",forms:{base:"swim",third:"swims"},objects:["pool","water"]},
+{en:"swim",ru:"плавать",mode:"action",forms:{base:"swim",third:"swims"},objects:["pool","ocean","lake"]},
 {en:"sing",ru:"петь",mode:"action",forms:{base:"sing",third:"sings"},objects:["song"]},
 {en:"stew",ru:"тушить",mode:"action",forms:{base:"stew",third:"stews"},objects:["vegetables"]},
 {en:"start",ru:"начинать",mode:"action",forms:{base:"start",third:"starts"},objects:["reading","running"]},
@@ -358,8 +358,6 @@ const objects = [
 {en:"bathroom",ru:"ванная",countable:false},
 {en:"ballet",ru:"баллет",countable:false},
    
-
-
 {en:"car", ru:"автомобиль",types:["transport","object"], countable:true},
 {en:"city", ru:"город", type:"place", countable:true},
 {en:"card", ru:"карта", type:"special_place", countable:true},
@@ -417,6 +415,7 @@ const objects = [
 {en:"left",ru:"лево",type:"direction",countable:false},
 {en:"laundry",ru:"прачечная",type:"object",article:"the",countable:false},
 {en:"lies",ru:"ложь",type:"abstract", countable:false},
+{en:"lake",ru:"озеро",type:"place_water_small",preposition:"in",countable:true,articleRule:"auto"},
 
 {en:"music", ru:"музыка",  types:["media","audio","abstract"], countable:false},
 {en:"milk", ru:"молоко",type:"drink", countable:false},
@@ -434,6 +433,7 @@ const objects = [
 {en:"news",ru:"новости", type:"media",countable:true,plural:true,article:"the"},
 
 {en:"office", ru:"офис", type:"workplace", countable:true},
+{en:"ocean",ru:"океан",type:"place_water_large",preposition:"in",countable:true,articleRule:"auto"),
 
 {en:"picture", ru:"картина", type:"visual", countable:true},
 {en:"phone", ru:"телефон",type:"special_place",article:"the", countable:true},
