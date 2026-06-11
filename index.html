@@ -317,7 +317,7 @@ const actionRules = [
 {en:"study", ru:"учить",mode:"action",forms:{base:"study",third:"studies"},objects:["English","math","history"]},
 {en:"sit", ru:"сидеть на",mode:"action",forms:{base:"sit",third:"sits"},objects:["chair","table","home"]},
 {en:"swim",ru:"плавать",mode:"action",forms:{base:"swim",third:"swims"},objects:["pool","ocean","lake"]},
-{en:"sing",ru:"петь",mode:"action",forms:{base:"sing",third:"sings"},objects:["song"]},
+{en:"sing",ru:"петь",mode:"action",forms:{base:"sing",third:"sings"},objects:["song","badly","well"]},
 {en:"stew",ru:"тушить",mode:"action",forms:{base:"stew",third:"stews"},objects:["vegetables"]},
 {en:"start",ru:"начинать",mode:"action",forms:{base:"start",third:"starts"},objects:["reading","running"]},
 {en:"speak",ru:"говорить",mode:"action",forms:{base:"speak",third:"speaks"},objects:["English"]},
@@ -357,6 +357,7 @@ const objects = [
 {en:"business",ru:"бизнес",type:"person",countable:true},
 {en:"bathroom",ru:"ванная",countable:false},
 {en:"ballet",ru:"баллет",countable:false},
+{en:"badly",ru:"плохо",type:"adverb",countable:false,articleRule:"none"},   
    
 {en:"car", ru:"автомобиль",types:["transport","object"], countable:true},
 {en:"city", ru:"город", type:"place", countable:true},
@@ -483,7 +484,6 @@ const objects = [
 {en:"task",ru:"задача",type:"abstract",article:"the",countable:false},
 {en:"tired",ru:"уставший",type:"state", countable:false},
 
-
 {en:"vegetables",ru:"овощи",type:"food",countable:false},
  
 {en:"water", ru:"вода", type:"drink", countable:false},
@@ -492,6 +492,7 @@ const objects = [
 {en:"week",ru:"неделя",type:"abstract",countable:true},
 {en:"waiting",ru:"ожидающий",type:"state", countable:false},
 {en:"window",ru:"окно",type:"openable", countable:false},
+{en:"well",ru:"хорошо",type:"adverb",countable:false,articleRule:"none"},
 
 
 {en:"go",ru:"идти",type:"verb_infinitive",infinitive:true,countable:false},
