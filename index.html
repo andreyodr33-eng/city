@@ -321,7 +321,7 @@ const actionRules = [
 {en:"stew",ru:"тушить",mode:"action",forms:{base:"stew",third:"stews"},objects:["vegetables","potatoes","meat"]},
 {en:"start",ru:"начинать",mode:"action",forms:{base:"start",third:"starts"},objects:["reading","running","business"]},
 {en:"speak",ru:"говорить",mode:"action",forms:{base:"speak",third:"speaks"},objects:["English","well"]},
-{en:"say",ru:"говорю",mode:"action",forms:{base:"say",third:"says"},objects:["hello"]},
+{en:"say",ru:"говорю",mode:"action",forms:{base:"say",third:"says"},objects:["hello","no","yes"]},
 {en:"stand",ru:"стоять",mode:"action",forms:{base:"stand",third:"stands"},objects:["line"]},
 {en:"stay",ru:"остаться",mode:"action",forms:{base:"stay",third:"stays"},objects:["home"]},
 
@@ -433,6 +433,7 @@ const objects = [
 
 {en:"name", ru:"имя", type:"abstract", countable:true},
 {en:"news",ru:"новости", type:"media",countable:true,plural:true,article:"the"},
+{en:"no",ru:"нет",type:"interjection",countable:false,articleRule:"none"},
 
 {en:"office", ru:"офис", type:"workplace", countable:true},
 {en:"ocean",ru:"океан",type:"place_water",countable:true,preposition:"in",article:"the"},
@@ -496,6 +497,7 @@ const objects = [
 {en:"window",ru:"окно",type:"openable", countable:false},
 {en:"well",ru:"хорошо",type:"adverb",countable:false,articleRule:"none"},
 
+{en:"yes",ru:"да",type:"interjection",countable:false,articleRule:"none"},   
 
 {en:"go",ru:"идти",type:"verb_infinitive",infinitive:true,countable:false},
 {en:"top up",ru:"пополнить",type:"verb_infinitive",infinitive:true,countable:false},
