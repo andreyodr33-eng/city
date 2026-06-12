@@ -322,7 +322,7 @@ const actionRules = [
 {en:"start",ru:"начинать",mode:"action",forms:{base:"start",third:"starts"},objects:["reading","running","business"]},
 {en:"speak",ru:"говорить",mode:"action",forms:{base:"speak",third:"speaks"},objects:["English","well"]},
 {en:"say",ru:"говорю",mode:"action",forms:{base:"say",third:"says"},objects:["hello","no","yes"]},
-{en:"stand",ru:"стоять",mode:"action",forms:{base:"stand",third:"stands"},objects:["line"]},
+{en:"stand",ru:"стоять",mode:"action",forms:{base:"stand",third:"stands"},objects:["line","door","street"]},
 {en:"stay",ru:"остаться",mode:"action",forms:{base:"stay",third:"stays"},objects:["home"]},
 
 {en:"take",ru:"брать",mode:"action",forms:{base:"take",third:"takes"},objects:["bus","medicine","shower","taxi"]},
@@ -372,7 +372,7 @@ const objects = [
 {en:"cash",ru:"наличные",type:"object",countable:false},
 {en:"classes",ru:"занятия",type:"abstract",countable:false},
 
-{en:"door", ru:"дверь",types:["object","openable"], countable:false},
+{en:"door", ru:"дверь",types:["object","openable"],preposition:"at", countable:true,defaultArticle:"the"},
 {en:"doctor", ru:"врач",types:["person","medical"], countable:true},
 {en:"dishes",ru:"тарелки",type:"object",countable:true,plural:true},
 {en:"difference",ru:"разница",type:"abstract",article:"the",countable:false},
@@ -394,7 +394,7 @@ const objects = [
 
 
 {en:"house",ru:"дом", type:"place", countable:false, dropArticle:true},
-{en:"home", ru:"дом", type:"special_place",preposition:"at",countable:false},
+{en:"home", ru:"дом", type:"special_place",preposition:"at",countable:true,articleRule:"none"},
 {en:"happy", ru:"счастлив", type:"state", countable:false},
 {en:"hospital", ru:"больница",type:"institution",article:true },
 {en:"help", ru:"помощь", type:"abstract", countable:false},
@@ -460,6 +460,7 @@ const objects = [
 {en:"right",ru:"право",type:"direction",countable:false},
 {en:"restaurant",ru:"ресторан",type:"object",countable:false},
 {en:"report",ru:"отчёт",type:"object",countable:true},
+{en:"room",ru:"комната",type:"object",preposition:"in",countable:true},
 
 {en:"soup", ru:"суп",type:"food", countable:false},
 {en:"spoon", ru:"ложка",type:"object", countable:true},
@@ -468,7 +469,7 @@ const objects = [
 {en:"shop", ru:"магазин",type:"place", countable:true},
 {en:"song", ru:"песня",type:"media",countable:true},
 {en:"shower",ru:"душ",type:"object",countable:true},
-{en:"street",ry:"улица",type:"object",preposition:"on",countable:true},
+{en:"street",ry:"улица",type:"object",preposition:"on",countable:true,defaultArticle:"the"},
 {en:"sports",ru:"спорт",type:"activity",countable:false},
 {en:"sound",ru:"звук",type:"abstract",countable:true},
 {en:"sick",ru:"больной",type:"state", countable:false},
@@ -494,7 +495,7 @@ const objects = [
 {en:"work",ru:"работа",type:"noun",countable:false,articleRule:"none"},
 {en:"week",ru:"неделя",type:"abstract",countable:true},
 {en:"waiting",ru:"ожидающий",type:"state", countable:false},
-{en:"window",ru:"окно",type:"openable", countable:false},
+{en:"window",ru:"окно",type:"openable",preposition:"at", countable:true,defaultArticle:"the"},
 {en:"well",ru:"хорошо",type:"adverb",countable:false,articleRule:"none"},
 
 {en:"yes",ru:"да",type:"interjection",countable:false,articleRule:"none"},   
