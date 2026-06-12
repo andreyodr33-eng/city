@@ -320,7 +320,7 @@ const actionRules = [
 {en:"sing",ru:"петь",mode:"action",forms:{base:"sing",third:"sings"},objects:["song","badly","well"]},
 {en:"stew",ru:"тушить",mode:"action",forms:{base:"stew",third:"stews"},objects:["vegetables","potatoes","meat"]},
 {en:"start",ru:"начинать",mode:"action",forms:{base:"start",third:"starts"},objects:["reading","running","business"]},
-{en:"speak",ru:"говорить",mode:"action",forms:{base:"speak",third:"speaks"},defaultPreposition:"to",objects:["English","well","teacher"]},
+{en:"speak",ru:"говорить",mode:"action",forms:{base:"speak",third:"speaks"},objects:["English","well","teacher"]},
 {en:"say",ru:"говорю",mode:"action",forms:{base:"say",third:"says"},objects:["hello","no","yes"]},
 {en:"stand",ru:"стоять",mode:"action",forms:{base:"stand",third:"stands"},objects:["line","door","street"]},
 {en:"stay",ru:"остаться",mode:"action",forms:{base:"stay",third:"stays"},objects:["home","hotel","here"]},
@@ -533,6 +533,7 @@ ask:{friend:{prep:"my",article:false},teacher:{prep:"the",article:false}},
  look:{job:{prep:"for",article:true},tired:{prep:"",article:false},picture:{prep:"at",article:true}},
  walk:{home:{prep:"",article:false}},
  understand:{lesson:{prep:"the",article:false}},
+ speak:{teacher:{prep:"to",article:false}},
 };
    
 let selected = { s:0, a:0, o:0 };
