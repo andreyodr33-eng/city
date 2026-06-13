@@ -316,7 +316,7 @@ const actionRules = [
 {en:"sell",ru:"продавать",mode:"action",forms:{base:"sell",third:"sells"},objects:["book","car","ticket"]},
 {en:"study", ru:"учить",mode:"action",forms:{base:"study",third:"studies"},objects:["English","math","history"]},
 {en:"sit", ru:"сидеть на",mode:"action",forms:{base:"sit",third:"sits"},objects:["chair","table","home"]},
-{en:"swim",ru:"плавать",mode:"action",forms:{base:"swim",third:"swims"},objects:["pool","ocean","lake"]},
+{en:"swim",ru:"плавать",mode:"action",forms:{base:"swim",third:"swims"},objects:["pool","ocean","lake"],,defaultPreposition:"in"},
 {en:"sing",ru:"петь",mode:"action",forms:{base:"sing",third:"sings"},objects:["song","badly","well"]},
 {en:"stew",ru:"тушить",mode:"action",forms:{base:"stew",third:"stews"},objects:["vegetables","potatoes","meat"]},
 {en:"start",ru:"начинать",mode:"action",forms:{base:"start",third:"starts"},objects:["reading","running","business"]},
@@ -440,7 +440,7 @@ const objects = [
 {en:"no",ru:"нет",type:"interjection",countable:false,articleRule:"none"},
 
 {en:"office", ru:"офис", type:"workplace", countable:true},
-{en:"ocean",ru:"океан",type:"place_water",countable:true,preposition:"in",defaultArticle:"the"},
+{en:"ocean",ru:"океан",type:"place_water",countable:true,defaultArticle:"the"},
 
 {en:"picture", ru:"картина", type:"visual", countable:true},
 {en:"phone", ru:"телефон",type:"object",article:"the", countable:true},
