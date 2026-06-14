@@ -865,15 +865,8 @@ function validateLocal(subject, action, object){
         };
     }
 
-    // пустые значения
-    if(subject.en === "" ||
-       action.en === "" ||
-       object.en === ""){
-        return {
-            valid:false,
-            reason:"Incomplete sentence"
-        };
-    }
+    // пустые значения удалил
+    
 
     // если у глагола есть список допустимых объектов
     if(action.objects &&
