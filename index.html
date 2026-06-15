@@ -329,7 +329,7 @@ const actionRules = [
 {en:"top up",ru:"пополнить",mode:"action",forms:{base:"top up",third:"tops up"},objects:["card","phone","wallet"]},
 {en:"try", ru:"пытаться",mode:"action",forms:{base:"try",third:"tries"},objects:["again","sleep","cake","food"],infinitiveMode:"to"},
 {en:"turn",ru:"повернуть",mode:"action",forms:{base:"turn",third:"turns"},objects:["left","right","here"]},
-{en:"tell",ru:"рассказывать",mode:"action",forms:{base:"tell",third:"tells"},objects:["joke","truth","difference"]},
+{en:"tell",ru:"рассказывать",mode:"action",forms:{base:"tell",third:"tells"},objects:["joke","truth","story"]},
 
 {en:"use", ru:"использовать",mode:"action",forms:{base:"use",third:"uses"},objects:["computer","card","phone"]},
 {en:"understand",ru:"понимаю",mode:"action",forms:{base:"understand",third:"understands"},objects:["question","lesson","English"]},
@@ -480,6 +480,7 @@ const objects = [
 {en:"sound",ru:"звук",type:"abstract",countable:true},
 {en:"sick",ru:"больной",type:"state", countable:false},
 {en:"study",ru:"учёба",type:"abstract",countable:false},
+{en:"story",ru:"история",type:"abstract",countable:true},
 
 
 {en:"tea", ru:"чай",type:"drink", countable:false},
@@ -828,8 +829,8 @@ return sentence;
 "I do the dishes": "Я мою посуду",
  "I live alone": "Я живу один/одна",
  "I am looking for a job": "Я ищу работу",
- "I say hello": "Я здороваюсь",
- "I tell the difference": "Я вижу разницу"   
+ "I say hello": "Я здороваюсь"
+    
 };
  async function translateText(text){
    if (fixes[text]) {
