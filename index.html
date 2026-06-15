@@ -818,8 +818,18 @@ return sentence;
     ]
     .filter(Boolean)
     .join(" ");
+}   
+ const fixes = {
+"I do the laundry": "Я стираю бельё",
+"I answer the phone": "Я отвечаю на телефонный звонок",
+"I'll shoot off a reply": "Я быстренько отпишусь",
+"I answer the question": "Я овечаю на вопрос",
+"I do the dishes": "Я мою посуду"
+};
+ async function translateText(text){
+   if (fixes[text]) {
+     return fixes[text]
 }
-async function translateText(text){
 
 try{
 
