@@ -258,7 +258,7 @@ const actionRules = [
 
 {en:"answer",ru:"отвечать",mode:"action",forms:{base:"answer",third:"answers"},article:"the",objects:["phone","question","email"]},
 {en:"ask",ru:"просить",mode:"action",forms:{base:"ask",third:"asks"},defaultPreposition:"for",objects:["help","teacher","friend"]},
-{en:"arrive",ru:"приезжать",forms:{base:"arrive",third:"arrives"},objects:["school","work","station"]},
+{en:"arrive",ru:"приезжать",forms:{base:"arrive",third:"arrives"},objects:["school","work","station"],defaultPreposition:"at"},
 
 {en:"be",ru:"быть",mode:"state",type:"linking_verb",forms:{I:"am",You:"are",He:"is",She:"is",It:"is",We:"are",They:"are"},
  objects:["happy","free","ready","home","doctor"]},
@@ -500,6 +500,7 @@ const objects = [
 {en:"study",ru:"учёба",type:"abstract",countable:false},
 {en:"story",ru:"история",type:"abstract",countable:true},
 {en:"so",ru:"так",type:"adverb",countable:false},
+{en:"station",ru:"станция",type:"object",article:false,defaultArticle:"the"},
 
 
 {en:"tea", ru:"чай",type:"drink", countable:false},
