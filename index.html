@@ -397,7 +397,7 @@ const objects = [
 {en:"English",ru:"английский",type:"place",countable:false,articleRule:"none",noPreposition: true},
 {en:"email",ru:"e-почта",type:"abstract",countable:false},
 {en:"early",ru:"рано",type:"adverb",countable:false},
-{en:"evening",ru:"вечер",type:"abstract",countable:false},
+{en:"evening",ru:"вечер",type:"abstract",countable:false,defaultArticle:"the"},
 
 {en:"family", ru:"семья", types:["people","group"],article:"my", countable:false},
 {en:"friend", ru:"друг", type:"people", countable:true},
@@ -563,6 +563,7 @@ ask:{friend:{prep:"my",article:false},teacher:{prep:"the",article:false}},
  speak:{teacher:{prep:"to the",article:false}},
  learn:{school:{prep:"at",article:false}},
  think:{good:{prep:"it is",article:false}},
+ meet:{evening:{prep:"in",article:false},school:{prep:"at",article:false},friend:{prep:"my",article:false}},
 };
    
 let selected = { s:0, a:0, o:0 };
