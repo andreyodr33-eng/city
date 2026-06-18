@@ -316,7 +316,7 @@ const actionRules = [
 
 {en:"read",ru:"читать",mode:"action",forms:{base:"read",third:"reads"},objects:["book","report","news"]},
 {en:"run",ru:"бегать",mode:"action",forms:{base:"run",third:"runs"},objects:["park","street","company","business"]},
-{en:"ride",ru:"ехать",forms:{base:"ride",third:"rides"},objects:["bike","horse","school"],defaultPreposition:"to"},
+{en:"ride",ru:"ехать",mode:"action",forms:{base:"ride",third:"rides"},objects:["bike","horse","school"],infinitiveMode:"to"},
 
 
 {en:"see",ru:"видеть",mode:"action",forms:{base:"see",third:"sees"},objects:["movie","problem","difference"]},
@@ -372,7 +372,7 @@ const objects = [
 {en:"bathroom",ru:"ванная",countable:false},
 {en:"ballet",ru:"баллет",countable:false},
 {en:"badly",ru:"плохо",type:"adverb",countable:false,articleRule:"none"},
-{en:"bike",ru:"велосипед",types:["transport","object"], countable:true,articleRule:"none",},
+{en:"bike",ru:"велосипед",types:["transport","object"], countable:true},
    
 {en:"car", ru:"автомобиль",types:["transport","object"], countable:true},
 {en:"city", ru:"город", type:"place", countable:true},
