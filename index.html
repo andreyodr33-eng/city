@@ -1123,19 +1123,29 @@ renderHistory();
 
 }
 function speakHistory(index){
+speechSynthesis.cancel();
 
-    speechSynthesis.cancel();
-
-    const utterance =
+const utterance =
     new SpeechSynthesisUtterance(
         history[index].sentence
     );
 
-    utterance.lang = "en-US";
+utterance.lang = "en-US";
+utterance.rate = 0.9;
 
-    utterance.rate = 0.9;
+const voices =
+    speechSynthesis.getVoices();
 
-    speechSynthesis.speak(utterance);
+const englishVoice =
+    voices.find(v =>
+        v.lang.includes("en")
+    );
+
+if(englishVoice){
+    utterance.voice = englishVoice;
+}
+
+speechSynthesis.speak(utterance);
 }   
 function renderHistory(){
 
