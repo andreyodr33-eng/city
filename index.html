@@ -1123,28 +1123,19 @@ renderHistory();
 
 }
 function speakHistory(index){
-speechSynthesis.cancel();
 
-const sentence = "Hello, this is Karen speaking.";
+    speechSynthesis.cancel();
 
-const utterance =
-    new SpeechSynthesisUtterance(sentence);
+    const utterance =
+    new SpeechSynthesisUtterance(
+        history[index].sentence
+    );
 
-utterance.lang = "en-US";
-utterance.rate = 0.9;
+    utterance.lang = "en-US";
 
-const voices = speechSynthesis.getVoices();
+    utterance.rate = 0.9;
 
-const voice =
-    voices.find(v => v.name.includes("Karen"));
-
-if (voice) {
-    utterance.voice = voice;
-}
-
-console.log("VOICE:", voice?.name);
-
-speechSynthesis.speak(utterance);
+    speechSynthesis.speak(utterance);
 }   
 function renderHistory(){
 
