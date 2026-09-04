@@ -1122,31 +1122,30 @@ JSON.stringify(history)
 renderHistory();
 
 }
-function speakHistory(index, voiceName = "Karen"){
+function speakHistory(index){
 speechSynthesis.cancel();
 
+const sentence = "Hello, this is Karen speaking.";
+
 const utterance =
-    new SpeechSynthesisUtterance(
-        history[index].sentence
-    );
+    new SpeechSynthesisUtterance(sentence);
 
 utterance.lang = "en-US";
 utterance.rate = 0.9;
 
-const voices =
-    speechSynthesis.getVoices();
+const voices = speechSynthesis.getVoices();
 
 const voice =
-    voices.find(v =>
-        v.name.includes(voiceName)
-    );
+    voices.find(v => v.name.includes("Karen"));
 
 if (voice) {
     utterance.voice = voice;
 }
 
+console.log("VOICE:", voice?.name);
+
 speechSynthesis.speak(utterance);
-}
+}   
 function renderHistory(){
 
 document.getElementById("history").innerHTML =
